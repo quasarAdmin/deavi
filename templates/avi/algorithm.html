@@ -1,0 +1,19 @@
+
+<div class="alg-content">
+  <h1>Algorithm</h1>
+  {{ id }}
+  <form id="form_page"
+        method="post">
+    {% csrf_token %}
+    <button
+       type="submit"
+       class="btn btn-primary"
+       formmethod="POST"
+       id="first_page_button" 
+       name="page"
+       title="Page" 
+       value="1">
+      First
+    </button>
+  </form>
+</div>

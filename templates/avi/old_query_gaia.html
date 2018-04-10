@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "avi/header.html"  %}
+    <!--<script
+       src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>-->
+    {% load static %}
+    <!--<link rel="stylesheet"
+	  type="text/css" href="{% static 'avi/queries.css' %}"/>-->
+    <script src="{% static 'avi/js/query_form.js' %}"></script>
+  </head>
+<body>
+  <div id="navbar">
+    {% include "avi/navbar.html" %}
+  </div>
+  <div class="container-fluid">
+  <div id="content" class="row content">
+    <div id="sidebar" class="col-sm-2 sidenav">
+      {% include "avi/sidebar-nav.html" with sidebar_menu="queries"%}
+    </div>
+    <div id="real-content" class="col-sm-10">
+      <!-- ----------------------------------------------------------------- -->
+      <!-- ----------------------------------------------------------------- -->
+      <!-- ----------------------------------------------------------------- -->
+      <h1>Gaia</h1>
+      <form id="gaia_query_form" class="container" method="post">
+	{% csrf_token %}
+	<div class="form-group row">
+	  <label for="query-name-input" class="col-2 col-form-label">Name</label>
+	  <div class="col-10">
+	    <input class="form-control" type="text" value="Query-NGC2264"
+		   name="query-name-input"
+		   id="query-name-input">
+	  </div>
+	</div>
+	<div class="form-group row">
+	  <label for="query-ra-input" class="col-2 col-form-label">RA (Degrees)</label>
+	  <div class="col-10">
+	    <input class="form-control" type="text" value="100.2417"
+		   name="query-ra-input"
+		   id="query-ra-input">
+	  </div>
+	</div>
+	<div class="form-group row">
+	  <label for="query-dec-input" class="col-2 col-form-label">DEC (Degrees)</label>
+	  <div class="col-10">
+	    <input class="form-control" type="text" value="9.895"
+		   name="query-dec-input"
+		   id="query-dec-input">
+	  </div>
+	</div>
+	<div class="form-group row">
+	  <label for="query-shape-input"
+		 class="col-2 col-form-label">Shape</label>
+	  <div class="col-10">
+	    <label class="radio-inline radio-circle col-3">
+	      <input type="radio" name="optradio">Circle</label>
+	    <label class="radio-inline radio-rectangle col-3">
+	      <input type="radio" name="optradio">Rectangle</label>
+	    <label class="radio-inline radio-polygon col-3">
+	      <input type="radio" name="optradio">Polygon</label>
+	  </div>
+	</div>
+	<div class="form-group row row-radius-input" style="display:none">
+	  <label for="query-shape-input"
+		 class="col-2 col-form-label">Radius</label>
+	  <div class="col-10">
+	    <input class="form-control" type="text" value="1"
+		   name="query-shape-circle-radius-input"
+		   id="query-shape-circle-radius-radius-input">
+	  </div>
+	</div>
+	<div class="form-group row row-rectangle-input" style="display:none">
+	  <label for="query-shape-input"
+		 class="col-2 col-form-label"></label>
+	  <div class="form-inline form-group">
+	    <label for="width">Width</label>
+	    <input class="form-control" type="text" value=""
+		   name="query-shape-rectangle-width-input"
+		   id="query-shape-rectangle-width-input">
+	  </div>
+	  <div class="form-inline form-group">
+	    <label for="width">Height</label>
+	    <input class="form-control" type="text" value=""
+		   name="query-shape-rectangle-height-input"
+		   id="query-shape-rectangle-height-input">
+	  </div>
+	</div>
+	<div class="form-group row row-polygon-input" style="display:none">
+	  <label for="query-shape-input"
+		 class="col-2 col-form-label">Polygon</label>
+	  <div class="col-10">
+	    <input class="form-control" type="text" value=""
+		   name="query-shape-polygon-input"
+		   id="query-shape-polygon-input">
+	  </div>
+	</div>
+	<div class="form-group row">
+	  <label for="query-shape-input"
+		 class="col-2 col-form-label">Table</label> 
+	  <div class="col dropdown">
+	    <button class="btn btn-primary dropdown-toggle"
+		    id="gaia-table-dropdown" type="button"
+		    data-toggle="dropdown">
+	      <span id="gaia-table-selected">Select Table</span></input>
+	      <span class="caret"></span></button>
+	    <ul class="dropdown-menu scrollable-menu"
+		id="gaia-tables-dropdown-menu">
+	      {% for item in tables %}
+	      <li><a href="#">{{ item }}</a></li>
+	      {% endfor %}
+	    </ul>
+	  </div>
+	</div>	      	
+	<div class="form-group row">
+	  <button type="submit" class="btn btn-default"
+		  id="gaia-query-submit" value="asdfsadfasf">Submit</button>
+	</div>
+      </form>
+      <!-- ----------------------------------------------------------------- -->
+      <!-- ----------------------------------------------------------------- -->
+      <!-- ----------------------------------------------------------------- -->
+    </div>
+  </div>
+  </div>
+</body>
+</html>

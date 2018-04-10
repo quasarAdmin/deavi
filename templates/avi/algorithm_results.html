@@ -1,0 +1,12 @@
+<div class="algorithm-container"
+     id="{{ id }}_algorithm-container"
+     loaded="false">
+  {% load static %}
+  <script type="text/javascript" 
+          src="{% static 'avi/js/algorithm_results.js' %}"></script>
+  <!-- Algorithm {{ id }} 
+  <script type="text/javascript">
+    var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+  </script> -->
+  <h4>Results of {{ name }}</h4>
+</div>

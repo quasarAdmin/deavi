@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "avi/header.html" %}
+  </head>
+<body>
+  <div id="navbar">
+    {% include "avi/navbar.html" %}
+  </div>
+  <div id="content">
+    <div id="sidebar">
+      {% include "avi/sidebar-nav.html" %}
+    </div>
+    <div id="real-content">
+      <h1>QUERIES</h1>
+      <!-- <lu>
+	  {% for f in form %}
+	  <div id="div_{{ f.id_for_label }}">
+	  <li><label for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}</li>
+	  </div>
+	  {% endfor %}
+	</lu> 
+      <!--{{ form }} -->
+      {{ form.non_field_errors }}
+	<div class="from-group row">
+	  <!-- <div class="col-sm-3"> -->
+	    <div id="div_id_name_coord">
+	      {{ form.name_coord.errors }}
+	      {{ form.name_coord }}
+	    </div>
+	  <!-- </div> -->
+	  <!-- <div class="col-sm-9"> -->
+	    <div id="div_id_name">
+	      {{ form.name.errors }}
+	      {{ form.name }}
+	    </div>
+	    <div id="div_id_ra">
+	      {{ form.ra.errors }}
+	      {{ form.ra }}
+	    </div>
+	    <div id="div_id_dec">
+	      {{ form.dec.errors }}
+	      {{ form.dec }}
+	    </div>
+	  <!-- </div> -->
+	</div>
+    </div>
+  </div>
+</body>
+</html>

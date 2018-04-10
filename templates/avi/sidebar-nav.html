@@ -1,0 +1,154 @@
+<div class="col-sm-12 col-md-12">
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse"
+	     data-parent="#accordion"
+	     href="#collapseOne">
+	    <span class="glyphicon glyphicon-leaf">
+            </span> Queries</a>
+        </h4>
+      </div>
+      {% if sidebar_menu == "queries"%}
+      <div id="collapseOne" class="panel-collapse collapse in">
+      {% else %}
+      <div id="collapseOne" class="panel-collapse collapse">
+      {% endif %}
+        <div class="panel-body">
+          <table class="table">
+            <tr>
+              <td>
+                <a href="/avi/queries/gaia">Gaia</a>
+              </td>
+            </tr>
+	    <tr>
+              <td>
+                <a href="/avi/queries/herschel">Herschel</a>
+              </td>
+            </tr>
+	    <tr>
+              <td>
+                <a href="/avi/queries/status">Status</a>
+              </td>
+            </tr>
+	    <!--<tr>
+              <td>
+                <a href="/avi/queries/saved">Saved</a>
+              </td>
+            </tr>-->
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse"
+	     data-parent="#accordion"
+	     href="#collapseTwo">
+	    <span class="glyphicon glyphicon-hdd">
+            </span> Resources</a>
+        </h4>
+      </div>
+      {% if sidebar_menu == "resources"%}
+      <div id="collapseTwo" class="panel-collapse collapse in">
+      {% else %}
+      <div id="collapseTwo" class="panel-collapse collapse">
+      {% endif %}
+        <div class="panel-body">
+          <table class="table">
+            <!--<tr>
+              <td>
+                <span class="">
+		</span><a href="#">Catalog</a>
+              </td>
+            </tr>-->
+            <tr>
+              <td>
+                <span class="">
+		</span><a href="/avi/resources/filemanager">Local</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse"
+	     data-parent="#accordion"
+	     href="#collapseThree">
+	    <span class="glyphicon glyphicon-th-list">
+            </span> Pipeline</a>
+        </h4>
+      </div>
+      {% if sidebar_menu == "pipeline"%}
+      <div id="collapseThree" class="panel-collapse collapse in">
+      {% else %}
+      <div id="collapseThree" class="panel-collapse collapse">
+      {% endif %}
+        <div class="panel-body">
+          <table class="table">
+            <tr>
+              <td>
+                <span class="glyphicon glyphicon-home"></span>
+		      <a href="/avi/algorithms">Home</a>
+	      </td>
+	    </tr>
+	    <tr>
+              <td>
+                <span class=""></span>
+		      <a href="/avi/status">Status</a>
+	      </td>
+	    </tr>
+	    <!--<tr>
+	      <td>
+		<span class="glyphicon glyphicon-console"></span>
+		<a href="#">Notebook</a>
+	      </td>
+	    </tr>-->                                
+	  </table>
+	</div>
+      </div>
+    </div>
+    <!--<div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse"
+	     data-parent="#accordion"
+	     href="#collapseFour"><span class="glyphicon glyphicon-globe">
+            </span> ESASky</a>
+        </h4>
+      </div>
+    </div>-->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse"
+	     data-parent="#accordion"
+	     href="#collapseFive">
+	    <span class="glyphicon glyphicon-question-sign">
+            </span> Help</a>
+        </h4>
+      </div>
+      {% if sidebar_menu == "help"%}
+      <div id="collapseFive" class="panel-collapse collapse in">
+      {% else %}
+      <div id="collapseFive" class="panel-collapse collapse">
+      {% endif %}
+        <div class="panel-body">
+          <table class="table">
+            <tr>
+              <td>
+		<a href="/avi/help/about">About</a>
+              </td>
+            </tr>    
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

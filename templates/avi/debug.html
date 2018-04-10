@@ -1,0 +1,41 @@
+<!DOCTYPY html>
+<html lang="en">
+  <head>
+    {% include "avi/header.html" %}
+    <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.10.min.js"></script>
+    <link rel="stylesheet" href="htp://cdn.pydata.org/bokeh/release/bokeh-0.12.10.min.css">
+    <!-- {% load static %}
+    <script type="text/javascript" src="{% static 'avi/js/samp.js' %}"></script>
+    <script type="text/javascript" src="{% static 'avi/lib/samp.js' %}"></script> -->
+  </head>
+  <body>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <div id="navbar">
+      {% include "avi/navbar.html" %}
+    </div>
+    <div id="content" class="row content">
+      <div id="sidebar" class="col-sm-2 sidenav">
+        {% include "avi/sidebar-nav.html" with sidebar_menu="help" %}
+      </div>
+      <div id="real-content" class="col-sm-10">
+        <div class="api" id="api">
+          <h1>API</h1>
+          <h4><a href="/avi/resources">Resources</a></h4>
+          <h4><a href="/avi/list_algorithms">Algorithms</a></h4>
+          <h4><a href="/avi/results">Results</a></h4>
+          <h4><a href="/avi/plots">Plots</a></h4>
+          <h4><a href="/avi/gaia_queries">Gaia</a></h4>
+          <h4><a href="/avi/hsa_queries">HSA</a></h4>
+          <h4><a href="/avi/alg_info">alg_info</a></h4>
+        </div>
+        <h1>DEBUG</h1>
+        <form class="form" name="form" 
+              method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input type="file" name="myfile">
+          <button type="submit">File</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

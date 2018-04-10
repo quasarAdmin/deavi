@@ -1,0 +1,40 @@
+# .gitignore file
+# The following files/folders will be ignored.
+
+*
+!*/
+
+*~
+
+# Add your build folders here
+
+.metadata/
+avi/migrations/
+pipeline/migrations/
+
+# Exceptions, the following files/folders WONT be ignored.
+
+!*.java
+!*.py
+!*.ui
+!*.css
+!*.js
+!*.html
+
+!*.conf
+!*.xml
+!*.ini
+!*.json
+
+!*.sh
+
+!.gitignore
+
+!AUTHORS
+!LICENSE
+!COPYING
+!ChangeLog
+!NEWS
+!README
+!TODO
+!GIT_BRANCHES
