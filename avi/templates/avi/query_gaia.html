@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "avi/header.html"  %}
+    <!--<script
+       src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>-->
+    {% load static %}
+    <!--<link rel="stylesheet"
+        type="text/css" href="{% static 'avi/queries.css' %}"/>-->
+    <script src="{% static 'avi/js/query_form.js' %}"></script>
+  </head>
+<body>
+  <div id="navbar">
+    {% include "avi/navbar.html" %}
+  </div>
+  <div class="container-fluid">
+  <div id="content" class="row content">
+    <div id="sidebar" class="col-sm-2 sidenav">
+      {% include "avi/sidebar-nav.html" with sidebar_menu="queries"%}
+    </div>
+    <div id="real-content" class="col-sm-10">
+      <!-- ----------------------------------------------------------------- -->
+      <!-- ----------------------------------------------------------------- -->
+      <!-- ----------------------------------------------------------------- -->
+      <h1>Gaia</h1>
+      <form id="gaia_query_form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group row">
+          <div class="col-sm-3">
+            <div id="div_id_name_coord">
+              {{ form.name_coord.errors }}
+              {{ form.name_coord }}
+            </div>
+          </div>
+          <div class="col-sm-9">
+            <div id="div_id_name">
+              {{ form.name.errors }}
+              {{ form.name }}
+            </div>
+            <div id="div_id_ra">
+              {{ form.ra.errors }}
+              <label for"{{ form.ra.id_for_label }}">RA: </label>
+              {{ form.ra }}
+            </div>
+            <div id="div_id_dec">
+              {{ form.dec.errors }}
+              <label for="{{ form.dec.id_for_label }}">DEC: </label>
+              {{ form.dec }}
+            </div>
+            <div id="div_id_input_file">
+              <!-- {{ form.input_file.erros }}
+              {{ form.input_file }} -->
+              <input type="file" name="input_file">
+            </div>
+          </div>
+        </div><!-- name coord row -->
+        <div id="data-form">
+          <div class="from-group row">
+            <div class="col-sm-3">
+              <div id="div_id_shape">
+                {{ form.shape.errors }}
+                {{ form.shape }}
+              </div>
+            </div>
+            <div class="col-sm-9">
+              <div id="div_id_radius">
+                {{ form.radius.errors }}
+                <label for="{{ form.radius.id_for_label }}">Radius: </label>
+                {{ form.radius }}
+              </div>
+              <div id="div_id_height">
+                {{ form.height.errors }}
+                <label for="{{ from.height.id_for_label }}">Height: </label>
+                {{ form.height }}
+              </div>
+              <div id="div_id_width">
+                {{ form.width.errors }}
+                <label for="{{ form.width.id_for_label }}">Width: </label>
+                {{ form.width }}
+              </div>
+              <div id="div_id_polygon">
+                {{ form.polygon.errors }}
+                <label for="{{ form.polygon.id_for_label }}">Polygon: </label>
+                {{ form.polygon }}
+              </div>
+            </div>
+          </div><!-- shape row -->
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <div id="div_id_table">
+                {{ form.table.errors }}
+                <label for="{{ form.table.id_for_label }}">Table: </label>
+                {{ form.table }}
+              </div>
+            </div>
+          </div><!-- table row -->
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <div id="div_id_file_name">
+                {{ form.file_name.errors }}
+                <label for="{{ form.file_name.id_for_label }}">Output File: </label>
+                {{ form.file_name }}
+              </div>
+            </div>
+          </div><!-- output file row -->
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <div id="div_id_adql">
+                {{ form.adql.errors }}
+                <label for="{{ form.adql.id_for_label }}">ADQL: </label>
+                {{ form.adql }}
+              </div>
+            </div>
+          </div><!-- output adql row -->
+        </div><!-- data-form -->
+        <input type="submit" value="Submit"/>
+      </form>
+      <!-- ----------------------------------------------------------------- -->
+      <!-- ----------------------------------------------------------------- -->
+      <!-- ----------------------------------------------------------------- -->
+    </div>
+  </div>
+  </div>
+</body>
+</html>

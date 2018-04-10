@@ -1,0 +1,8 @@
+
+# Requirements file
+
+bokeh==0.12.10
+#selenium
+#phantomjs
+#pillow
+

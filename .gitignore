@@ -25,6 +25,7 @@ pipeline/migrations/
 !*.xml
 !*.ini
 !*.json
+!*.txt
 
 !*.sh
 

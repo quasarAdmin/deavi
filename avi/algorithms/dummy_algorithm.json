@@ -1,0 +1,36 @@
+
+{"algorithm":{
+    "name": "dummy_algorithm",
+    "view_name": "dummy 2",
+    "input":{
+	"input_1":{
+	    "name": "param1",
+	    "view_name": "parameter 1",
+	    "type": "float"
+	},
+	"input_2":{
+	    "name": "param2",
+	    "view_name": "parameter 2",
+	    "type": "float"
+	},
+	"input_3":{
+	    "name": "param3",
+	    "view_name": "parameter 3",
+	    "type": "float"
+	}
+    },
+    "results":{
+	"result_1":{
+	    "name": "res",
+	    "view_name": "Result",
+	    "type": "float"
+	}
+    },
+    "plots":{
+	"plot_1":{
+	    "name": "plot",
+	    "view_name": "Plot",
+	    "type": "2D"
+	}
+    }
+}}
