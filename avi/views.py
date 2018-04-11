@@ -28,7 +28,8 @@ def getkey(value, arg):
 
 def index(request):
     template = loader.get_template('avi/index.html')
-    context = {} #RequestContext(request)
+    context = {'avi_url':wh_global_config().get().AVI_URL,
+               'portal_url':wh_global_config().get().PORTAL_URL} #RequestContext(request)
     return HttpResponse(template.render(context,request))
 
 def create(request, fib):
@@ -61,6 +62,10 @@ def algorithm(request,alg_id):
 
 def pipeline_v2(request):
     log = logger().get_log("views")
+    log.info('url %s', request.get_full_path())
+    log.info('host %s', request.build_absolute_uri())
+    log.info('base %s', wh_global_config().get().AVI_URL)
+    log.info('base %s', wh_global_config().get().PORTAL_URL)
     if request.method == 'POST':
         log.info("Post %s",str(request.POST))
         data = dict(request.POST)
