@@ -44,7 +44,8 @@ class risea:
         
         def __init__(self):
             
-            ipath = wh_global_config().get().INPUT_PATH
+            ipath = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'config')
+            #wh_global_config().get().INPUT_PATH
             self.str_log_config_file = os.path.join(ipath, 'log_config.xml')
             self.str_config_file = os.path.join(ipath, 'config.xml')
             self.str_global_config_file = os.path.join(ipath, 'global_config.xml')
