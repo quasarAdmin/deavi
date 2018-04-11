@@ -151,4 +151,5 @@ class test_hsa_api(unittest.TestCase):
         pass
 
 if __name__ == '__main__':
+    pass
     unittest.main()

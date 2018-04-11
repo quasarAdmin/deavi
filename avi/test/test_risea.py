@@ -18,4 +18,5 @@ class test_risea(unittest.TestCase):
         r = risea().get()
 
 if __name__ == '__main__':
+    pass
     unittest.main()
