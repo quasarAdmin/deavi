@@ -29,6 +29,9 @@ class wh_global_config:
         RESULTS_FMT = "result.dat"
 
         ALGORITHMS_LOADED = False
+        
+        AVI_URL = "avi/"
+        PORTAL_URL = ""
 
         log = None
         str_log_header = 'wh_global_config'
@@ -82,6 +85,11 @@ class wh_global_config:
                 # TODO: ? set media and static paths?
                 self.OUTPUT_PATH = settings.OUTPUT_PATH
                 self.INPUT_PATH = settings.INPUT_PATH
+                
+                if settings.AVI_URL_NAME:
+                    self.AVI_URL = settings.AVI_URL_NAME
+                if settings.PORTAL_URL:
+                    self.PORTAL_URL = settings.PORTAL_URL
             #except ImportError:
             except Exception:
                 pass
