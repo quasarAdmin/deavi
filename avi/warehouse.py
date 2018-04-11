@@ -52,6 +52,9 @@ class wh_global_config:
                                              cfg["results_path"])
             self.TMP_PATH = os.path.join(self.OUTPUT_PATH, cfg["tmp_path"])
 
+            self.ALGORITHM_PATH = os.path.join( \
+                os.path.dirname(os.path.abspath(__file__)), 'algorithms')
+
             self.UPLOADED_ALGORITHM_PATH = os.path.join(self.OUTPUT_PATH, 
                                                    cfg["uploaded_alg_path"])
             self.TMP_ALGORITHM_PATH = os.path.join(self.OUTPUT_PATH, 
