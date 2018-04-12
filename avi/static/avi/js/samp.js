@@ -1,7 +1,9 @@
 
 var base_url = window.location.href.toString().replace(new RegExp("[^/]*$"),"");
 var origin = new URL(base_url).origin;
-var url = origin + avi_url+"avi/api/samp_resource/";
+//console.log(origin);
+//console.log(avi_url);
+var url = origin + "avi/api/samp_resource/";
 var src_url = "";
 
 var cc = new samp.ClientTracker();
@@ -93,3 +95,8 @@ function samp_send(id, name)
         connection.runWithConnection(send_fits);
     }
 }
+
+$(document).ready(function(){
+    url = origin + avi_url + "avi/api/samp_resource/";
+    console.log(url);
+});
