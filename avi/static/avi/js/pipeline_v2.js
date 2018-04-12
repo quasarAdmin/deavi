@@ -86,7 +86,7 @@ var create_form = function(el, id, data){
 var get_algorithm_info = function(el, id){//, name){
     $.ajax({
         type:"POST",
-        url:"/avi/ajax/get_alg_info",
+        url:avi_url+"avi/ajax/get_alg_info",
         dataType:'json',
         data:{'id': id,
               //'name': name,

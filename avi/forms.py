@@ -1,4 +1,5 @@
 # Error control
+import os
 from django import forms
 
 from enum import Enum
@@ -51,7 +52,8 @@ def get_hs_levels():
 def get_hs_tables():
     from avi.utils.config_manager import configuration_manager
     cfg = configuration_manager()
-    if not cfg.load('avi/config/config.xml'):
+    ipath = os.path.join(os.path.dirname(os.path.abspath(__file__)),'config')
+    if not cfg.load(os.path.join(ipath, 'config.xml')):
         return (('no_tables','no tables loaded'),)
 
     tables = cfg.get('hsa_tables')
@@ -66,7 +68,8 @@ def get_hs_tables():
 def get_gaia_tables():
     from avi.utils.config_manager import configuration_manager
     cfg = configuration_manager()
-    if not cfg.load('avi/config/config.xml'):
+    ipath = os.path.join(os.path.dirname(os.path.abspath(__file__)),'config')
+    if not cfg.load(os.path.join(ipath, 'config.xml')):
         return (('no_tables','no tables loaded'),)
 
     tables = cfg.get('gaiadr1_tables')

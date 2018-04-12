@@ -1,7 +1,7 @@
 
 var base_url = window.location.href.toString().replace(new RegExp("[^/]*$"),"");
 var origin = new URL(base_url).origin;
-var url = origin + "/avi/api/samp_resource/";
+var url = origin + avi_url+"avi/api/samp_resource/";
 var src_url = "";
 
 var cc = new samp.ClientTracker();

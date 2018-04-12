@@ -191,7 +191,7 @@
             </form>
             <!-- End Delete file button pop up -->
             <!-- Start Download file button-->
-            <form class="col-inline-button"  action="/avi/api/resource/{{ file }}">
+            <form class="col-inline-button"  action="{{ avi_url }}avi/api/resource/{{ file }}">
               <div class="col-inline-button">
                 {% csrf_token %}
                 <button class="btn btn-success"

@@ -2,7 +2,7 @@ var get_plot = function(el, id){
     console.log(id);
     $.ajax({
             type:"POST",
-            url:"/avi/ajax/get_plot",
+            url:avi_url+"avi/ajax/get_plot",
             dataType:'json',
             data:{'id': id,
                  csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
@@ -28,7 +28,7 @@ var get_results = function(id){
         el.append("<p>Loading results for the job "+id+"...</p>");
         $.ajax({
             type:"POST",
-            url:"/avi/ajax/get_results",
+            url:avi_url+"avi/ajax/get_results",
             dataType:'json',
             data:{'id': id,
                  csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
@@ -45,7 +45,7 @@ var get_results = function(id){
                     } else {
                         $.each(value, function(k,v){
                             //console.log(v);
-                            u = "/avi/api/res/"+k;
+                            u = avi_url+"avi/api/res/"+k;
                             el.append('<a href="'+u+'">'+v+"</a>")
                                 //.attr("href", "avi/api/res/"+k);
                         });

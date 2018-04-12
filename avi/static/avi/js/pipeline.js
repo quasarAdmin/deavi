@@ -81,7 +81,7 @@ $(document).ready(
             function(){
                 $.ajax({
                     type:"POST",
-                    url:"/avi/status",
+                    url:avi_url+"avi/status",
                     data:{'sort_by':'date',
                           csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
                     success: function(){
@@ -96,7 +96,7 @@ $(document).ready(
             function(){
                 $.ajax({
                     type:"POST",
-                    url:"/avi/status",
+                    url:avi_url+"avi/status",
                     data:{'sort_by':'status',
                           csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
                     success: function(){
@@ -112,7 +112,7 @@ $(document).ready(
             function(){
                 $.ajax({
                     type:"POST",
-                    url:"/avi/status",
+                    url:avi_url+"avi/status",
                     data:{'sort_by':'name',
                           csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
                     success: function(){

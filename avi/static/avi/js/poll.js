@@ -8,7 +8,7 @@ $(document).ready(
           });*/
         $.ajax({
             type:"POST",
-            url:"/avi/queries/status",
+            url:avi_url+"avi/queries/status",
             data:{'poll':'yes',
                   csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
             success: function(){
@@ -25,7 +25,7 @@ $(document).ready(
             function(){
                 $.ajax({
                     type:"POST",
-                    url:"/avi/queries/status",
+                    url:avi_url+"avi/queries/status",
                     data:{'sort_by':'date',
                           csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
                     success: function(){
@@ -40,7 +40,7 @@ $(document).ready(
             function(){
                 $.ajax({
                     type:"POST",
-                    url:"/avi/queries/status",
+                    url:avi_url+"avi/queries/status",
                     data:{'sort_by':'status',
                           csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
                     success: function(){
@@ -56,7 +56,7 @@ $(document).ready(
             function(){
                 $.ajax({
                     type:"POST",
-                    url:"/avi/queries/status",
+                    url:avi_url+"avi/queries/status",
                     data:{'sort_by':'name',
                           csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
                     success: function(){

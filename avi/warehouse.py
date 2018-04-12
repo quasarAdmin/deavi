@@ -30,7 +30,8 @@ class wh_global_config:
 
         ALGORITHMS_LOADED = False
         
-        AVI_URL = "avi/"
+        AVI_URL = "/"#"/avis/deavi_0_0_1/"
+        AVI_URL_NAME = "deavi_0_0_1"
         PORTAL_URL = ""
 
         log = None
@@ -87,9 +88,11 @@ class wh_global_config:
                 self.INPUT_PATH = settings.INPUT_PATH
                 
                 if settings.AVI_URL_NAME:
-                    self.AVI_URL = settings.AVI_URL_NAME
+                    self.AVI_URL_NAME = settings.AVI_URL_NAME
                 if settings.PORTAL_URL:
                     self.PORTAL_URL = settings.PORTAL_URL
+                if settings.AVI_ROOT_URL:
+                    self.AVI_URL = settings.AVI_ROOT_URL
             #except ImportError:
             except Exception:
                 pass

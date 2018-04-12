@@ -55,6 +55,7 @@ def algorithm(request,alg_id):
     data['name'] = alg_id
     res = risea().get().start_job(wh_names().get().JOB_GET_ALGORITHM, data)
     res.data['id'] = alg_id
+    res.data['avi_url'] = wh_global_config().get().AVI_URL
     return render(request, 'avi/algorithm.html', res.data)
     template = loader.get_template('avi/algorithm.html')
     context = {} #RequestContext(request)
@@ -73,11 +74,12 @@ def pipeline_v2(request):
         risea().get().start_job(wh_names().get().JOB_ALGORITHM,
                                 data)
         
-        return HttpResponseRedirect('/avi/status')
+        return HttpResponseRedirect(wh_global_config().get().AVI_URL+'avi/status')
     
     template = loader.get_template('avi/pipeline_v2.html')
     res = risea().get().start_job(wh_names().get().JOB_GET_ALGORITHMS, None)
     context = res.data
+    context['avi_url'] = wh_global_config().get().AVI_URL
     log.info(str(context))
     return HttpResponse(template.render(context,request))
 
@@ -107,13 +109,14 @@ def pipeline(request):
         risea().get().start_job(wh_names().get().JOB_ALGORITHM,
                                 data)
         
-        return HttpResponseRedirect('/avi/status')
+        return HttpResponseRedirect(wh_global_config().get().AVI_URL+'avi/status')
         
     template = loader.get_template('avi/pipeline.html')
     context = risea().get().get_algorithm_list()
     resources = risea().get().start_job(wh_names().get().JOB_GET_RESOURCES,
                                         None)
     context['resources'] = resources.data
+    context['avi_url'] = wh_global_config().get().AVI_URL
     log.info(str(context))
     return HttpResponse(template.render(context,request))
 
@@ -151,9 +154,10 @@ def status(request):
     if jobs.ok:
         context = { 'jobs': jobs.data, 
                     'cpage': jobs.ok[1], 'pages': jobs.ok[0],
-                    'npage': jobs.ok[2], 'ppage': jobs.ok[3] }
+                    'npage': jobs.ok[2], 'ppage': jobs.ok[3],
+                    'avi_url':wh_global_config().get().AVI_URL}
     else:
-        context = {} #RequestContext(request)
+        context = {'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
     return HttpResponse(template.render(context,request))
 
 def get_results(request):
@@ -206,7 +210,7 @@ def query_gaia(request):
             log.debug("cleaned data \n%s",str(form.cleaned_data))
             risea().get().start_job(wh_names().get().JOB_GAIA_QUERY,
                                     data)
-            return HttpResponseRedirect('/avi/queries/status')
+            return HttpResponseRedirect(wh_global_config().get().AVI_URL+'avi/queries/status')
         else:
             log.error("Invalid form")
 
@@ -220,7 +224,8 @@ def query_gaia(request):
                                                 'dec':'9.895',
                                                 'radius':'0.5',
                                                 'shape':'cone',
-                                                'name_coord':'equatorial'})}
+                                                'name_coord':'equatorial'}),
+               'avi_url':wh_global_config().get().AVI_URL}
     return HttpResponse(template.render(context,request))
 
 def query_herschel(request):
@@ -243,7 +248,7 @@ def query_herschel(request):
             risea().get().start_job(wh_names().get().JOB_HSA_QUERY,
                                     data)
             
-            return HttpResponseRedirect('/avi/queries/status')
+            return HttpResponseRedirect(wh_global_config().get().AVI_URL+'avi/queries/status')
         else:
             log.error("Invalid form")
         
@@ -254,7 +259,8 @@ def query_herschel(request):
                                                     'shape':'cone',
                                                     'positional_images':'images',
                                                     'instrument':'PACS',
-                                                    'name_coord':'equatorial'})}
+                                                    'name_coord':'equatorial'}),
+               'avi_url':wh_global_config().get().AVI_URL}
     return HttpResponse(template.render(context,request))
 
 def query_status(request):
@@ -309,10 +315,11 @@ def query_status(request):
         #    return HttpResponseRedirect('avi/query_status.html')
         context = {'queries': queries.data[1], 'update': queries.data[0], 
                    'cpage': queries.ok[1], 'pages': queries.ok[0],
-                   'npage': queries.ok[2], 'ppage': queries.ok[3] }
+                   'npage': queries.ok[2], 'ppage': queries.ok[3],
+                   'avi_url':wh_global_config().get().AVI_URL}
         #log.debug("get_queries_status context: %s", str(context))
     else:
-        context = {} #RequestContext(request)
+        context = {'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
     return HttpResponse(template.render(context,request))
 
 def query_saved(request):
@@ -342,7 +349,7 @@ def resources_filemanager(request):
         if request.POST.get('go_home') == "home":
             log.debug("There is a go_home POST")
             home_site = risea().get().move_default_directory()
-            return HttpResponseRedirect("/avi/resources/filemanager")
+            return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
         else:
             log.debug("There is nothing")
 
@@ -353,7 +360,7 @@ def resources_filemanager(request):
             value_new_directory = request.POST['directory_name']
             log.debug(request.POST)
             risea().get().create_directory(value_new_directory)
-            return HttpResponseRedirect("/avi/resources/filemanager")
+            return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
         else:
             log.debug("There is nothing")
 
@@ -364,7 +371,7 @@ def resources_filemanager(request):
             log.debug(request.POST)
             risea().get().delete_directory(request.POST['delete_folder'])
             log.debug("The directory has been deleted")
-            return HttpResponseRedirect("/avi/resources/filemanager")
+            return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
         else:
             log.debug("There is nothing")
 
@@ -376,7 +383,7 @@ def resources_filemanager(request):
             risea().get().rename_directory(request.POST['rename_folder'],\
                                             request.POST['directory_new_name'])
             log.debug("The directory has been renamed")
-            return HttpResponseRedirect("/avi/resources/filemanager")
+            return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
         else:
             log.debug("There is nothing")
        
@@ -384,7 +391,7 @@ def resources_filemanager(request):
         if request.POST.get('up_directory') == "up_directory":
             log.debug("There is a up_directory POST")
             directory_up = risea().get().directory_up()
-            return HttpResponseRedirect("/avi/resources/filemanager")
+            return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
         else:
             log.debug("There is nothing")
             
@@ -393,7 +400,7 @@ def resources_filemanager(request):
         for key, value in directories_list.items():
             if request.POST.get(key) == key:
                 new_folder_risea = risea().get().directory_down(key)
-                return HttpResponseRedirect("/avi/resources/filemanager")
+                return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
             else:
                 log.debug("There is nothing")
 
@@ -403,7 +410,7 @@ def resources_filemanager(request):
             log.debug(request.POST)
             risea().get().delete_file(request.POST['delete_file'])
             log.debug("The file has been deleted")
-            return HttpResponseRedirect("/avi/resources/filemanager")
+            return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
         else:
             log.debug("There is nothing")
 
@@ -415,7 +422,7 @@ def resources_filemanager(request):
             risea().get().rename_file(request.POST['rename_file'],\
                                             request.POST['file_new_name'])
             log.debug("The file has been renamed")
-            return HttpResponseRedirect("/avi/resources/filemanager")
+            return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
         else:
             log.debug("There is nothing")
 
@@ -425,14 +432,14 @@ def resources_filemanager(request):
             data['page'] = 'resources'
             data['number'] = request.POST['page']
             risea().get().start_job(wh_names().get().JOB_CHANGE_PAGE, data)
-            return HttpResponseRedirect("/avi/resources/filemanager")
+            return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
         if request.POST.get('sort_by'):
             log.info("Sort by %s",str(request.POST['sort_by']))
             data = {}
             data['page'] = 'resources'
             data['sort_by'] = request.POST['sort_by']
             risea().get().start_job(wh_names().get().JOB_SORT_BY, data)
-            return HttpResponseRedirect("/avi/resources/filemanager")
+            return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
     
     else:
         log.debug("There is not POST method!")
@@ -441,13 +448,14 @@ def resources_filemanager(request):
     template = loader.get_template('avi/resources_filemanager.html')
     context = {'directories_list': directories_list, 'files_list': files_list,
                'cpage': job.ok[1], 'pages': job.ok[0],
-               'npage': job.ok[2], 'ppage': job.ok[3]}
+               'npage': job.ok[2], 'ppage': job.ok[3],
+               'avi_url':wh_global_config().get().AVI_URL}
 
     return HttpResponse(template.render(context,request))
 
 def help_about(request):
     template = loader.get_template('avi/help_about.html')
-    context = {} #RequestContext(request)
+    context = {'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
     return HttpResponse(template.render(context,request))
 
 def vr(request):
@@ -479,7 +487,7 @@ def debug(request):
             f = request.FILES['myfile']
             full_name = "/data/output/" + f.name
             filename = fs.save(full_name, f)
-    context = {}
+    context = {'avi_url':wh_global_config().get().AVI_URL}
     template = loader.get_template('avi/debug.html')
     return HttpResponse(template.render(context, request))
     
