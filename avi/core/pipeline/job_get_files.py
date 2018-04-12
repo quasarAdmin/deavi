@@ -38,6 +38,6 @@ class get_files(parent):
         log.info(f)
         
         self.job_data.data = [f, d]
-        self.job_data.ok = (pg.num_pages, wh.CURRENT_EXEC_PAGE, \
-                            wh.CURRENT_EXEC_PAGE + 1, wh.CURRENT_EXEC_PAGE - 1)
+        self.job_data.ok = (pg.num_pages, wh.CURRENT_RESOURCES_PAGE, \
+                            wh.CURRENT_RESOURCES_PAGE + 1, wh.CURRENT_RESOURCES_PAGE - 1)
         return self.job_data

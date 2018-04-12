@@ -38,7 +38,8 @@ class algorithm_task(parent):
 
         log.info("from %s import %s",package_str,module_str)
 
-        mod = __import__(package_str, fromlist=[module_str])
+        # FIXME: 
+        mod = __import__(package_str, fromlist=[module_str]) 
 
         log.info("Getting algorithm obj")
         

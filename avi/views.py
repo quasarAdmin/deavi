@@ -332,6 +332,9 @@ def resources_filemanager(request):
     from avi.warehouse import wh_frontend_config
 
     log = logger().get_log("resources_manager")
+    #log = logger().get_log("views")
+
+    log.info("resourcesssss")
 
     #directories_list, files_list = risea().get().get_file_list()
 
