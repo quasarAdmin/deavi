@@ -1,5 +1,6 @@
 {"algorithm":{
     "name": "example",
+    "view_name": "Test Example",
     "input":{
         "input_1":{
             "name": "gaia_table",
@@ -10,11 +11,6 @@
             "name": "hsa_table",
             "view_name": "hsa table",
             "type": "hsa_table"
-        },
-        "input_3":{
-            "name": "gaia_table2",
-            "view_name": "gaia table 2",
-            "type": "gaia_table"
         }
     }
 }}
