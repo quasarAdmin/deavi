@@ -17,11 +17,15 @@ You should have received a copy of the GNU General Public License
 along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+import mimetypes
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import viewsets
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, StreamingHttpResponse
+from wsgiref.util import FileWrapper
 
+
+from avi.warehouse import wh_global_config as wh
 from avi.models import (resource_model, algorithm_model, gaia_query_model,
                         herschel_query_model, plot_model, results_model,
                         algorithm_info_model)
@@ -85,7 +89,28 @@ class resource(APIView):
         name, ext = os.path.splitext(res[0].name) 
         if ext == ".fits" or ext == ".tar":
             file_type ='application/x-tar'
-        response = HttpResponse(file_data, content_type=file_type)
+        elif ext != ".xml" or ext != ".vot":
+            file_type = mimetypes.guess_type(full_name)[0]
+
+        size = os.path.getsize(full_name)
+
+        if wh.production:
+            response = HttpResponse()
+            response['Content-Disposition'] = 'attachment; filename="%s"'%res[0].name
+            reponse['X-Sendfile'] = full_name
+            return response
+
+        if size <= 20:
+            response = HttpResponse(file_data, content_type=file_type)
+            response['Content-Disposition'] = 'attachment; filename="%s"'%res[0].name
+            response['Content-Length'] = os.path.getsize(full_name)
+            return response
+
+        chunk_size = 8192
+        response = StreamingHttpResponse(FileWrapper(open(full_name, 'rb'), 
+                                                     chunk_size),
+                                         content_type=file_type)
+        response['Content-Length'] = size
         response['Content-Disposition'] = 'attachment; filename="%s"'%res[0].name
         return response
 

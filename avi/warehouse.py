@@ -27,6 +27,8 @@ class wh_global_config:
         CONTAINER_NAME = 'deavi'
         #CONTAINER_NAME = 'gavip'
         VERSION = '0.0.1'
+        
+        production = False
 
         RESOURCES_PATH = "/data/output/"
         OUTPUT_PATH = "/data/output/"
