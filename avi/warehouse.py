@@ -28,7 +28,7 @@ class wh_global_config:
         #CONTAINER_NAME = 'gavip'
         VERSION = '0.0.1'
         
-        production = False
+        production = True
 
         RESOURCES_PATH = "/data/output/"
         OUTPUT_PATH = "/data/output/"
