@@ -24,8 +24,20 @@ from django.core.paginator import Paginator
 
 from avi.warehouse import wh_frontend_config
 from avi.utils.resources_manager import resources_manager
+from avi.models import resource_model
 
 class get_files(parent):
+    
+    valid_directories = {'results', 'sources', 'hsa', 'gaia'}
+
+    def discard_files(self, files):
+        res = []
+        db_resources = resource_model.objects.all()
+        for f in files:
+            if f in self.valid_directories or resource_model.objects.filter(name=f):
+                res.append(f)
+        return res
+
     def start(self, data):
         log = logger().get_log("views")
         
@@ -36,9 +48,9 @@ class get_files(parent):
 
         sorting_wh = wh.SORTING_RESOURCES_BY
         order_by = ''
-
-        all_files = resources_manager().get_list(wh.CURRENT_PATH)
         
+        all_files = self.discard_files(resources_manager().get_list(wh.CURRENT_PATH))
+
         all_files.sort()
 
         pg = Paginator(all_files, wh.MAX_RESOURCES_PER_PAGE)

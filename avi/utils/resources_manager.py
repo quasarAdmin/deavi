@@ -28,7 +28,7 @@ from avi.utils.data.file_manager import file_manager
 # Methods related to general file management
 
 class resources_manager(object):
-    
+
     log = None
     def __init__(self):
         self.log = logger().get_log('resources_manager')
