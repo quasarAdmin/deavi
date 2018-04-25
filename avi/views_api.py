@@ -94,7 +94,7 @@ class resource(APIView):
 
         size = os.path.getsize(full_name)
 
-        if wh.production:
+        if wh().get().production:
             response = HttpResponse()
             response['Content-Disposition'] = 'attachment; filename="%s"'%res[0].name
             reponse['X-Sendfile'] = full_name
