@@ -14,7 +14,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 */
 var text_array = ["hola", "Hola 2", "asdf", "qwerty"];
 var gaia_array = [];

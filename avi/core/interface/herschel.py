@@ -14,7 +14,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 """
 #from .connection.connection import connection
 ################################################################################
@@ -90,9 +90,10 @@ class herschel(archive_interface):
     def get_images(self, ra, dec, radius, level = "All",
                    instrument = 'PACS',
                    tap_server = False, table = None):
-        self.log.info("Getting Herschel images...")
+        self.log.info("Getting Herschel images ...")
         if not table:
-            table = "hsa.cat_hppsc_070"
+            #table = "hsa.cat_hppsc_070"
+            table = "hsa.v_active_observation"
 
         vot_data = self.get_circle(ra, dec, radius,  table = table, \
                                    params = {"observation_id" : "observation_id"})
@@ -120,7 +121,7 @@ class herschel(archive_interface):
         self.log.info("Removing temporary file...")
         os.path.exists(path) and os.remove(path)
 
-        if ids == None:
+        if ids == None or ids == []:
             self.log.error("The table has no observation_id key, " \
                            + "no obsids retrieved")
             return

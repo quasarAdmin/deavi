@@ -14,7 +14,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 """
 import xml.etree.ElementTree
 import os.path
@@ -39,6 +39,7 @@ class configuration_manager:
     file_manager_config = None
     hsa_tables = None
     gaiadr1_tables = None
+    gaiadr2_tables = None
 
     xml_root = None
     
@@ -92,6 +93,9 @@ class configuration_manager:
             elif child.tag == 'gaiadr1_tables':
                 self.gaiadr1_tables = {}
                 current_config = self.gaiadr1_tables
+            elif child.tag == 'gaiadr2_tables':
+                self.gaiadr2_tables = {}
+                current_config = self.gaiadr2_tables
             
             if current_config != None:    
                 for att in child:

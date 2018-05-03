@@ -11,7 +11,7 @@
     <results-pathinfo>/results/result</results-pathinfo>
     <jobid-tag>uws:jobId</jobid-tag>
     <phase-tag>uws:phase</phase-tag>
-    <cookie>cookies.txt</cookie>		
+    <cookie>cookies.txt</cookie>
   </gaia>
   <samp>
     <ip>0.0.0.0</ip>
@@ -68,7 +68,7 @@
   </hsa_hpdp_tables>
   <hsa_updp2_tables header="updp2.">
   </hsa_updp2_tables>
-  <gaiadr1_tables>
+  <gaiadr1_tables header="">
     <allwise_best_neighbour>allwise_best_neighbour</allwise_best_neighbour>
     <allwise_neighbourhood>allwise_neighbourhood</allwise_neighbourhood>
     <allwise_original_valid>allwise_original_valid</allwise_original_valid>
@@ -100,6 +100,9 @@
     <urat1_original_valid>urat1_original_valid</urat1_original_valid>
     <variable_summary>variable_summary</variable_summary>
   </gaiadr1_tables>
+  <gaiadr2_tables header="">
+    <gaia_source>gaia_source</gaia_source>
+  </gaiadr2_tables>
   <file_manager>
     <resources_path>/data/resources/</resources_path>
   </file_manager>
