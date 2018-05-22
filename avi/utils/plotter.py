@@ -15,6 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.utils.plotter
+
+--------------------------------------------------------------------------------
+
+This module provides an interface to save plots
 """
 import traceback
 import os
@@ -28,6 +34,15 @@ from avi.models import plot_model
 from avi.utils.data.data_file import data_file
 
 def save_plot(job_id, alg_name, plot):
+    """saves the given plot
+
+    This function saves the given plot an associates it with the given job id
+
+    Args:
+    job_id: The job id to be associated with
+    alg_name: The name of the algorithm
+    plot: A bokeh plot object
+    """
     log = logger().get_log('plotter')
     try:
         sc_path = '/data/output/sc'
@@ -49,6 +64,17 @@ def save_plot(job_id, alg_name, plot):
         pass
 
 def load_plot(job_id, alg_name, name):
+    """Deprecated, Loads a plot
+    This function loads a plot with associated with the given name and job_id
+
+    Args:
+    job_id: The job id which the plot is associated with
+    alg_name: The name of the algorithm
+    name: The name of the plot
+
+    Returns:
+    A tuple with the plot script and the plot html
+    """
     log = logger().get_log('plotter')
     try:
         query = \
@@ -68,4 +94,5 @@ def load_plot(job_id, alg_name, name):
         pass
 
 def remove_plot(job_id, alg_name, name):
+    """Not implemented"""
     pass

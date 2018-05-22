@@ -15,6 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.core.interface.herschel
+
+--------------------------------------------------------------------------------
+
+This module provides the interface to the herschel archive 
 """
 #from .connection.connection import connection
 ################################################################################
@@ -44,20 +50,56 @@ from avi.utils.data.file_manager import file_manager
 from avi.warehouse import wh_global_config
 
 class herschel(archive_interface):
+    """@class herschel
+    The herschel class provides the interface to the herschel archive.
 
+    It inherits from the archive_interface, this it uses the connection 
+    object to access the archive.
+
+    @see avi.core.interface.archive_interface.archive_interface
+    @see avi.core.interface.connection.connection.connection
+    """
     _metadata_url = 'http://archives.esac.esa.int/hsa/aio/jsp/metadata.jsp'
     _product_url = 'http://archives.esac.esa.int/hsa/aio/jsp/product.jsp'
     _data_url = "/data"
     _download_path = "/data/output/"
     _tmp_path = "/data/output/"
 
+    ## The id of the job that started the query
     job_id = ""
     
     def __init__(self):
+        """The herschel constructor
+
+        The constructor initializes the log and calls the parent class 
+        constructor to create the conneciton object.
+
+        Args:
+        self: The object pointer
+
+        See:
+        connection: avi.core.interface.connection.connection.connection
+        """
         super(herschel, self).__init__()
         self.log = logger().get_log('herschel')
 
     def init(self, cfg):
+        """Initializes the herschel interface
+        
+        This method initializes the herschel archive attributes using the 
+        given configuration. Then calls the parent method init to finish the 
+        initialization.
+
+        Args:
+        self: The object pointer
+        cfg: The configuration to be loaded.
+
+        Returns:
+        True if the configuration is loaded correctly, False otherwise
+
+        See:
+        archive_interface: avi.core.interface.archive_interface.archive_interface
+        """
         self._metadata_url = cfg['metadata_url']
         self._product_url = cfg['product_url']
         self._data_url = cfg['data']
@@ -77,19 +119,101 @@ class herschel(archive_interface):
     
     def get_circle(self, ra, dec, radius, table = "hsa.v_active_observation",
                    params = None):
+        """Does a conical query to the archive.
+        
+        This method calls the parent method get_circle to do the query
+                
+        Args:
+        self: The object pointer
+        ra: The ra coordinate
+        dec: The dec coordinate
+        radius: The radius of the query
+        table: The table to be queried
+        params: Special parameters to the query
+                
+        Returns:
+        The data retrieve from that query if everything was done 
+        correctly, None otherwise
+                
+        See:
+        archive_interface: avi.core.interface.archive_interface.archive_interface
+        """
         return super(herschel, self).get_circle(ra, dec, radius, table, params)
     
     def get_box(self, ra, dec, width, height, table = "hsa.v_active_observation",
                 params = None):
+        """Does a box-shaped query to the archive.
+        
+        This method calls the parent method get_box to do the query
+        
+        Args:
+        self: The object pointer
+        ra: The ra coordinate
+        dec: The dec coordinate
+        width: The width of the box
+        height: The height of the box
+        table: The table to be queried
+        params: Special parameters to the query
+        
+        Returns:
+        The data retrieve from that query if everything was done 
+        correctly, None otherwise
+                
+        See:
+        archive_interface: avi.core.interface.archive_interface.archive_interface
+        """
         return super(herschel, self).get_box(ra,dec,width,height,table,params)
 
     def get_polygon(self, ra, dec, vertexes, table = "hsa.v_active_observation",
                     params = None):
+        """Does a polygonal-shaped query to the archive.
+        
+        This method calls the parent method get_polygon to do the query
+                
+        Args:
+        self: The object pointer
+        ra: The ra coordinate
+        dec: The dec coordinate
+        vertexes: An array of vertex forming the polygon
+        table: The table to be queried
+        params: Special parameters to the query
+
+        Returns:
+        The data retrieve from that query if everything was done 
+        correctly, None otherwise
+                
+        See:
+        archive_interface: avi.core.interface.archive_interface.archive_interface
+        """
         return super(herschel, self).get_polygon(ra,dec,vertexes,table,params)
 
     def get_images(self, ra, dec, radius, level = "All",
                    instrument = 'PACS',
                    tap_server = False, table = None):
+        """Retrieves the herschel images.
+
+        This method retrieves the herschel images found in the area specified 
+        by the given coordinates and radius.
+
+        It also filters the retrieved images by the processing level specified 
+        and the instrument.
+
+        First it will query the positional sources archive to retrieve the 
+        observation ids using the get_circle() method.
+
+        Then with the observation ids retrieved it will call get_images_by_id() 
+        to download the images.
+
+        Args:
+        self: The object pointer
+        ra: The ra coordinate
+        dec: The dec coordinate
+        radius: The radius of the query
+        level: The processing level
+        intrument: The instrument
+        tap_server: If we are using the new tap server access or not
+        table: The table from which the method will extract the observarion ids.
+        """
         self.log.info("Getting Herschel images ...")
         if not table:
             #table = "hsa.cat_hppsc_070"
@@ -130,6 +254,18 @@ class herschel(archive_interface):
 
     def get_images_by_id(self, obids, level = "All", instrument = 'PACS',
                          tap_server = False):
+        """This method retrieves the images by id.
+
+        This method will retrieve each and everyone of the products with the 
+        given ids.
+
+        Args:
+        self: The object pointer
+        obids: An array with the observation ids
+        level: The processing level
+        instrument: The instrument
+        tap_server: If we are using the new tap server access or not.
+        """
         self.log.info("Getting Herschel images from the observation ids array...")
         for obsid in obids:
             self.log.info("getting obsid: %s, level: %s, instr: %s",

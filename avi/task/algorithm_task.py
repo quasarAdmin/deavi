@@ -15,18 +15,51 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.task.algorithm_task
+
+--------------------------------------------------------------------------------
+
+This module manages the execution of scientific algorithms.
+
+The module manages the execution of python scripts containing the scientific 
+algorithms.
 """
 import ast
+
+import os
+from avi.models import algorithm_info_model
 
 from .task import task as parent
 from .task import task_exception as err
 from avi.log import logger
 
 class algorithm_task(parent):
+    """@class algorithm_task
+    The algorithm_task class manages the execution of algorithms.
+
+    It implementes the task interface and inherits the task_data attribute.
+
+    @see task @link avi.task.task.task
+    @see task_data @link avi.task.task.task_data
+    """
     def output(self):
+        """Deprecated"""
         pass
 
     def __get_data(self, raw):
+        """Evalues a raw data structure.
+        
+        This method is used to evaluate the task_data.data dictionary 
+        containing all the input parameters for the algorithm.
+
+        Args:
+        self: The object pointer.
+        raw: The raw data structure.
+
+        Returns:
+        The evaluated structure or None if the raw input is not valid.
+        """
         if not raw or raw == "":
             return None
         ret = None
@@ -38,7 +71,23 @@ class algorithm_task(parent):
             return None
         return ret
     
+    def _get_package_str(self, path):
+        head, tail = os.path.split(os.path.normpath(path))
+        
+        if tail == 'avi':
+            return 'avi.'
+        else:
+            return self._get_package_str(head) + tail + "." 
+
     def run(self):
+        """Runs the scientific algorithm.
+        
+        Loads the scientific algorithm and sets its input parameters contained 
+        in the task_data
+        
+        Args:
+        self: The object pointer.
+        """
         log = logger().get_log("algorithm_task")
         log.info("running algorithm")
 
@@ -46,14 +95,36 @@ class algorithm_task(parent):
 
         if not data:
             log.error("Invalid data provided")
+            raise err("Invalid data provided")
             return
         
-        alg_name = data['algorithm']['name']
+        try:
+            alg_name = data['algorithm']['name']
+        except Exception:
+            raise err("No algorithm name provided")
 
-        package_str = "avi.algorithms." + alg_name
+        try:
+            alg_info = algorithm_info_model.objects.get(name=alg_name)
+        except Exception:
+            raise err("Inconsistent database")
+
+        try:
+            sc_path = alg_info.source_file
+        except Exception:
+            raise err("No algorithm_info could have been retrieved")
+
+        log.info(sc_path)
+
+        #log.info(os.path.basename(os.path.normpath(sc_path)))
+        head, tail = os.path.split(os.path.normpath(sc_path)) 
+        #log.info(head)
+        #log.info(self._get_package_str(head))
+
+        #package_str = "avi.algorithms." + alg_name
+        package_str = self._get_package_str(head) + alg_name
         module_str = alg_name
 
-        log.info("from %s import %s",package_str,module_str)
+        log.info("from %s import %s", package_str,module_str)
 
         # FIXME: 
         mod = __import__(package_str, fromlist=[module_str]) 
@@ -69,13 +140,7 @@ class algorithm_task(parent):
 
         log.info("Running algorithm %i", self.task_id)
             
-        alg.run(self.task_id)
-
-        log.info("Saving results")
-
-        res = {'results':{'result': 10}}
-        
-        #for k, v in data['algorithm']['results'].items():
-        #    res['results'][k] = getattr(alg,k)
-
-        self.results = res
+        try:
+            alg.run(self.task_id)
+        except Exception:
+            raise err("Script has issues")

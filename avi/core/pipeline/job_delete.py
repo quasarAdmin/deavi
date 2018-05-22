@@ -15,6 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.core.pipeline.job_delete
+
+--------------------------------------------------------------------------------
+
+This module provides the delete job.
 """
 from .job import job as parent
 
@@ -27,7 +33,39 @@ from avi.models import results_model
 from avi.log import logger
 
 class delete(parent):
+    """@class delete
+    The delete class provides the delete asynchronous job feature.
+    
+    It implementes the job interface and inherits the job_data attribute.
+
+    @see job @link avi.core.pipeline.job
+    @see job_data @link avi.core.pipeline.job_data
+    """
     def start(self, data):
+        """This method runs the delete job.
+
+        This method will delete the asynchronous job provided in the data 
+        parameter.
+
+        The data parameter must have the key 'pk' containing the primary key of 
+        the job to be aborted and the key 'type' containing the type of 
+        asynchronous job to be aborted.
+
+        It will first check if the job of the given type and with the given pk 
+        exists and if so, it will delete it if the job is aborted or its state 
+        is 'SUCCESS' or 'FAILURE'.
+
+        If the type is 'algorithm' it will also delete all the results and 
+        plots associated with it.
+
+        Args:
+        self: The object pointer.
+        data: A dictorianry containing the input data for the job.
+
+        Returns:
+        The job_data attribute. The ok attribute will be True if the job has 
+        been deleted, False otherwise.
+        """
         log = logger().get_log("views")
         log.info("inside delete job")
         dtype = data['type']

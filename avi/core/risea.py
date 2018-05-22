@@ -15,6 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.core.risea
+
+--------------------------------------------------------------------------------
+
+This module provides the RISEA interface
 """
 # RISEA's API
 # Here goes the API of the star form mapper project
@@ -33,34 +39,58 @@ from avi.warehouse import wh_frontend_config
 from avi.warehouse import wh_global_config
 
 class risea:
+    """@class risea
+    This class provides the RISEA interface
 
+    It uses the singleton pattern to ensure there is only one instance of RISEA 
+    and also to provide accessibility in any secion of the code
+    """
     instance = None
 
     class __risea:
+        """Private class to feature the singleton pattern"""
         # TODO move this constant to common file
         # FIXME: ? should we be using input dir for this?
+        ## Deprecated
         str_log_config_file = 'avi/config/log_config.xml'
+        ## Deprecated
         str_config_file = 'avi/config/config.xml'
+        ## Deprecated
         str_global_config_file = 'avi/config/global_config.xml'
         #str_log_config_file = '/opt/gavip_avi/avi/config/log_config.xml'
         #str_config_file = '/opt/gavip_avi/avi/config/config.xml'
         
+        ## The log header
         str_log_header = 'risea'
+        ## The log
         log = None
-        
+        ## The application configuration
         cfg = None
+        ## The interface manager
         interface_manager = None
         
         #FIXME: deprecated, remove at some point
+        ## Deprecated
         gaia = None
+        ## Deprecated
         herschel = None
+        ## Deprecated
         file_manager = None
+        ## Deprecated
         resources_manager = None
         # warehouse
+        ## Deprecated
         current_frontend_resources_path = None
         
         def __init__(self):
+            """Constructor
             
+            Initializes the log, the warehouses, the configuration and the 
+            interface_manager
+            
+            Args:
+            self: The object pointer
+            """
             ipath = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'config')
             #wh_global_config().get().INPUT_PATH
             self.str_log_config_file = os.path.join(ipath, 'log_config.xml')
@@ -119,6 +149,18 @@ class risea:
         # Asynchronous tasks and pipeline methods
         #
         def start_job(self, name,  data):
+            """Starts a new job
+
+            This method starts a new job with the given name and the given data
+
+            Args:
+            self: The object pointer
+            name: The name of the job
+            data: The input data
+
+            Returns:
+            The result of the job initialization
+            """
             from .pipeline.pipeline_manager import pipeline_manager
             pm = pipeline_manager()
             res = pm.start_job(name, data)
@@ -129,6 +171,7 @@ class risea:
             return res
         
         def _start_gaia_query(self, data):
+            """Deprecated"""
             from .pipeline.pipeline_manager import pipeline_manager
             pm = pipeline_manager()
 
@@ -144,6 +187,7 @@ class risea:
         # File management methods
         #
         def save_plain_votable(self, data, name):
+            """Deprecated"""
             if not self.file_manager:
                 self.log.error('There is no file manager initialized!')
                 return ""
@@ -154,6 +198,7 @@ class risea:
         # Frontend configutaion management methods
         #
         def get_gaia_tables(self):
+            """Deprecated"""
             if not self.cfg:
                 return []
             #if not self.cfg.gaiadr1_tables:
@@ -166,57 +211,113 @@ class risea:
             return ret
 
         def get_algorithm(self, data):
+            """Returns the algorithm information
+            Args:
+            self: The object pointer
+            data: A JSON file with the information
+
+            Returns:
+            A dictionary with the algorithm information
+            """
             from avi.core.algorithm.algorithm_manager import algorithm_manager
             return algorithm_manager().get_algorithm_info(data)
 
         def get_algorithm_list(self):
+            """Returns the list of algorithms
+            
+            Args:
+            self: The object pointer
+            
+            Returns:
+            A dictionary with the information of all algorithms
+            """
             from avi.core.algorithm.algorithm_manager import algorithm_manager
             return algorithm_manager().get_algorithm_list()
         
         def get_file_list(self):
+            """Deprecated"""
             from avi.utils.resources_manager import resources_manager
             return resources_manager() \
                 .get_file_list(wh_frontend_config().get().CURRENT_PATH)
 
         def  move_default_directory(self):
+            """Moves the warehouse current path to the home directory
+            
+            Args:
+            self: The object pointer
+            
+            Returns:
+            The warehouse current path
+            """
             from avi.utils.resources_manager import resources_manager
             return resources_manager() \
                 .move_absolute_directory("".join(wh_frontend_config().\
                                                  get().HOME_PATH))
 
         def  directory_down(self, folder_local):
+            """Moves the warehouse current path to the given new location
+            
+            Args:
+            self: The object pointer
+            folder_local: The directory to enter
+
+            Returns:
+            The warehouse current path
+            """
             from avi.utils.resources_manager import resources_manager
             return resources_manager() \
                 .directory_down(wh_frontend_config().get().\
                                 CURRENT_PATH, folder_local)
 
         def  directory_up(self):
+            """Moves the warehouse current path to the parent directory
+            
+            Args:
+            self: The object pointer
+            
+            Returns:
+            The warehouse current path
+            """
             from avi.utils.resources_manager import resources_manager
             return resources_manager() \
                 .directory_up(wh_frontend_config().get().CURRENT_PATH)
 
         def  create_directory(self, directory):
+            """Deprecated"""
             from avi.utils.resources_manager import resources_manager
             return resources_manager() \
                 .create_directory(directory)
 
         def  get_folder_size(self, directory):
+            """Deprecated"""
             from avi.utils.resources_manager import resources_manager
             return resources_manager().get_folder_size(directory)
 
         def  delete_directory(self, directory):
+            """Deprecated"""
             from avi.utils.resources_manager import resources_manager
             return resources_manager().delete_directory(directory)
 
         def  rename_directory(self, name, new_name):
+            """Deprecated"""
             from avi.utils.resources_manager import resources_manager
             return resources_manager().rename_directory(name, new_name)
 
         def  delete_file(self, file_name):
+            """Deletes the given file
+            
+            Args:
+            self: The object pointer
+            file_name: The file to be deleted
+            
+            Raises:
+            Exception: if something went wrong with the deletion
+            """
             from avi.utils.resources_manager import resources_manager
             return resources_manager().delete_file(file_name)
 
         def  rename_file(self, name, new_name):
+            """Deprecated"""
             from avi.utils.resources_manager import resources_manager
             return resources_manager().rename_file(name, new_name)
 
@@ -231,6 +332,7 @@ class risea:
         #
         #
         def get_ptr(self):
+            """For debuggin purposes only"""
             return repr(self)
         #
         # end of the private class
@@ -239,9 +341,25 @@ class risea:
     # Public interface
         
     def __init__(self):
+        """Constructor
+        
+        The constructor will create a new __risea object in case 
+        there is none initialized, otherwise it will not do anything
+        
+        Args:
+        self: The object pointer
+        """
         if not risea.instance:
             risea.instance = risea.__risea()
 
     def get(self):
+        """Returns the risea intance
+        
+        Args:
+        self: The object pointer
+        
+        Returns:
+        The instance of the warehouse
+        """
         return risea.instance
 

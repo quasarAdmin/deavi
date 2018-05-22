@@ -15,6 +15,16 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.views
+
+--------------------------------------------------------------------------------
+
+This module provides the main views.
+
+This module provides the main django views for the user interface.
+
+@see https://docs.djangoproject.com/en/2.0/topics/http/views/
 """
 import json
 import random
@@ -44,12 +54,31 @@ def getkey(value, arg):
     return ""
 
 def index(request):
+    """View for the index page.
+
+    This function provides the view for the index page.
+
+    Args:
+    request: HttpRequest object.
+    
+    Returns:
+    A HttpResponse object of the index.html template.
+
+    See:
+    HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+    
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+    """
     template = loader.get_template('avi/index.html')
-    context = {'avi_url':wh_global_config().get().AVI_URL,
+    context = {'version':wh_global_config().get().VERSION,
+               'avi_url':wh_global_config().get().AVI_URL,
                'portal_url':wh_global_config().get().PORTAL_URL} #RequestContext(request)
     return HttpResponse(template.render(context,request))
 
 def create(request, fib):
+    """Deprecated function.
+    """
     #tutmod, created = TutorialModel.objects.get_or_create(fib_num = fib)
 
     res = risea().get().start_gaia_query(fib)
@@ -60,11 +89,15 @@ def create(request, fib):
     return render(request, 'avi/create.html', context)
 
 def queries(request):
+    """Deprecated function.
+    """
     template = loader.get_template('avi/queries.html')
     context = {} #RequestContext(request)
     return HttpResponse(template.render(context,request))
 
 def algorithm(request,alg_id):
+    """Deprecated function.
+    """
     log = logger().get_log("views")
     log.info('algorithm %s', str(alg_id))
     data = {}
@@ -73,12 +106,37 @@ def algorithm(request,alg_id):
     res = risea().get().start_job(wh_names().get().JOB_GET_ALGORITHM, data)
     res.data['id'] = alg_id
     res.data['avi_url'] = wh_global_config().get().AVI_URL
+    res.data['version'] = wh_global_config().get().VERSION
     return render(request, 'avi/algorithm.html', res.data)
     template = loader.get_template('avi/algorithm.html')
     context = {} #RequestContext(request)
     return HttpResponse(template.render(context,request))
 
 def pipeline_v2(request):
+    """View for the pipeline v2 page.
+
+    This function provides the view for the version 2 pipeline page.
+    If recieves a POST request it will start an algorithm job with the given 
+    parameters from the POST.
+
+    Args:
+    request: HttpRequest object.
+
+    Returns:
+    A HttpResponse object of the pipeline_v2.html template. If recieves a POST 
+    request it will return a HttpResponseRedirect object to the avi/status url.
+    
+    See:
+    HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+
+    See also:
+    HttpResponseRedirect: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+    
+    @see job_algorithm @link avi.core.pipeline.job_algorithm
+    """
     log = logger().get_log("views")
     log.info('url %s', request.get_full_path())
     log.info('host %s', request.build_absolute_uri())
@@ -97,10 +155,31 @@ def pipeline_v2(request):
     res = risea().get().start_job(wh_names().get().JOB_GET_ALGORITHMS, None)
     context = res.data
     context['avi_url'] = wh_global_config().get().AVI_URL
+    context['version'] = wh_global_config().get().VERSION
     log.info(str(context))
     return HttpResponse(template.render(context,request))
 
 def get_alg_info(request):
+    """View for the retrieving of the algorithm information.
+
+    This function is used by an ajax script to retrieve 
+    the algorithm information. If the request is an ajax request,
+    it will start a get_algorithm_info job.
+
+    Args:
+    request: HttpRequest object.
+    
+    Returns:
+    A HttpResponse object with a json containing all the algorithm information.
+
+    See:
+    django http HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+
+    @see job_get_algorithm_info @link avi.core.pipeline.job_get_algorithm_info
+    """
     log = logger().get_log("views")
     log.info(request.POST)
     if request.is_ajax():
@@ -115,6 +194,8 @@ def get_alg_info(request):
     return HttpResponse(json.dumps({"error":"error"}))
 
 def pipeline(request):
+    """Deprecated function.
+    """
     log = logger().get_log("views")
     if request.method == 'POST':
         log.info("Post %s",str(request.POST))
@@ -134,10 +215,51 @@ def pipeline(request):
                                         None)
     context['resources'] = resources.data
     context['avi_url'] = wh_global_config().get().AVI_URL
+    context['version'] = wh_global_config().get().VERSION
     log.info(str(context))
     return HttpResponse(template.render(context,request))
 
 def status(request):
+    """View for the pipeline status page.
+
+    This function returns the pipeline status page.
+
+    If it recieves a POST request containing the 'abort' message, it will start 
+    the abort job.
+    
+    If it recieves a POST request containing the 'delete' message, it will 
+    start the delete job.
+
+    If it recieves a POST request containing the 'page' message, it will start 
+    the change_page job with the given page provided by the POST.
+
+    If it recieves a POST request containing the 'sort_by' message, it will 
+    start the sort_by job with the given page provided by the POST.
+
+    Then it will start a get_pipeline_status job.
+
+    Args:
+    request: HttpRequest object.
+    
+    Returns:
+    A HttpResponse object of the status.html template.
+
+    See:
+    django http HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+
+    @see job_get_pipeline_status @link avi.core.pipeline.job_get_pipeline_status
+
+    @see job_abort @link avi.core.pipeline.job_abort
+
+    @see job_delete @link avi.core.pipeline.job_delete
+
+    @see job_change_page @link avi.core.pipeline.job_change_page
+    
+    @see job_sort_by @link avi.core.pipeline.job_sort_by
+    """
     log = logger().get_log("views")
     if request.method == 'POST':
         if request.POST.get('abort'):
@@ -172,12 +294,64 @@ def status(request):
         context = { 'jobs': jobs.data, 
                     'cpage': jobs.ok[1], 'pages': jobs.ok[0],
                     'npage': jobs.ok[2], 'ppage': jobs.ok[3],
+                    'version':wh_global_config().get().VERSION,
                     'avi_url':wh_global_config().get().AVI_URL}
     else:
-        context = {'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
+        context = {'version':wh_global_config().get().VERSION,
+                   'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
     return HttpResponse(template.render(context,request))
 
+def send_samp_data(request):
+    """View for the saving of samp data from the client.
+
+    This function is used by an ajax script to send data through samp from the 
+    client.
+
+    Args:
+    request: HttpRequest object.
+    
+    Returns:
+    A HttpResponse object with a json containing all the results information.
+
+    See:
+    django http HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+
+    @see job_get_results @link avi.core.pipeline.job_get_results
+    """
+    #log = logger().get_log("views")
+    #log.info("send_samp")
+    #log.info(request.POST['data'])
+    if request.is_ajax():
+        response = risea().get().start_job(wh_names().get().JOB_SAVE_SAMP_DATA,
+                                           {'name':request.POST['name'],
+                                            'data':request.POST['data']})
+        #log.info(request.POST['data'])
+    return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
+
 def get_results(request):
+    """View for the retrieving of the results of an execution.
+
+    This function is used by an ajax script to retrieve 
+    the results of an algorithm execution. If the request is an ajax request,
+    it will start a get_results job.
+
+    Args:
+    request: HttpRequest object.
+    
+    Returns:
+    A HttpResponse object with a json containing all the results information.
+
+    See:
+    django http HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+
+    @see job_get_results @link avi.core.pipeline.job_get_results
+    """
     log = logger().get_log("views")
     log.info(request.POST)
     if request.is_ajax():
@@ -187,6 +361,27 @@ def get_results(request):
         return HttpResponse(json.dumps(response.data))
 
 def get_plot(request):
+    """View for the retrieving of a plot.
+
+    This function is used by an ajax script to retrieve 
+    a plot created as a result of an algorithm execution. 
+    If the request is an ajax request,
+    it will start a get_plot job.
+
+    Args:
+    request: HttpRequest object.
+    
+    Returns:
+    A HttpResponse object with a json containing all the algorithm information.
+
+    See:
+    django http HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+
+    @see job_get_plot @link avi.core.pipeline.job_get_plot
+    """
     log = logger().get_log("views")
     log.info(request.POST)
     if request.is_ajax():
@@ -197,7 +392,31 @@ def get_plot(request):
         return HttpResponse(json.dumps(response.data))
 
 def query_gaia(request):
+    """View for the gaia query page.
 
+    This function provides the view for the gaia query page.
+    If it recieves a POST request it will start a gaia_query job with the given 
+    parameters from the POST after checking them.
+
+    Args:
+    request: HttpRequest object.
+
+    Returns:
+    A HttpResponse object of the query_gaia.html template. If recieves a POST 
+    request it will return a HttpResponseRedirect object to the 
+    avi/queries/status url.
+    
+    See:
+    HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+
+    See also:
+    HttpResponseRedirect: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+    
+    @see job_gaia_query @link avi.core.pipeline.job_gaia_query
+    """
     if request.method=='POST':
         form = query_gaia_form(request.POST)
         
@@ -241,11 +460,38 @@ def query_gaia(request):
                                                 'dec':'9.895',
                                                 'radius':'0.5',
                                                 'shape':'cone',
-                                                'name_coord':'equatorial'}),
+                                                'name_coord':'equatorial',
+                                                'data_release':'dr1'}),
+               'version':wh_global_config().get().VERSION,
                'avi_url':wh_global_config().get().AVI_URL}
     return HttpResponse(template.render(context,request))
 
 def query_herschel(request):
+    """View for the herschel query page.
+
+    This function provides the view for the herschel query page.
+    If it recieves a POST request it will start a hsa_query job with the given 
+    parameters from the POST after checking them.
+
+    Args:
+    request: HttpRequest object.
+
+    Returns:
+    A HttpResponse object of the query_herschel.html template. 
+    If recieves a POST request it will return a HttpResponseRedirect object to 
+    the avi/queries/status url.
+    
+    See:
+    HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+
+    See also:
+    HttpResponseRedirect: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+    
+    @see job_hsa_query @link avi.core.pipeline.job_hsa_query
+    """
     if request.method == 'POST':
         f = query_herschel_form(request.POST)
         log = logger().get_log("views")
@@ -254,13 +500,14 @@ def query_herschel(request):
             log.info("Valid form")
             data = f.cleaned_data
             if request.FILES.get('input_file'):
-                log.info("There is a file")
+                log.info("There is a file %s", request.FILES['input_file'].name)
                 from django.core.files.storage import FileSystemStorage
                 fs = FileSystemStorage()
                 f = request.FILES['input_file']
                 full_name = os.path.join(wh_global_config().get().TMP_PATH, f.name)
                 filename = fs.save(full_name, f)
                 data['input_file'] = full_name
+                log.info(full_name)
             log.debug("cleaned data \n%s", str(data))
             risea().get().start_job(wh_names().get().JOB_HSA_QUERY,
                                     data)
@@ -277,10 +524,51 @@ def query_herschel(request):
                                                     'positional_images':'images',
                                                     'instrument':'PACS',
                                                     'name_coord':'equatorial'}),
+               'version':wh_global_config().get().VERSION,
                'avi_url':wh_global_config().get().AVI_URL}
     return HttpResponse(template.render(context,request))
 
 def query_status(request):
+    """View for the query status page.
+
+    This function returns the query status page.
+
+    If it recieves a POST request containing the 'abort_gaia' or 'abort_hsa' 
+    message, it will start the abort job.
+    
+    If it recieves a POST request containing the 'delete_gaia' or 'delete_hsa' 
+    message, it will start the delete job.
+
+    If it recieves a POST request containing the 'page' message, it will start 
+    the change_page job with the given page provided by the POST.
+
+    If it recieves a POST request containing the 'sort_by' message, it will 
+    start the sort_by job with the given page provided by the POST.
+
+    Then it will start a get_queries_status job.
+
+    Args:
+    request: HttpRequest object.
+    
+    Returns:
+    A HttpResponse object of the query_status.html template.
+
+    See:
+    django http HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+
+    @see job_get_queries_status @link avi.core.pipeline.job_get_queries_status
+
+    @see job_abort @link avi.core.pipeline.job_abort
+
+    @see job_delete @link avi.core.pipeline.job_delete
+
+    @see job_change_page @link avi.core.pipeline.job_change_page
+    
+    @see job_sort_by @link avi.core.pipeline.job_sort_by
+    """
     log = logger().get_log("views")
     if request.method == 'POST':
         if request.POST.get('abort_gaia'):
@@ -333,19 +621,77 @@ def query_status(request):
         context = {'queries': queries.data[1], 'update': queries.data[0], 
                    'cpage': queries.ok[1], 'pages': queries.ok[0],
                    'npage': queries.ok[2], 'ppage': queries.ok[3],
+                   'version':wh_global_config().get().VERSION,
                    'avi_url':wh_global_config().get().AVI_URL}
         #log.debug("get_queries_status context: %s", str(context))
     else:
-        context = {'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
+        context = {'version':wh_global_config().get().VERSION,
+                   'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
     return HttpResponse(template.render(context,request))
 
 def query_saved(request):
+    """Deprecated function.
+    """
     template = loader.get_template('avi/query_saved.html')
     context = {} #RequestContext(request)
     request.session['menu_queries'] = " in"
     return HttpResponse(template.render(context,request))
 
 def resources_filemanager(request):
+    """View for the resources manager page.
+
+    This function returns the resources manager page.
+
+    First it will start the get_files job to retrieve the current path's 
+    files and directories.
+
+    If it recieves a POST request containing the 'go_home' message, it will 
+    move the current directory to the home path and it will redirect again 
+    to the avi/resources/filemanager url.
+
+    If it recieves a POST request containing the 'up_directory' message, 
+    it will move the current directory to the parent directory and it will 
+    redirect again to the avi/resources/filemanager url.
+
+    If it recieves a POST request containing the 'page' message, it will start 
+    the change_page job with the given page provided by the POST and it will 
+    redirect again to the avi/resources/filemanager url.
+
+    If it recieves a POST request containing the 'sort_by' message, it will 
+    start the sort_by job with the given page provided by the POST and it will 
+    redirect again to the avi/resources/filemanager url.
+
+    If it recieves a POST request containing a directory name, it will 
+    move the current directory to that directory after checking if it is a 
+    valid directory with directories retrieved by the get_files job and it will 
+    redirect again to the avi/resources/filemanager url.
+
+    If there is not POST then it will return a HttpResponse object of the 
+    resources_filemanager.html template.
+
+    Args:
+    request: HttpRequest object.
+
+    Returns:
+    A HttpResponse object of the resources_filemanager.html template.
+    If recieves a POST request it will return a HttpResponseRedirect object to 
+    the avi/resources/filemanager url.
+    
+    See:
+    django http HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+
+    See also:
+    HttpResponseRedirect: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+
+    @see job_get_files @link avi.core.pipeline.job_get_files
+
+    @see job_change_page @link avi.core.pipeline.job_change_page
+    
+    @see job_sort_by @link avi.core.pipeline.job_sort_by
+    """
     from avi.warehouse import wh_frontend_config
 
     log = logger().get_log("resources_manager")
@@ -469,16 +815,36 @@ def resources_filemanager(request):
     context = {'directories_list': directories_list, 'files_list': files_list,
                'cpage': job.ok[1], 'pages': job.ok[0],
                'npage': job.ok[2], 'ppage': job.ok[3],
+               'version':wh_global_config().get().VERSION,
                'avi_url':wh_global_config().get().AVI_URL}
 
     return HttpResponse(template.render(context,request))
 
 def help_about(request):
+    """View for the help/about page.
+
+    This function provides the view for the help/about page.
+
+    Args:
+    request: HttpRequest object.
+    
+    Returns:
+    A HttpResponse object of the help_about.html template.
+
+    See:
+    HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+    
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+    """
     template = loader.get_template('avi/help_about.html')
-    context = {'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
+    context = {'version':wh_global_config().get().VERSION,
+               'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
     return HttpResponse(template.render(context,request))
 
 def vr(request):
+    """Deprecated function.
+    """
     stars = {}
     log = logger().get_log("views")
     for i in range(0,10000):
@@ -495,7 +861,22 @@ def vr(request):
     return HttpResponse(template.render(context, request))
 
 def debug(request):  
+    """View for the debug page.
 
+    This function provides the view for the debug page.
+
+    Args:
+    request: HttpRequest object.
+    
+    Returns:
+    A HttpResponse object of the index.html template.
+
+    See:
+    HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+    
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+    """
     log = logger().get_log("views")
     if request.method == 'POST':
         log.info("Post %s",str(request.POST))
@@ -507,7 +888,8 @@ def debug(request):
             f = request.FILES['myfile']
             full_name = "/data/output/" + f.name
             filename = fs.save(full_name, f)
-    context = {'avi_url':wh_global_config().get().AVI_URL}
+    context = {'version':wh_global_config().get().VERSION,
+               'avi_url':wh_global_config().get().AVI_URL}
     template = loader.get_template('avi/debug.html')
     return HttpResponse(template.render(context, request))
     

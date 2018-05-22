@@ -20,6 +20,7 @@ var text_array = ["hola", "Hola 2", "asdf", "qwerty"];
 var gaia_array = [];
 var hsa_array = [];
 var res_array = [];
+var user_array = [];
 /*
 var get_files_list = function(type){
     $.ajax({
@@ -92,6 +93,30 @@ var create_form = function(el, id, data){
             //get_files_list("hsa");
             //document.getElementById(inp_id)
             //autocomplete(adiv[0], text_array);
+        }else if (v['type'] == "results_data"){
+            var adiv = $('<div class="autocomplete" style="width:300px;"></div>');
+            adiv.append("<label>"+v['view_name']+"</label>");
+            adiv.append('<input name="'+id+"_"+v['name']+
+                        '" id="'+inp_id+
+                        '" class="results_data"'+
+                        ' type="text" placeholder="Results Data">');
+            div.append(adiv);
+            form.append(div);
+            //get_files_list("hsa");
+            //document.getElementById(inp_id)
+            //autocomplete(adiv[0], text_array);
+        }else if (v['type'] == "user_data"){
+            var adiv = $('<div class="autocomplete" style="width:300px;"></div>');
+            adiv.append("<label>"+v['view_name']+"</label>");
+            adiv.append('<input name="'+id+"_"+v['name']+
+                        '" id="'+inp_id+
+                        '" class="user_data"'+
+                        ' type="text" placeholder="User Data">');
+            div.append(adiv);
+            form.append(div);
+            //get_files_list("hsa");
+            //document.getElementById(inp_id)
+            //autocomplete(adiv[0], text_array);
         }
     });
 //form.append('
@@ -115,6 +140,12 @@ var get_algorithm_info = function(el, id){//, name){
             }
             if ('gaia' in data) {
                 gaia_array = data['gaia'];
+            }
+            if ('res' in data){
+                res_array = data['res'];
+            }
+            if ('user' in data){
+                user_array = data['user'];
             }
             create_form(el, id, data['algorithm']);
         },
@@ -149,7 +180,8 @@ $(document).ready(function(){
             //$("#alg_info_form").attr("autocomplete","off");
             $(".gaia_table").autocomplete({source:gaia_array});
             $(".hsa_table").autocomplete({source:hsa_array});
-            $(".res_table").autocomplete({source:res_array});
+            $(".results_data").autocomplete({source:res_array});
+            $(".user_data").autocomplete({source:user_array});
         }
     );
 });

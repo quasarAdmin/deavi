@@ -15,6 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.core.interface.name_solvers
+
+--------------------------------------------------------------------------------
+
+This module provides classes to transform space object names to coordenates
 """
 import warnings
 with warnings.catch_warnings():
@@ -23,8 +29,22 @@ with warnings.catch_warnings():
     from astroquery.ned import Ned
 
 class simbad:
+    """@class simbad
+    This class translates names using simbad
 
+    It uses simbad to transform from space object names to equatorial 
+    coordinates
+    """
     def get_object_coordinates(self, name):
+        """Transforms the name to coordinates
+        
+        This method transforms from space object names to equatorial 
+        coordiantes
+        
+        Args:
+        self: The object pointer
+        name: Name of the space object
+        """
         obj = Simbad.query_object(name)
         if not obj:
             return None
@@ -34,8 +54,22 @@ class simbad:
         return coord
     
 class ned:
-    
+    """@class ned
+    This class translates names using ned
+
+    It uses ned to transform from space object names to equatorial 
+    coordinates
+    """
     def get_object_coordinates(self, name):
+        """Transforms the name to coordinates
+        
+        This method transforms from space object names to equatorial 
+        coordiantes
+        
+        Args:
+        self: The object pointer
+        name: Name of the space object
+        """
         try:
             obj = Ned.query_object(name)
         except Exception:

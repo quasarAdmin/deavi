@@ -15,6 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.core.algorithm.algorithm_manager
+
+--------------------------------------------------------------------------------
+
+This module provides the algorithm_manager features.
 """
 import os
 
@@ -25,18 +31,42 @@ from avi.warehouse import wh_global_config as wh
 from avi.models import algorithm_info_model
 
 class algorithm_manager:
-
+    """@class algorithm_manager
+    The algorithm_manager class provides the management for the scientific 
+    algorithms.
+    
+    It provides all the needed methods to work with the scientific algorithms.
+    """
+    ## The log header
     str_log_header = 'algorithm_manager'
+    ## The log
     log = None
 
     def __init__(self):
+        """The algorithm_manager constructor
+        The constructor just initialize the log.
+        """
         self.log = logger().get_log(self.str_log_header)
 
     def __sort_dict(self, d):
+        """Deprecated"""
         #sorted_index = sorted(d, key=lambda x: data[x][1], reverse=True)
         return d
     
     def update_database(self, path, alg_type):
+        """This method updates the algorithms in the database.
+        
+        This method will read files in the given directory and if they are any 
+        it will store the information in algorithm_info_models.
+
+        Args:
+        self: The object pointer.
+        path: The directory path to be read.
+        alg_type: The type of the algorithms in the given directory.
+
+        See:
+        algorithm_info_model @link avi.models.algorithm_info_model
+        """
         # read folder
         alg = {}
         for f in os.listdir(path):
@@ -62,6 +92,8 @@ class algorithm_manager:
             if not m:
                 self.log.info("not m")
                 a = alg[name]
+                if not a["name_view"]:
+                    a["name_view"] = a["name"]
                 m = algorithm_info_model(name=a["name"],
                                          source_file=a["src"],
                                          name_view=a["name_view"],
@@ -70,6 +102,22 @@ class algorithm_manager:
                 m.save()
 
     def init(self):
+        """This method initializes the algorithms in the database.
+        
+        This method will first delete the temporal algorithms (if any) 
+        
+        Then, it will check the different directories in which might be 
+        scientific algorithms and it will call the update_database() method.
+        
+        The directories to be checked are given by the wh_global_config 
+        warehouse.
+
+        Args:
+        self: The object pointer.
+
+        See:
+        wh_global_config: avi.warehouse.wh_global_config
+        """
         alg_m = algorithm_info_model.objects.all()
         
         for a in alg_m:
@@ -83,59 +131,146 @@ class algorithm_manager:
                              "uploaded")
 
     def get_algorithm(self, json_file):
-        jm = json_manager()
-        jm.load(json_file)
-        if not self.__check_json(jm.json_root):
-            self.log.error("Not valid json file")
+        """This method returns a dictionary with the algorithm information.
+        
+        This methods loads a given json file, checks if it is a valid json and 
+        then returns a dictionary containing the algorithm information.
+        
+        Args:
+        self: The object pointer.
+        json_file: The json file to be read.
+
+        Returns:
+        A dictionay containing all the json information if it is a valid json 
+        file, None otherwise.
+
+        See:
+        json_manager: avi.utils.data.json_manager.json_manager
+
+        See also:
+        __check_json: __check_json()
+        """
+        try:
+            jm = json_manager()
+            jm.load(json_file)
+            if not self.__check_json(jm.json_root):
+                self.log.error("Not valid json file")
+                return None
+            return jm.json_root
+        except:
             return None
-        return jm.json_root
 
     def get_info(self, json, key):
-        jm = json_manager()
-        jm.load(json)
-        if not self.__check_json(jm.json_root):
-            self.log.error("Not algorithm 2")
+        """This method returns a dictionary with the algorithm information.
+        
+        This methods loads a given json file, checks if it is a valid json and 
+        then returns a dictionary containing the algorithm information.
+        
+        Args:
+        self: The object pointer.
+        json_file: The json file to be read.
+
+        Returns:
+        A dictionay containing the algorithm information if it is a valid json 
+        file, None otherwise.
+
+        See:
+        json_manager: avi.utils.data.json_manager.json_manager
+
+        See also:
+        __check_json: __check_json()
+        """
+        try:
+            jm = json_manager()
+            jm.load(json)
+            if not self.__check_json(jm.json_root):
+                self.log.error("Not algorithm 2")
+                return None
+            return jm.json_root['algorithm'][key]
+        except:
             return None
-        return jm.json_root['algorithm'][key]
 
     def has_param_type(self, json, param_type):
-        jm = json_manager()
-        jm.load(json)
-        if not self.__check_json(jm.json_root):
-            self.log.error("Not valid json file")
+        """Checks if the given json file has the given parameter type.
+
+        It loads the json file, checks if it is a valid json file and then 
+        checks if the given parameter type is in it.
+
+        Args:
+        self: The object pointer.
+        json: The json file to be read.
+        param_type: The parameter type to be checked.
+
+        Returns:
+        True if the parameter type is in the json, False otherwise
+
+        See:
+        json_manager: avi.utils.data.json_manager.json_manager
+
+        See also:
+        __check_json: __check_json()
+        """
+        try:
+            jm = json_manager()
+            jm.load(json)
+            if not self.__check_json(jm.json_root):
+                self.log.error("Not valid json file")
+                return None
+            aux = jm.json_root['algorithm']['input']
+            for k in aux:
+                input_type = aux[k]['type']
+                if input_type == param_type:
+                    return True
+            return False
+        except:
             return None
-        aux = jm.json_root['algorithm']['input']
-        for k in aux:
-            input_type = aux[k]['type']
-            if input_type == param_type:
-                return True
-        return False
 
     def get_algorithm_data(self, alg_id, name, def_file, post):
+        """Returns a dictionary with all the algorithm parameters from a POST 
+        message
+
+        The methods reads the given definition file and the given POST and 
+        creates a dictionary with the values of the post message.
+
+        Args:
+        self: The object pointer.
+        alg_id: The algorithm's id.
+        name: The algorithm's name.
+        def_file: The algorithm definition file.
+        post: The POST message containing all the values.
         
-        jm = json_manager()
-        if not os.path.isfile(def_file):
-            self.log.error("Not algorithm 1")
+        Returns:
+        A dictionary with all the algorithms parameters from the POST message, 
+        None if the definition file is not a valid json file.
+        """
+        try:
+            jm = json_manager()
+            if not os.path.isfile(def_file):
+                self.log.error("Not algorithm 1")
+                return None
+            jm.load(def_file)
+            if not self.__check_json(jm.json_root):
+                self.log.error("Not algorithm 2")
+                return None
+            ret = {"algorithm":{}}
+            alg = ret['algorithm']
+            alg['name'] = name
+            alg['params'] = {}
+            params = alg['params']
+            for k, v in jm.json_root['algorithm']['input'].items():
+                param_name = v['name']
+                post_name = alg_id +"_"+ param_name
+                self.log.info("param_name %s post_name %s data %s",
+                              param_name,post_name,"")
+                params[param_name] = self.__get_data(post[post_name][0],
+                                                     v['type'])
+            return ret
+        except:
             return None
-        jm.load(def_file)
-        if not self.__check_json(jm.json_root):
-            self.log.error("Not algorithm 2")
-            return None
-        ret = {"algorithm":{}}
-        alg = ret['algorithm']
-        alg['name'] = name
-        alg['params'] = {}
-        params = alg['params']
-        for k, v in jm.json_root['algorithm']['input'].items():
-            param_name = v['name']
-            post_name = alg_id +"_"+ param_name
-            self.log.info("param_name %s post_name %s data %s",
-                           param_name,post_name,"")
-            params[param_name] = self.__get_data(post[post_name][0],
-                                                 v['type'])
-        return ret
 
     def get_algorithm_info(self, data):
+        """Deprecated?
+        """
         self.log.debug(str(data))
         if not "algorithm" in data.keys():
             self.log.error("Not algorithm")
@@ -176,6 +311,19 @@ class algorithm_manager:
         return ret
 
     def get_algorithm_list(self):
+        """Deprecated
+        
+        Returns the algorithm list
+
+        This method returns a dictionary with the information of all the 
+        algorithms.
+
+        Args:
+        self: The object pointer.
+
+        Returns:
+        A dictionary with the information of all the algorithms.
+        """
         num_alg = wh_frontend_config().get().MAX_ALG_PER_PAGE
         current_page = wh_frontend_config().get().CURRENT_ALG_PAGE
 
@@ -235,6 +383,18 @@ class algorithm_manager:
         return self.__sort_dict(data)
 
     def __check_json(self, data):
+        """Checks a json files.
+
+        This methods checks if a given json file is a valid algorithm 
+        definition file.
+
+        Args:
+        self: The object pointer.
+        data: A dictionary with the content of the json file.
+
+        Returns:
+        True if the json is a valid json, False otherwise.
+        """
         if not "algorithm" in data.keys():
             return False
 
@@ -265,6 +425,20 @@ class algorithm_manager:
         return True
 
     def __get_data(self, data, data_type):
+        """Returns the data in its proper type.
+
+        This method returns a variable in its proper type with the 
+        given data in a string format and a string describing the 
+        data type.
+
+        Args:
+        self: The object pointer.
+        data: The data value to be returned.
+        data_type: The type of the data value to be returned.
+
+        Returns:
+        The data value in its given type
+        """
         ret = ""
         if data_type == "float":
             try:
@@ -282,6 +456,12 @@ class algorithm_manager:
         if data_type == "hsa_table" or data_type == "hsa_fits":
             return os.path.join(wh().get().HSA_PATH, data)
 
+        if data_type == "results_data":
+            return os.path.join(wh().get().RESULTS_PATH, data)
+
+        if data_type == "user_data":
+            return os.path.join(wh().get().USER_PATH, data)
+
         if data_type == "integer":
             try:
                 ret = int(data)
@@ -291,7 +471,7 @@ class algorithm_manager:
 
         if data_type == "long":
             try:
-                ret = long(data)
+                ret = int(data)
                 return ret
             except ValueError:
                 return ""

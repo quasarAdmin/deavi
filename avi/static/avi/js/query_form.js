@@ -41,18 +41,28 @@ $(document).ready(
             $("#div_id_ra").hide();
             $("#div_id_dec").hide();
             $("#div_id_input_file").hide();
+            $("#div_id_adql").hide()
             $("#data-form").show();
         }else if (document.getElementById('id_name_coord_1').checked){
             $("#div_id_name").hide();
             $("#div_id_ra").show();
             $("#div_id_dec").show();
             $("#div_id_input_file").hide();
+            $("#div_id_adql").hide()
             $("#data-form").show();
         }else if (document.getElementById('id_name_coord_2').checked){
             $("#div_id_name").hide();
             $("#div_id_ra").hide();
             $("#div_id_dec").hide();
             $("#div_id_input_file").show();
+            $("#div_id_adql").hide()
+            $("#data-form").hide();
+        }else if (document.getElementById('id_name_coord_3').checked){
+            $("#div_id_name").hide();
+            $("#div_id_ra").hide();
+            $("#div_id_dec").hide();
+            $("#div_id_input_file").hide();
+            $("#div_id_adql").show();
             $("#data-form").hide();
         }
         var positional = document.getElementById('id_positional_images_0');
@@ -65,6 +75,16 @@ $(document).ready(
                 $("#div_id_instrument").show();
                 $("#div_id_level").show();
                 $("#div_id_table").hide();
+            }
+        }
+        var dr = document.getElementById('id_data_release_0');
+        if (dr != null){
+            if (dr.checked){
+                $("#div_id_table").show();
+                $("#div_id_table_dr2").hide();
+            }else{
+                $("#div_id_table").hide();
+                $("#div_id_table_dr2").show();
             }
         }
         // on change
@@ -100,6 +120,7 @@ $(document).ready(
                 $("#div_id_ra").hide();
                 $("#div_id_dec").hide();
                 $("#div_id_input_file").hide();
+                $("#div_id_adql").hide();
                 $("#data-form").show();
             });
         $("#id_name_coord_1").change(
@@ -109,6 +130,7 @@ $(document).ready(
                 $("#div_id_ra").show();
                 $("#div_id_dec").show();
                 $("#div_id_input_file").hide();
+                $("#div_id_adql").hide();
                 $("#data-form").show();
             });
         $("#id_name_coord_2").change(
@@ -118,6 +140,17 @@ $(document).ready(
                 $("#div_id_ra").hide();
                 $("#div_id_dec").hide();
                 $("#div_id_input_file").show();
+                $("#div_id_adql").hide();
+                $("#data-form").hide();
+            });
+        $("#id_name_coord_3").change(
+            function()
+            {
+                $("#div_id_name").hide();
+                $("#div_id_ra").hide();
+                $("#div_id_dec").hide();
+                $("#div_id_input_file").hide();
+                $("#div_id_adql").show();
                 $("#data-form").hide();
             });
         $("#id_positional_images_0").change(
@@ -134,6 +167,18 @@ $(document).ready(
                 $("#div_id_instrument").show();
                 $("#div_id_level").show();
                 $("#div_id_table").hide();
+            }
+        );
+        $("#id_data_release_0").change(
+            function(){
+                $("#div_id_table").show();
+                $("#div_id_table_dr2").hide();
+            }
+        );
+        $("#id_data_release_1").change(
+            function(){
+                $("#div_id_table").hide();
+                $("#div_id_table_dr2").show();
             }
         );
     });

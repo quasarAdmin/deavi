@@ -15,6 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.utils.coordinates_manager
+
+--------------------------------------------------------------------------------
+
+This module helps with the coordinates transformations
 """
 import warnings
 with warnings.catch_warnings():
@@ -23,7 +29,22 @@ with warnings.catch_warnings():
     from astropy.coordinates import SkyCoord 
 
 class coordinates_manager:
+    """@class coordinates_manager
+    This class helps with the coordinates transformations
+    """
     def gal_to_icrs(self, l, b):
+        """Galactic to equatorial
+
+        Transforms the given galactic coordinates to equatorial
+
+        Args:
+        self: The object pointer
+        l: longitude
+        b: latitude
+
+        Returns:
+        A dictionary containing the equatorial coordinates
+        """
         coord = {}
         c = SkyCoord(l = l*u.degree, b = b*u.degree, frame='galactic')
         ret = c.transform_to('icrs')
@@ -32,6 +53,18 @@ class coordinates_manager:
         return coord
     
     def icrs_to_gal(self, r, d):
+        """Equatorial to galactic
+
+        Transforms the given equatorial coordinates to galactic
+
+        Args:
+        self: The object pointer
+        r: RA
+        d: DEC
+        
+        Returns:
+        a dictionary containing the galactic coordinates
+        """
         coord = {}
         c = SkyCoord(ra = r*u.degree, dec = d*u.degree, frame = 'icrs')
         ret = c.galactic
@@ -40,6 +73,20 @@ class coordinates_manager:
         return coord
 
     def icrs_degrees(self, r, d):
+        """Equatorial represented with Julian days to equatorial represented in 
+        degrees
+
+        Transforms the given equatorial coordiantes represented with Julian 
+        days to equatorial represented in degrees
+
+        Args:
+        self: The object pointer
+        r: RA
+        d: DEC
+
+        Returns:
+        A dictionary containing the equatorial coordinates
+        """
         coord = {}
         try:
             c = SkyCoord(r,d, frame='icrs')

@@ -70,6 +70,11 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
             <div id="div_id_input_file">
               <input type="file" name="input_file">
             </div>
+            <div id="div_id_adql">
+              {{ form.adql.errors }}
+              <label for="{{ form.adql.id_for_label }}">ADQL: </label>
+              {{ form.adql }}
+            </div>
           </div>
         </div><!-- name coord row -->
         <div id="data-form">
@@ -145,7 +150,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
               </div>
             </div>
           </div><!-- output file row -->
-          <div class="form-group row">
+          <!-- <div class="form-group row">
             <div class="col-sm-12">
               <div id="div_id_adql">
                 {{ form.adql.errors }}

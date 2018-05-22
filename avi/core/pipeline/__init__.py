@@ -15,4 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.core.pipeline
+
+--------------------------------------------------------------------------------
+
+This module provides the synchronous jobs for the application.
+
+This module is formed by a pipeline_manager class and severa job classes.
 """

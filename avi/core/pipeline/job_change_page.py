@@ -15,6 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.core.pipeline.job_change_page
+
+--------------------------------------------------------------------------------
+
+This module provides the change page job.
 """
 from .job import job as parent
 
@@ -22,7 +28,36 @@ from avi.log import logger
 from avi.warehouse import wh_frontend_config
 
 class change_page(parent):
+    """@class change_page
+    The change_page class changes the current page to the given page.
+    
+    It implementes the job interface and inherits the job_data attribute.
+
+    @see job @link avi.core.pipeline.job
+    @see job_data @link avi.core.pipeline.job_data
+    """
     def start(self, data):
+        """This method runs the change page job.
+
+        This methods changes the current page storaged in the 
+        wh_frontend_config warehouse.
+
+        The data parameter must have the key 'page' containing the name of 
+        the web page whose page number will change. It must have also the 
+        key 'number' with the number of the page.
+
+        Here we just change the current page in the warehouse, without checking 
+        if it is valid or not. Those error controls will be made in other jobs.
+
+        Args:
+        self: The object pointer.
+        data: A dictorianry containing the input data for the job.
+
+        Returns:
+        The job_data attribute. The ok attribute will be True always.
+
+        @see wh_frontend_config @link avi.warehouse.wh_frontend_config
+        """
         #log = logger().get_log('get_queries_status')
         wh = wh_frontend_config().get()
         if data['page'] == "pipeline_status":

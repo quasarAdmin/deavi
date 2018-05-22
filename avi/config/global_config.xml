@@ -2,7 +2,7 @@
 <sfm>
   <global>
     <container>deavi</container>
-    <version>0.0.1</version>
+    <version>0.0.7</version>
     <!-- PATHS -->
     <!-- The resources_path will be set from gavip/django configuration -->
     <!-- <resources_path>/data/output/</resources_path> -->
@@ -10,12 +10,14 @@
     <gaia_path>gaia</gaia_path>
     <hsa_path>hsa</hsa_path>
     <results_path>results</results_path>
+    <user_path>user</user_path>
     <tmp_path>tmp</tmp_path>
     <uploaded_alg_path>alg</uploaded_alg_path>
     <tmp_alg_path>tmp_alg</tmp_alg_path>
     <!-- FORMATS -->
     <sources_fmt>%(mission)s_%(date)s_%(name)s</sources_fmt>
     <results_fmt>%(task)s_%(date)s_%(name)s</results_fmt>
+    <user_fmt>%(user)s_%(date)s_%(name)s</user_fmt>
   </global>
   <!-- FRONTEND -->
   <frontend>

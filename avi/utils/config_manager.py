@@ -15,6 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.utils.config_manager
+
+--------------------------------------------------------------------------------
+
+This module features the configuration_manager class
 """
 import xml.etree.ElementTree
 import os.path
@@ -23,6 +29,7 @@ import os.path
 from avi.log import logger
 
 def read_login(path):
+    """Deprecated, used for debugging purposes only"""
     file = open(path, "r")
     ret = {}
     ret['user'] = file.readline()
@@ -32,23 +39,53 @@ def read_login(path):
     return ret
 
 class configuration_manager:
-    
+    """@class configuration_manager
+    This class manages the application configuration
+
+    The class reads the configuration files and store the information readed.
+    """
+    ## Gaia configuration
     gaia_config = None
+    ## Herschel configuration
     herschel_config = None
+    ## SAMP configuration
     samp_config = None
+    ## file manager configuration
     file_manager_config = None
+    ## Herschel archive tables
     hsa_tables = None
+    ## Gaia DR1 tables
     gaiadr1_tables = None
+    ## Gaia DR2 tables
     gaiadr2_tables = None
 
+    ## XML file's root
     xml_root = None
-    
+    ## The log
     log = None
 
     def __init__(self):
+        """The constructor
+        
+        Initializes the log
+
+        Args:
+        self: The object pointer
+        """
         self.log = logger().get_log('configuration_manager')
 
     def get(self, config_name):
+        """Returns the given configuration
+        
+        Reads the xml_root and returns the given configuration from it.
+
+        Args:
+        self: The object pointer
+        config_name: The configuration to be returned
+
+        Returns: 
+        The given configuration if it is located in the xml_root, None otherwise
+        """
         if not self.xml_root:
             self.log.error("There is no config file loaded")
             return None
@@ -61,6 +98,17 @@ class configuration_manager:
         return ret
 
     def load(self, config_file):
+        """Loads the configuration file
+        
+        Loads a given configuration file
+
+        Args:
+        self: The object pointer
+        config_file: The configuration file
+        
+        Returns:
+        True if the configuration file was read correctly, False otherwise
+        """
         if(not os.path.isfile(config_file)):
             self.log.error('Configuration file %s not found!', config_file)
             return False
@@ -68,6 +116,7 @@ class configuration_manager:
         return True
         
     def _load(self, config_file):
+        """Deprecated"""
         if(not os.path.isfile(config_file)):
             self.log.error('Configuration file %s not found!', config_file)
             return False
@@ -105,6 +154,7 @@ class configuration_manager:
         return True
 
 class logger_configuration:
+    """Deprecated, moved to another module"""
     log_config = None
     def load(self, log_config):
         self.log_config = {}

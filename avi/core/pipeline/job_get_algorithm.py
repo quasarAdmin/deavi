@@ -15,13 +15,23 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.core.pipeline.job_get_algorithm
+
+--------------------------------------------------------------------------------
+
+This module is deprecated.
 """
 from .job import job as parent
 
 from avi.log import logger
 
 class get_algorithm(parent):
+    """@class get_algorithm
+    This class is deprecated
+    """
     def start(self, data):
+        """This method is deprecated"""
         log = logger().get_log('views')
         log.info(data)
         from avi.core.algorithm.algorithm_manager import algorithm_manager

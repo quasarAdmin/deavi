@@ -71,6 +71,11 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
               {{ form.input_file }} -->
               <input type="file" name="input_file">
             </div>
+            <div id="div_id_adql">
+              {{ form.adql.errors }}
+              <label for="{{ form.adql.id_for_label }}">ADQL: </label>
+              {{ form.adql }}
+            </div>
           </div>
         </div><!-- name coord row -->
         <div id="data-form">
@@ -105,11 +110,22 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
             </div>
           </div><!-- shape row -->
           <div class="form-group row">
-            <div class="col-sm-12">
+            <div class="col-sm-3">
+              <div id="div_id_drs">
+                {{ form.data_release.errors }}
+                {{ form.data_release }}
+              </div>
+            </div>
+            <div class="col-sm-9">
               <div id="div_id_table">
-                {{ form.table.errors }}
-                <label for="{{ form.table.id_for_label }}">Table: </label>
-                {{ form.table }}
+                {{ form.table_dr1.errors }}
+                <label for="{{ form.table_dr1.id_for_label }}">Table: </label>
+                {{ form.table_dr1 }}
+              </div>
+              <div id="div_id_table_dr2">
+                {{ form.table_dr2.errors }}
+                <label for="{{ form.table_dr2.id_for_label }}">Table: </label>
+                {{ form.table_dr2 }}
               </div>
             </div>
           </div><!-- table row -->
@@ -122,7 +138,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
               </div>
             </div>
           </div><!-- output file row -->
-          <div class="form-group row">
+          <!-- <div class="form-group row">
             <div class="col-sm-12">
               <div id="div_id_adql">
                 {{ form.adql.errors }}

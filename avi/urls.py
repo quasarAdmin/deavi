@@ -15,6 +15,16 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.urls
+
+--------------------------------------------------------------------------------
+
+This module provides the urls for the application.
+
+This module provides the django urls dispachers.
+
+@see https://docs.djangoproject.com/en/2.0/topics/http/urls/
 """
 from django.conf.urls import url, include, patterns
 from rest_framework.urlpatterns import format_suffix_patterns
@@ -29,7 +39,10 @@ from avi.core.risea import risea
 risea().get()
 
 # urlpatterns configuration
-
+## @var router
+#  REST API routers
+#
+#  @see http://www.django-rest-framework.org/api-guide/routers/
 router = routers.DefaultRouter()
 router.register(r'resources', views_api.resources_list)
 router.register(r'gaia_queries', views_api.gaia_queries_list)
@@ -39,6 +52,8 @@ router.register(r'plots', views_api.plot_list)
 router.register(r'results', views_api.results_list)
 router.register(r'alg_info', views_api.algorithms_info)
 
+## @var api_urls
+#  REST API URLs
 api_urls = [
     #url(r'^', include(router.urls)),
     url(r'^resource/(?P<resource_id>[0-9]+)/$', 
@@ -51,6 +66,10 @@ api_urls = [
 
 api_urls = format_suffix_patterns(api_urls)
 
+## @var urlpatterns
+#  URL patterns
+#
+#  @see https://docs.djangoproject.com/en/2.0/topics/http/urls/
 urlpatterns = patterns('',
                        url(r'^$', views.index, name='index'),
                        url(r'^', include(router.urls)),
@@ -59,6 +78,8 @@ urlpatterns = patterns('',
                        url(r'^algorithms', views.pipeline_v2, name='pipe'),
                        url(r'^pipeline', views.pipeline, name='pipeline'),
                        url(r'^status', views.status, name='status'),
+                       url(r'^ajax/send_samp_data', 
+                           views.send_samp_data, name='send_samp_data'),
                        url(r'^ajax/get_results', 
                            views.get_results, name='get_results'),
                        url(r'^ajax/get_alg_info',

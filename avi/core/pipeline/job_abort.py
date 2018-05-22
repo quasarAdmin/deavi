@@ -15,6 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.core.pipeline.job_abort
+
+--------------------------------------------------------------------------------
+
+This module provides the abort job.
 """
 from .job import job as parent
 
@@ -25,7 +31,36 @@ from avi.models import herschel_query_model
 from avi.log import logger
 
 class abort(parent):
+    """@class abort
+    The abort class provides the abort asynchronous job feature.
+    
+    It implementes the job interface and inherits the job_data attribute.
+
+    @see job @link avi.core.pipeline.job
+    @see job_data @link avi.core.pipeline.job_data
+    """
     def start(self, data):
+        """This method runs the abort job.
+
+        This method will abort the asynchronous job provided in the data 
+        parameter.
+
+        The data parameter must have the key 'pk' containing the primary key of 
+        the job to be aborted and the key 'type' containing the type of 
+        asynchronous job to be aborted.
+
+        It will first check if the job of the given type and with the given pk 
+        exists and if so, it will abort it unless it is already or its state is 
+        'SUCCESS' or 'FAILURE'.
+
+        Args:
+        self: The object pointer.
+        data: A dictorianry containing the input data for the job.
+
+        Returns:
+        The job_data attribute. The ok attribute will be True if the job has 
+        been aborted, False otherwise.
+        """
         log = logger().get_log("views")
         log.info("inside the job")
         if data['type'] == 'algorithm':

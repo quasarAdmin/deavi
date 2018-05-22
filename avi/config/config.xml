@@ -37,26 +37,29 @@
   </herschel>
   <!-- tables. It is possible to download this information from the archives -->
   <hsa_tables header="hsa.">
-    <ancillary>ancillary</ancillary>
-    <cat_hppsc_070>cat_hppsc_070</cat_hppsc_070>
-    <cat_hppsc_100>cat_hppsc_100</cat_hppsc_100>
-    <cat_hppsc_160>cat_hppsc_160</cat_hppsc_160>
-    <cat_spsc_250>cat_spsc_250</cat_spsc_250>
-    <cat_spsc_350>cat_spsc_350</cat_spsc_350>
-    <cat_spsc_500>cat_spsc_500</cat_spsc_500>
-    <instrument>instrument</instrument>
-    <metadata_expert_panels>metadata_expert_panels</metadata_expert_panels>
-    <observation_science>observation_science</observation_science>
-    <observing_mode>observing_mode</observing_mode>
-    <observing_mode_per_instrument>observing_mode_per_instrument</observing_mode_per_instrument>
-    <proposal>proposal</proposal>
-    <proposal_coauthor>proposal_coauthor</proposal_coauthor>
-    <proposal_info>proposal_info</proposal_info>
-    <proposal_observation>proposal_observation</proposal_observation>
-    <proposal_pi_user>proposal_pi_user</proposal_pi_user>
-    <publication>publication</publication>
-    <qualify_flag>qualify_flag</qualify_flag>
-    <v_active_observation>v_active_observation</v_active_observation>
+    <ancillary>hsa.ancillary</ancillary>
+    <pacs_point_source_070>hsa.pacs_point_source_070</pacs_point_source_070>
+    <pacs_point_source_100>hsa.pacs_point_source_100</pacs_point_source_100>
+    <pacs_point_source_160>hsa.pacs_point_source_160</pacs_point_source_160>>
+    <spire_point_source_250>hsa.spire_point_source_250</spire_point_source_250>
+    <spire_point_source_350>hsa.spire_point_source_350</spire_point_source_350>
+    <spire_point_source_500>hsa.spire_point_source_500</spire_point_source_500>
+    <spire_spectral_feature_finder_catalogue>hsa.spire_spectral_feature_finder_catalogue</spire_spectral_feature_finder_catalogue>
+    <hifi_spectral_native>hsa.hifi_spectral_native</hifi_spectral_native>
+    <hifi_spectral_line_smoothed>hsa.hifi_spectral_line_smoothed</hifi_spectral_line_smoothed>
+    <instrument>hsa.instrument</instrument>
+    <metadata_expert_panels>hsa.metadata_expert_panels</metadata_expert_panels>
+    <observation_science>hsa.observation_science</observation_science>
+    <observing_mode>hsa.observing_mode</observing_mode>
+    <observing_mode_per_instrument>hsa.observing_mode_per_instrument</observing_mode_per_instrument>
+    <proposal>hsa.proposal</proposal>
+    <proposal_coauthor>hsa.proposal_coauthor</proposal_coauthor>
+    <proposal_info>hsa.proposal_info</proposal_info>
+    <proposal_observation>hsa.proposal_observation</proposal_observation>
+    <proposal_pi_user>hsa.proposal_pi_user</proposal_pi_user>
+    <v_publication>hsa.v_publication</v_publication>
+    <qualify_flag>hsa.qualify_flag</qualify_flag>
+    <v_active_observation>hsa.v_active_observation</v_active_observation>
   </hsa_tables>
   <hsa_updp_tables header="updp.">
     <updp_files>updp_files</updp_files>
@@ -68,40 +71,77 @@
   </hsa_hpdp_tables>
   <hsa_updp2_tables header="updp2.">
   </hsa_updp2_tables>
-  <gaiadr1_tables header="">
-    <allwise_best_neighbour>allwise_best_neighbour</allwise_best_neighbour>
-    <allwise_neighbourhood>allwise_neighbourhood</allwise_neighbourhood>
-    <allwise_original_valid>allwise_original_valid</allwise_original_valid>
-    <aux_qso_icrf2_match>aux_qso_icrf2_match</aux_qso_icrf2_match>
-    <cepheid>cepheid</cepheid>
-    <ext_phot_zero_point>ext_phot_zero_point</ext_phot_zero_point>
-    <gaia_source>gaia_source</gaia_source>
-    <gsc23_best_neighbour>gsc23_best_neighbour</gsc23_best_neighbour>
-    <gsc23_neighbourhood>gsc23_neighbourhood</gsc23_neighbourhood>
-    <gsc23_original_valid>gsc23_original_valid</gsc23_original_valid>
-    <phot_variable_time_series_gfov>phot_variable_time_series_gfov</phot_variable_time_series_gfov>
-    <phot_variable_time_series_gfov_statistical_parameters>phot_variable_time_series_gfov_statistical_parameters</phot_variable_time_series_gfov_statistical_parameters>
-    <ppmxl_best_neighbour>ppmxl_best_neighbour</ppmxl_best_neighbour>
-    <ppmxl_neighbourhood>ppmxl_neighbourhood</ppmxl_neighbourhood>
-    <ppmxl_original_valid>ppmxl_original_valid</ppmxl_original_valid>
-    <rrlyrae>rrlyrae</rrlyrae>
-    <sdss_dr9_best_neighbour>sdss_dr9_best_neighbour</sdss_dr9_best_neighbour>
-    <sdss_dr9_neighbourhood>sdss_dr9_neighbourhood</sdss_dr9_neighbourhood>
-    <sdss_dr9_original_valid>sdss_dr9_original_valid</sdss_dr9_original_valid>
-    <tgas_source>tgas_source</tgas_source>
-    <tmass_best_neighbour>tmass_best_neighbour</tmass_best_neighbour>
-    <tmass_neighbourhood>tmass_neighbourhood</tmass_neighbourhood>
-    <tmass_original_valid>tmass_original_valid</tmass_original_valid>
-    <ucac4_best_neighbour>ucac4_best_neighbour</ucac4_best_neighbour>
-    <ucac4_neighbourhood>ucac4_neighbourhood</ucac4_neighbourhood>
-    <ucac4_original_valid>ucac4_original_valid</ucac4_original_valid>
-    <urat1_best_neighbour>urat1_best_neighbour</urat1_best_neighbour>
-    <urat1_neighbourhood>urat1_neighbourhood</urat1_neighbourhood>
-    <urat1_original_valid>urat1_original_valid</urat1_original_valid>
-    <variable_summary>variable_summary</variable_summary>
+  <gaiadr1_tables header="gaiadr1.">
+    <allwise_best_neighbour>gaiadr1.allwise_best_neighbour</allwise_best_neighbour>
+    <allwise_neighbourhood>gaiadr1.allwise_neighbourhood</allwise_neighbourhood>
+    <allwise_original_valid>gaiadr1.allwise_original_valid</allwise_original_valid>
+    <aux_qso_icrf2_match>gaiadr1.aux_qso_icrf2_match</aux_qso_icrf2_match>
+    <cepheid>gaiadr1.cepheid</cepheid>
+    <ext_phot_zero_point>gaiadr1.ext_phot_zero_point</ext_phot_zero_point>
+    <gaia_source>gaiadr1.gaia_source</gaia_source>
+    <gsc23_best_neighbour>gaiadr1.gsc23_best_neighbour</gsc23_best_neighbour>
+    <gsc23_neighbourhood>gaiadr1.gsc23_neighbourhood</gsc23_neighbourhood>
+    <gsc23_original_valid>gaiadr1.gsc23_original_valid</gsc23_original_valid>
+    <phot_variable_time_series_gfov>gaiadr1.phot_variable_time_series_gfov</phot_variable_time_series_gfov>
+    <phot_variable_time_series_gfov_statistical_parameters>gaiadr1.phot_variable_time_series_gfov_statistical_parameters</phot_variable_time_series_gfov_statistical_parameters>
+    <ppmxl_best_neighbour>gaiadr1.ppmxl_best_neighbour</ppmxl_best_neighbour>
+    <ppmxl_neighbourhood>gaiadr1.ppmxl_neighbourhood</ppmxl_neighbourhood>
+    <ppmxl_original_valid>gaiadr1.ppmxl_original_valid</ppmxl_original_valid>
+    <rrlyrae>gaiadr1.rrlyrae</rrlyrae>
+    <sdss_dr9_best_neighbour>gaiadr1.sdss_dr9_best_neighbour</sdss_dr9_best_neighbour>
+    <sdss_dr9_neighbourhood>gaiadr1.sdss_dr9_neighbourhood</sdss_dr9_neighbourhood>
+    <sdss_dr9_original_valid>gaiadr1.sdss_dr9_original_valid</sdss_dr9_original_valid>
+    <tgas_source>gaiadr1.tgas_source</tgas_source>
+    <tmass_best_neighbour>gaiadr1.tmass_best_neighbour</tmass_best_neighbour>
+    <tmass_neighbourhood>gaiadr1.tmass_neighbourhood</tmass_neighbourhood>
+    <tmass_original_valid>gaiadr1.tmass_original_valid</tmass_original_valid>
+    <ucac4_best_neighbour>gaiadr1.ucac4_best_neighbour</ucac4_best_neighbour>
+    <ucac4_neighbourhood>gaiadr1.ucac4_neighbourhood</ucac4_neighbourhood>
+    <ucac4_original_valid>gaiadr1.ucac4_original_valid</ucac4_original_valid>
+    <urat1_best_neighbour>gaiadr1.urat1_best_neighbour</urat1_best_neighbour>
+    <urat1_neighbourhood>gaiadr1.urat1_neighbourhood</urat1_neighbourhood>
+    <urat1_original_valid>gaiadr1.urat1_original_valid</urat1_original_valid>
+    <variable_summary>gaiadr1.variable_summary</variable_summary>
   </gaiadr1_tables>
-  <gaiadr2_tables header="">
-    <gaia_source>gaia_source</gaia_source>
+  <gaiadr2_tables header="gaiadr2.">
+    <aux_allwise_agn_gdr2_cross_id>gaiadr2.aux_allwise_agn_gdr2_cross_id</aux_allwise_agn_gdr2_cross_id>
+    <aux_iers_gdr2_cross_id>gaiadr2.aux_iers_gdr2_cross_id</aux_iers_gdr2_cross_id>
+    <aux_sso_orbit_residuals>gaiadr2.aux_sso_orbit_residuals</aux_sso_orbit_residuals>
+    <aux_sso_orbits>gaiadr2.aux_sso_orbits</aux_sso_orbits>
+    <dr1_neighbourhood>gaiadr2.dr1_neighbourhood</dr1_neighbourhood>
+    <allwise_best_neighbour>gaiadr2.allwise_best_neighbour</allwise_best_neighbour>
+    <allwise_neighbourhood>gaiadr2.allwise_neighbourhood</allwise_neighbourhood>
+    <apassdr9_best_neighbour>gaiadr2.apassdr9_best_neighbour</apassdr9_best_neighbour>
+    <apassdr9_neighbourhood>gaiadr2.apassdr9_neighbourhood</apassdr9_neighbourhood>
+    <gsc23_best_neighbour>gaiadr2.gsc23_best_neighbour</gsc23_best_neighbour>
+    <gsc23_neighbourhood>gaiadr2.gsc23_neighbourhood</gsc23_neighbourhood>
+    <hipparcos2_best_neighbour>gaiadr2.hipparcos2_best_neighbour</hipparcos2_best_neighbour>
+    <hipparcos2_neighbourhood>gaiadr2.hipparcos2_neighbourhood</hipparcos2_neighbourhood>
+    <panstarrs1_best_neighbour>gaiadr2.panstarrs1_best_neighbour</panstarrs1_best_neighbour>
+    <panstarrs1_neighbourhood>gaiadr2.panstarrs1_neighbourhood</panstarrs1_neighbourhood>
+    <ppmxl_best_neighbour>gaiadr2.ppmxl_best_neighbour</ppmxl_best_neighbour>
+    <ppmxl_neighbourhood>gaiadr2.ppmxl_neighbourhood</ppmxl_neighbourhood>
+    <ravedr5_best_neighbour>gaiadr2.ravedr5_best_neighbour</ravedr5_best_neighbour>
+    <ravedr5_neighbourhood>gaiadr2.ravedr5_neighbourhood</ravedr5_neighbourhood>
+    <sdssdr9_best_neighbour>gaiadr2.sdssdr9_best_neighbour</sdssdr9_best_neighbour>
+    <sdssdr9_neighbourhood>gaiadr2.sdssdr9_neighbourhood</sdssdr9_neighbourhood>
+    <tmass_best_neighbour>gaiadr2.tmass_best_neighbour</tmass_best_neighbour>
+    <tmass_neighbourhood>gaiadr2.tmass_neighbourhood</tmass_neighbourhood>
+    <tycho2_best_neighbour>gaiadr2.tycho2_best_neighbour</tycho2_best_neighbour>
+    <tycho2_neighbourhood>gaiadr2.tycho2_neighbourhood</tycho2_neighbourhood>
+    <urat1_best_neighbour>gaiadr2.urat1_best_neighbour</urat1_best_neighbour>
+    <urat1_neighbourhood>gaiadr2.urat1_neighbourhood</urat1_neighbourhood>
+    <sso_observation>gaiadr2.sso_observation</sso_observation>
+    <sso_source>gaiadr2.sso_source</sso_source>
+    <gaia_source>gaiadr2.gaia_source</gaia_source>
+    <vari_cepheid>gaiadr2.vari_cepheid</vari_cepheid>
+    <vari_classifier_class_definition>gaiadr2.vari_classifier_class_definition</vari_classifier_class_definition>
+    <vari_classifier_definition>gaiadr2.vari_classifier_definition</vari_classifier_definition>
+    <vari_long_period_variable>gaiadr2.vari_long_period_variable</vari_long_period_variable>
+    <vari_rotation_modulation>gaiadr2.vari_rotation_modulation</vari_rotation_modulation>
+    <vari_rrlyrae>gaiadr2.vari_rrlyrae</vari_rrlyrae>
+    <vari_short_timescale>gaiadr2.vari_short_timescale</vari_short_timescale>
+    <vari_time_series_statistics>gaiadr2.vari_time_series_statistics</vari_time_series_statistics>
   </gaiadr2_tables>
   <file_manager>
     <resources_path>/data/resources/</resources_path>

@@ -15,6 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.core.pipeline.job_get_algorithm_info
+
+--------------------------------------------------------------------------------
+
+This module provides the get_algorithm_info job.
 """
 from .job import job as parent
 
@@ -25,7 +31,39 @@ from avi.models import resource_model
 from avi.log import logger
 
 class get_algorithm_info(parent):
+    """@class get_algorithm_info
+    The get_algorithm_info retrieves the algorithm information.
+
+    It implementes the job interface and inherits the job_data attribute.
+
+    @see job @link avi.core.pipeline.job
+    @see job_data @link avi.core.pipeline.job_data
+    """
     def start(self, data):
+        """This method retrieves the algorithm information.
+
+        The data parameter must have the key 'id' containing the algorithm id 
+        which info will be retrieved.
+
+        The method will retrieve the algorithm_info_model with the given id and 
+        it will will extract the parameters information from the definition 
+        file provided by the algorithm_info_model.
+
+        If the algorithm has gaia, herschel or results files in its input, this 
+        method will also retrieve the names of thouse files from the 
+        resource_model.
+
+        Args:
+        self: The object pointer.
+        data: A dictorianry containing the input data for the job.
+
+        Returns:
+        The job_data attribute. The ok attribute will be True if the algorithm 
+        exists, False otherwise.
+
+        @see algorithm_info_model @link avi.models.algorithm_info_model
+        @see resource_model @link avi.models.resource_model
+        """
         log = logger().get_log('algorithm_manager')
 
         #log.info(data)
@@ -52,17 +90,25 @@ class get_algorithm_info(parent):
         if has_hsa:
             self.job_data.data['hsa'] = []
         has_results = algorithm_manager().has_param_type(am.definition_file,
-                                                     'results_files')
+                                                     'results_data')
         if has_results:
             self.job_data.data['res'] = []
+        has_user = algorithm_manager().has_param_type(am.definition_file,
+                                                      'user_data')
 
+        if has_user:
+            self.job_data.data['user'] = []
+            
         for i in ms:
+            log.info("file %s - %s", i.name, i.file_type)
             if has_gaia and i.file_type == 'gaia':
                 self.job_data.data['gaia'].extend([i.name])
             if has_hsa and i.file_type == 'hsa':
                 self.job_data.data['hsa'].extend([i.name])
             if has_results and i.file_type == 'result':
                 self.job_data.data['res'].extend([i.name])
+            if has_user and i.file_type == 'user':
+                self.job_data.data['user'].extend([i.name])
 
         #self.job_data.data = alg_info
         self.job_data.ok = alg_info is not None

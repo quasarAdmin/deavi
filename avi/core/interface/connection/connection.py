@@ -15,6 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.core.interface.connection.connection
+
+--------------------------------------------------------------------------------
+
+This module provides connection features to the archives.
 """
 import http.client
 import urllib.parse
@@ -30,31 +36,61 @@ from avi.log import logger
 import requests
 
 class connection:
-    
+    """@class connection
+    The connection class provides connection features to the archives.
+    """
     # default paths for Gaia
+    ## http head
     httphdr = "http://"
+    ## host name
     host = "gea.esac.esa.int"
+    ## port
     port = 80
+    ## path to the tap server
     tap_server = "/tap-server"
+    ## path to the info
     pathinfo = "/tap-server/tap/async"
+    ## path to the login
     pathlogin = "/tap-server/login"
+    ## path to the logout
     pathlogout = "/tap-server/logout"
+    ## path to the upload
     pathupload = "/tap-server/Upload"
+    ## path to the results
     pathresults = "/results/result"
+    ## the job id tag
     jobidtag = "uws:jobId"
+    ## the phase tag
     phasetag = "uws:phase"
+    ## cookies
     cookie = "cookies.txt"
+    ## Deprecated, the connection object 
     connection = None
+    ## The session
     session = None
+    ## The user
     user = None
-
+    
+    ## Number of retries before abort the query
     retry_count = 20
     
+    ## The log
     log = None
     
     #def __init__(self):
         
     def init(self, cfg):
+        """Initializes the attributes.
+        
+        This method initializes the attributes with the given configuration
+
+        Args:
+        self: The object pointer
+        cfg: The configuration to be loaded
+
+        Returns:
+        True if everything is initialized correctly, False otherwise
+        """
         try:
             self.httphdr = cfg['http-header']
             self.host = cfg['host']
@@ -74,6 +110,20 @@ class connection:
             return False
     
     def login(self, user, passwd):
+        """Logs in to an archive
+
+        This method logs in to an archive with the given user and password.
+
+        It saves the session in the session attribute
+
+        Args:
+        self: The object pointer
+        user: The user name
+        passwd: The password
+
+        Returns:
+        True if the login was done correctly, False otherwise
+        """
         params = {"username": user,"password": passwd}
         with requests.Session() as session:
             response = session.post(self.httphdr + self.host + self.pathlogin, data = params)
@@ -88,6 +138,16 @@ class connection:
         #return True
         
     def logout(self):
+        """Logs out of an archive
+
+        This method logs out of an archive if there is a session active.
+
+        Args:
+        self: The object pointer
+
+        Returns:
+        True if the logout was done correctly, False otherwise
+        """
         if self.session == None: return False
         response = self._session.post(self.httphdr + self.host + self.pathlogout)
         if response.status_code != 200: return False
@@ -95,6 +155,22 @@ class connection:
         return True
     
     def async_query(self, query):
+        """Does a synchronous query to an archive
+
+        Altough the name is async_query this method is actually synchronous. 
+        The reason behind this name is because the actual connection to the 
+        archive is asynchronous that way the connection is closed after the 
+        request but the method will wait until the archives 
+        answers the request.
+
+        Args:
+        self: The object pointer
+        query: The ADQL query
+
+        Returns:
+        The data retrieved from the archive if everything goes correctly, 
+        None otherwise
+        """
         params = {"REQUEST": "doQuery","LANG": "ADQL","FORMAT": "votable","PHASE": "RUN", \
                   "QUERY": query}
         headers = {"Content-type": "application/x-www-form-urlencoded","Accept": "text/plain"}
@@ -146,6 +222,21 @@ class connection:
     
     # This method works only with gaia
     def upload_table(self, name, table):
+        """Uploads a user table to the archive user space.
+
+        If the archives allows it, this method will upload a user table to the 
+        archive user space.
+
+        In order to do it, a login session has to be opened previously.
+        
+        Args:
+        self: The object pointer
+        name: The name of the table
+        table: The table data
+
+        Returns:
+        True if the table is uploaded correctly, False otherwise
+        """
         if self.session == None: return False
         
         params = {"TABLE_NAME": name}
@@ -160,7 +251,7 @@ class connection:
     # ###################################################################################################
     
     def de_anonymous_async_query(self, query):
-        
+        """Deprecated"""
         if self._connection != None: self._connection.close()
     
         params = urllib.parse.urlencode({"REQUEST": "doQuery","LANG": "ADQL","FORMAT": "votable","PHASE": "RUN", \
@@ -205,7 +296,7 @@ class connection:
         return data
     
     def de_async_query(self, query):
-        
+        """Deprecated"""
         if self._connection == None: return None
         
         params = urllib.parse.urlencode({"REQUEST": "doQuery","LANG": "ADQL","FORMAT": "votable","PHASE": "RUN", \
@@ -242,7 +333,7 @@ class connection:
         return data
     
     def de_login(self, user, passwd):
-        
+        """Deprecated"""
         if self._connection != None: self._connection.close()
         
         connection = http.client.HTTPConnection(self._host, self._port)
@@ -262,6 +353,7 @@ class connection:
         return True
     
     def de_logout(self):
+        """Deprecated"""
         if self._connection != None: 
         #connection = http.client.HTTPConnection(self._host, self._port)
             params = urllib.parse.urlencode(self._cookie)
@@ -272,4 +364,5 @@ class connection:
             self._connection = None
     
     def de_save_table(self, table):
+        """Deprecated"""
         return table

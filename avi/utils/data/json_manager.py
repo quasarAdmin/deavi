@@ -15,24 +15,61 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.utils.data.json_manager
+
+--------------------------------------------------------------------------------
+
+This module provides the json files management
 """
 import json
 
 from avi.log import logger
 
 class json_manager:
-
+    """@class json_manager
+    This class provides the json files management
+    """
+    ## The json file root
     json_root = None
     
     def __init__(self):
+        """Constructor
+        
+        Initializes the log
+        """
         self.log = logger().get_log('json_manager')
 
     def load(self, file_name):
+        """Load a given json file
+
+        Reads a given json file and stores the root into the json_root 
+        attribute
+
+        Args:
+        self: The object pointer
+        file_name: The json file name
+        """
         data = open(file_name)
         self.json_root = json.load(data)
         data.close()
 
     def get(self, key):
+        """Retrieves the value of a given key
+
+        If there is not a json loaded returns None. 
+        
+        If the key does not exists in the json loaded returns None.
+        
+        Otherwise it will return the value of the given key
+
+        Args:
+        self: The object pointer
+        key: The key of the value to be returned
+
+        Returns:
+        The value of the given key if everything goes correctly, None otherwise
+        """
         if not self.json_root:
             self.log.error('There is no json loaded')
             return None
@@ -46,6 +83,18 @@ class json_manager:
             return data
 
     def read_gaia_input(self, file_name):
+        """Reads an input file with queries to the Gaia archive.
+
+        This method is used to read an input file containing queries to the 
+        Gaia archive. It returns an array with all the queries read
+
+        Args:
+        self: The object pointer
+        file_name: The name of the input file
+
+        Returns:
+        An array with the queries information
+        """
         self.load(file_name)
         c = 1
         ret = []
@@ -57,6 +106,18 @@ class json_manager:
         return ret
 
     def read_herschel_input(self, file_name):
+        """Reads an input file with queries to the Herschel archive.
+
+        This method is used to read an input file containing queries to the 
+        Herschel archive. It returns an array with all the queries read
+
+        Args:
+        self: The object pointer
+        file_name: The name of the input file
+
+        Returns:
+        An array with the queries information
+        """
         self.load(file_name)
         c = 1
         ret = []
@@ -68,6 +129,18 @@ class json_manager:
         return ret
 
     def get_vertexes(self, data):
+        """Returns an array of vertexes
+
+        With the give data, this method will read the data and return an array 
+        with the vertexes information contained in the data
+
+        Args:
+        self: The object pointer
+        data: The data to be read
+
+        Returns:
+        An array with the vertexes information contained in the given data
+        """
         c = 1
         v = data.get("vertex_%i"%(c))
         ret = []
@@ -78,6 +151,19 @@ class json_manager:
         return ret
         
     def set_vertexes(self, data, vertexes):
+        """Stores the vertexes in a dictionary format
+        
+        With the given string containing the vertexes information, this method 
+        will store them into the given json data
+
+        The vertexes contained in the string must be separeted with the 
+        character ', ' and each pair of vertexes must have the separtor ' '
+
+        Args:
+        self: The object pointer
+        data: The data into which the vertexes are going to be stored
+        vertexes: The string containing the vertexes information
+        """
         def set_vertex(pair, data, num):
             ps = ' ' # pair separator
             v = {}

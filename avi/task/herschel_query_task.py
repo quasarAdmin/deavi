@@ -15,6 +15,14 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.task.herschel_query_task
+
+--------------------------------------------------------------------------------
+
+This module manages the execution of queries to the herschel archive.
+
+The module manages the execution of queries to the herschel archive.
 """
 import sys, traceback, os
 from django.utils import timezone
@@ -33,9 +41,39 @@ from avi.utils.data.json_manager import json_manager
 from avi.warehouse import wh_global_config as wh
 
 class herschel_query_task(parent):
+    """@class herschel_query_task
+    The herschel_query_task class manages the execution of queries to the 
+    herschel archive.
+
+    It implementes the task interface and inherits the task_data attribute.
+
+    @see task @link avi.task.task.task
+    @see task_data @link avi.task.task.task_data
+    """
     def output(self):
+        """Deprecated"""
         pass
     def get_herschel_data(self, log, data):
+        """Does a query to the herschel archive
+
+        It will read the input contained in the data parameter and it will 
+        query the herschel archive trough the interface_manager. Then it will 
+        save the results using the file_manager
+    
+        Args:
+        self: The object pointer
+        log: The log
+        data: The input data to the query
+
+        Raises:
+        task_exception: avi.task.task.task_exception
+        
+        See:
+        interface_manager: avi.core.interface.interface_manager.interface_manager
+        
+        See also:
+        file_manager: avi.utils.data.file_manager.file_manager
+        """
         log.debug('get_herschel_data method')
         im = risea().get().interface_manager
         fm = file_manager()
@@ -174,7 +212,31 @@ class herschel_query_task(parent):
             raise err(traceback.format_exc())
 
     def run(self):
+        """Runs the query to the herschel archive.
+        
+        If the task_data contains the 'input_file' key it will read that value 
+        and call get_herschel_data() once per input parameter found in the 
+        input_file.
+        
+        If the task_data contains the 'adql' key it will query the archive 
+        through the interface_manager using that query.
+
+        Otherwise it will call get_herschel_data() with the input from task_data
+
+        Args:
+        self: The object pointer.
+
+        Raises:
+        task_exception: avi.task.task.task_exception
+
+        See:
+        interface_manager: avi.core.interface.interface_manager.interface_manager
+        
+        See also:
+        get_herschel_data: get_herschel_data()
+        """
         def get_herschel_data(log, data):
+            """Deprecated"""
             pass
             
         log = logger().get_log('herschel_query_task')
@@ -190,9 +252,11 @@ class herschel_query_task(parent):
                     if i.get('wavelength'):
                         wl = int(i['wavelength'])
                         if wl == 70 or wl == 100 or wl == 160:
-                            i['table'] = "cat_hppsc_%s"%(str(wl).zfill(3))
+                            i['tablee'] = "hsa.pacs_point_source_%s"%(str(wl).zfill(3))
+                            #"cat_hppsc_%s"%(str(wl).zfill(3))
                         elif wl == 250 or wl == 350 or wl == 500:
-                            i['table'] = "cat_spsc_%i"%(wl)
+                            i['tablee'] = "hsa.spire_point_source_%s"%(wl)
+                            #"cat_spsc_%i"%(wl)
                     if i.get('positional_source'):
                         i['positional_images'] = False
                     else:
@@ -203,7 +267,8 @@ class herschel_query_task(parent):
                 log.error(traceback.format_exc())
                 raise err(traceback.format_exc())
             finally:
-                os.remove(data['input_file'])
+                pass
+                #os.remove(data['input_file'])
             return
         elif data.get('adql'):
             log.info('ADQL query')

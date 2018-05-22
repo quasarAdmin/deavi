@@ -26,26 +26,56 @@ var src_url = "";
 var cc = new samp.ClientTracker();
 var call_handler = cc.callHandler;
 
+var send_data = function(name, xml){
+    //console.log(xml);
+    //escape(xml);
+    $.ajax({
+        type:"POST",
+        url:avi_url+"avi/ajax/send_samp_data",
+        //contentType: 'application/json',
+        dataType:'json',
+        data:{'name':name, 'data':escape(xml),
+              csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
+        success:function(data){console.log("ok");},
+        error:function(xhr, textStatus, throwError){console.log(textStatus);},
+        headers:{'X-Requested-With': 'XMLHttpRequest'}
+    });
+}
+
 // callers
 call_handler["table.load.votable"] =  function(sender_id, message, is_call){
-    console.log("callback");
+    //console.log("callback");
+    //console.log(avi_url);
     var params = message["samp.params"];
     var origin_url = params["url"];
     var proxy_url = cc.connection.translateUrl(origin_url);
     var xhr = samp.XmlRpcClient.createXHR();
     //console.log(params);
-    console.log(xhr);
+    //console.log(xhr);
     xhr.open("GET", proxy_url);
-    console.log(xhr);
+    //console.log(xhr);
     xhr.onload = function(){
+        var data = xhr.responseText;
         var xml = xhr.responseXML;
-        console.log(xml);
+        var name = proxy_url.substring(proxy_url.lastIndexOf('/')+1);
+        //console.log(name);
+        //console.log(xml);
+        //console.log(avi_url);
+        if(xml){
+            send_data(name, data);
+        }
+        /*
+        var xhr_send = new XMLHttpRequest();
+        xhr_send.open("POST", avi_url+"avi/ajax/send_samp_data",true);
+        xhr_send.send({'data':xml,
+                      csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value});
+                      */
     };
     xhr.onerror = function(){
         
     };
     xhr.send(null);
-    console.log(proxy_url);
+    //console.log(proxy_url);
 };
 
 var meta = {"samp.name": "Handler",

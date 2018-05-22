@@ -15,4 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.core.interface
+
+--------------------------------------------------------------------------------
+
+This module provides interfaces to the archives.
+
+This module is formed by several interfaces to the gaia and herschel archives.
 """

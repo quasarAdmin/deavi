@@ -15,6 +15,14 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.task.gaia_query_task
+
+--------------------------------------------------------------------------------
+
+This module manages the execution of queries to the gaia archive.
+
+The module manages the execution of queries to the gaia archive.
 """
 import time
 import sys, traceback, os
@@ -34,12 +42,40 @@ from avi.utils.data.json_manager import json_manager
 from avi.warehouse import wh_global_config as wh
 
 class gaia_query_task(parent):
-    
+    """@class gaia_query_task
+    The gaia_query_task class manages the execution of queries to the gaia 
+    archive.
+
+    It implementes the task interface and inherits the task_data attribute.
+
+    @see task @link avi.task.task.task
+    @see task_data @link avi.task.task.task_data
+    """
     def output(self):
+        """Deprecated"""
         pass
 
     def get_gaia_data(self, log, data):
+        """Does a query to the gaia archive
+
+        It will read the input contained in the data parameter and it will 
+        query the gaia archive trough the interface_manager. Then it will save 
+        the results using the file_manager
+    
+        Args:
+        self: The object pointer
+        log: The log
+        data: The input data to the query
+
+        Raises:
+        task_exception: avi.task.task.task_exception
         
+        See:
+        interface_manager: avi.core.interface.interface_manager.interface_manager
+        
+        See also:
+        file_manager: avi.utils.data.file_manager.file_manager
+        """
         im = risea().get().interface_manager
         fm = file_manager()
         cm = coordinates_manager()
@@ -144,6 +180,29 @@ class gaia_query_task(parent):
             raise err('%s', traceback.format_exc())
 
     def run(self):
+        """Runs the query to the gaia archive.
+        
+        If the task_data contains the 'input_file' key it will read that value 
+        and call get_gaia_data() once per input parameter found in the 
+        input_file.
+        
+        If the task_data contains the 'adql' key it will query the archive 
+        through the interface_manager using that query.
+
+        Otherwise it will call get_gaia_data() with the input from task_data
+
+        Args:
+        self: The object pointer.
+
+        Raises:
+        task_exception: avi.task.task.task_exception
+
+        See:
+        interface_manager: avi.core.interface.interface_manager.interface_manager
+        
+        See also:
+        get_gaia_data: get_gaia_data()
+        """
         log = logger().get_log('gaia_query_task')
         
         jm = json_manager()

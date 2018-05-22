@@ -15,6 +15,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+
+@package avi.core.pipeline.job_get_pipeline_status
+
+--------------------------------------------------------------------------------
+
+This module provides the get_pipeline_status job.
 """
 from .job import job as parent
 
@@ -26,8 +32,34 @@ from avi.warehouse import wh_frontend_config
 from avi.log import logger
 
 class get_pipeline_status(parent):
-    def start(self, data):
+    """@class get_pipeline_status
+    The get_pipeline_status class retrieves the status of the pipeline.
 
+    It implementes the job interface and inherits the job_data attribute.
+
+    @see job @link avi.core.pipeline.job
+    @see job_data @link avi.core.pipeline.job_data
+    """
+    def start(self, data):
+        """This method runs the get_pipeline_status job.
+
+        This method will retrieve the algorithm_models and it will sort them 
+        by the current sorting method provided by the wh_frontend_config 
+        warehouse.
+
+        Then it will paginate the results with current page retrieved from 
+        the wh_frontend_config warehouse.
+
+        Args:
+        self: The object pointer.
+        data: A dictorianry containing the input data for the job.
+
+        Returns:
+        The job_data attribute. The ok attribute provides the pages information.
+
+        @see algorithm_model @link avi.models.algorithm_model
+        @see wh_frontend_config @link avi.warehouse.wh_frontend_config
+        """
         log = logger().get_log("get_pipeline_status")
         wh = wh_frontend_config().get()
         sorting_wh = wh.SORTING_EXEC_BY
