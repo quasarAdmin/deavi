@@ -210,6 +210,7 @@ class algorithm_manager:
         See also:
         __check_json: __check_json()
         """
+        # OLD
         try:
             jm = json_manager()
             jm.load(json)
@@ -222,6 +223,22 @@ class algorithm_manager:
                 if input_type == param_type:
                     return True
             return False
+        except:
+            return None
+        try:
+            jm = json_manager()
+            jm.load(json)
+            if not self.__check_json(jm.json_root):
+                self.log.error("Not valid json file")
+                return None
+            aux = jm.json_root['algorithm']['input']
+            for g in aux:
+                inputs = aux[g]
+                for k in inputs:
+                    input_type = inputs[k]['type']
+                    if input_type == param_type:
+                        return True
+                return False
         except:
             return None
 

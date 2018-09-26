@@ -47,61 +47,84 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
       <h1>Queries Status</h1>
       <div class="table text-center">
 	<div class="table-row heading">
-	  <div class="table-head text-left sort-by-name">
-	    Name
+          <div class="table-head">
+            <div class="row-sm-12">
+	      <div class="col-sm-4 cell-border text-left sort-by-name">
+	        Name
+	      </div>
+	      <div class="col-sm-4 cell-border sort-by-date">
+	        Date
+	      </div>
+	      <div class="col-sm-2 cell-border sort-by-status">
+	        Status
+	      </div>
+	      <div class="col-sm-1 cell-border">
+	        Info
+	      </div>
+	      <div class="col-sm-1 cell-border">
+	        Abort
+	      </div>
+            </div>
 	  </div>
-	  <div class="table-head sort-by-date">
-	    Date
-	  </div>
-	  <div class="table-head cell-size-2 sort-by-status">
-	    Status
-	  </div>
-	  <div class="table-head cell-size-1">
-	    Info
-	  </div>
-	  <div class="table-head cell-size-1">
-	    Abort
-	  </div>
-	</div>
+        </div>
 	{% for q in queries.items %}
 	<div class="table-row data">
-	  <div class="table-cell text-left">
-	    {# {{queries|get_item:q}} #}
-	    {{ q.1.0 }} - {{ q.1.4 }}
-	  </div>
-	  <div class="table-cell">
-	    {{ q.1.2 }}
-	  </div>
-	  <div class="table-cell cell-size-2">
-	    {{ q.1.1 }}
-	  </div>
-	  <div class="table-cell cell-size-1">
-	    {{ q.1.3 }}
-	  </div>
-	  <div class="table-cell cell-size-1">
-            <form id="form_{{ q.1.4 }}"
-                  method="post">
-              {% csrf_token %}
-              <button
-                 type="submit"
-                 class="btn btn-primary btn-block"
-                 formmethod="POST"
-                 id="form_button_{{ q.1.4 }}" 
-                {% if q.1.1 in "SUCCESS" or q.1.1 in "FAILURE" %}
-                 name="delete_{{ q.1.5 }}"
-                 title="Delete" 
-                 value="{{ q.1.4 }}">
-                Delete
-                {% else %}
-                name="abort_{{ q.1.5 }}"
-                title="Abort" 
-                value="{{ q.1.4 }}">
-                Abort
-                {% endif %}
-              </button>
-            </form>
+          <div class="table-cell">
+            <div class="row-sm-12">
+	      <div id="{{ q.1.5 }}_{{ q.1.4 }}"
+                   mission="{{ q.1.5 }}"
+                   qid="{{ q.1.4 }}"
+                   title="TODO"
+                   class="col-sm-4 text-left cell-border query-info
+                          hover-info">
+	        {# {{queries|get_item:q}} #}
+	        {{ q.1.0 }} - {{ q.1.4 }}
+	      </div>
+	      <div class="col-sm-4 cell-border">
+	        {{ q.1.2 }}
+	      </div>
+	      <div class="col-sm-2 cell-border">
+	        {{ q.1.1 }}
+	      </div>
+	      <div class="col-sm-1 cell-border">
+	        {{ q.1.3 }}
+	      </div>
+	      <div class="col-sm-1 cell-border">
+                <form id="form_{{ q.1.4 }}"
+                      method="post">
+                  {% csrf_token %}
+                  <button
+                     type="submit"
+                     class="btn btn-primary btn-block"
+                     formmethod="POST"
+                     id="form_button_{{ q.1.4 }}" 
+                     {% if q.1.1 in "SUCCESS" or q.1.1 in "FAILURE" %}
+                     name="delete_{{ q.1.5 }}"
+                     title="Delete" 
+                     value="{{ q.1.4 }}">
+                    Delete
+                    {% else %}
+                    name="abort_{{ q.1.5 }}"
+                    title="Abort" 
+                    value="{{ q.1.4 }}">
+                    Abort
+                    {% endif %}
+                  </button>
+                </form>
+              </div>
+            </div>
 	  </div>
 	</div>
+        <div id="div_qs-res_{{ q.1.5 }}_{{ q.1.4 }}"
+             class="table-row data qs-res" style="display: none">
+          <div class="table-cell text-left">
+            <div class="row-sm-12">
+              {% with id=q.1.4 name=q.1.0 mission=q.1.5 %}
+              {% include "avi/query_results.html" %}
+              {% endwith %}
+            </div>
+          </div>
+        </div>
 	{% endfor %}
       </div>
       <div class="table-footer text-right">
@@ -129,6 +152,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
              value="{{ ppage }}">
             Prev
           </button>
+          Page {{ cpage }} of {{ pages }}
           <button
              type="submit"
              class="btn btn-primary"

@@ -88,7 +88,7 @@ class gaia_query_task(parent):
         try:
             ra = None
             dec = None
-            if data.get('name'):
+            if data.get('name') and data.get('name_coord') == 'name':
                 log.info("Name attr %s found, retrieving coordinates from " \
                          + "Simbad/Ned databases", data['name'])
                 coords = simbad().get_object_coordinates(data['name'])
@@ -210,7 +210,7 @@ class gaia_query_task(parent):
 
         log.info("%s",str(data))
         
-        if data.get('input_file'):
+        if data.get('input_file') and data.get('name_coord') == 'file':
             log.info('There is an input file')
             try:
                 d = jm.read_gaia_input(data['input_file'])
@@ -223,7 +223,7 @@ class gaia_query_task(parent):
             finally:
                 os.remove(data['input_file'])
             return
-        elif data.get('adql'):
+        elif data.get('adql') and data.get('name_coord') == 'adql':
             log.info('ADQL query')
             im = risea().get().interface_manager
             fm = file_manager()

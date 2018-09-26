@@ -76,6 +76,13 @@ class get_algorithm_info(parent):
 
         alg_info = algorithm_manager().get_algorithm(am.definition_file)
 
+        inp = alg_info['algorithm']['input']
+        
+        #inp = {}
+
+        #inp = sorted(inp.items())
+        #inp = sorted(inp, key = lambda x: (x.get('group') is None, x))
+
         self.job_data.data = {}
         self.job_data.data['algorithm'] = alg_info['algorithm']
         
@@ -95,7 +102,6 @@ class get_algorithm_info(parent):
             self.job_data.data['res'] = []
         has_user = algorithm_manager().has_param_type(am.definition_file,
                                                       'user_data')
-
         if has_user:
             self.job_data.data['user'] = []
             

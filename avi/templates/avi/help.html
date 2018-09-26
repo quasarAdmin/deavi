@@ -1,0 +1,71 @@
+<!--
+Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+
+This file is part of DEAVI.
+
+DEAVI is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+DEAVI is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "avi/header.html" %}
+  </head>
+  <body>
+    <div id="navbar">
+      {% include "avi/navbar.html" %}
+    </div>
+    <div class="container-fluid">
+      <div id="content" class="row content">
+	<div id="sidebar" class="col-sm-2 sidenav">
+	  {% include "avi/sidebar-nav.html" with sidebar_menu="help"%}
+	</div>
+	<div id="real-content" class="col-sm-10">
+	  <!-- ------------------------------------------------------------- -->
+	  <!-- ------------------------------------------------------------- -->
+	  <!-- ------------------------------------------------------------- -->
+	  <h1>Help</h1>
+          <div class="smf-text-justify sfm-separator">
+            <h3>How to start an algorithm</h3>
+            <ul>
+              <li><p>To start an algorithm click on the Algorithms option in the side menu and select <a href="{{ avi_url }}avi/algorithms">Start</a></p></li>
+              <li>
+                <p>You can always check the status of the execution by going to the <a href="{{ avi_url }}avi/status">Pipeline</a> page. Here you can also see the results of such execution once it is finished.<p>
+              </li>
+            </ul>
+          </div>
+          <div class="smf-text-justify sfm-separator">
+            <h3>How to query the mission archives</h3>
+            <ul>
+              <li><p>To query the <a href="https://gea.esac.esa.int/archive/">Gaia archive</a> click on the Queries option in the side menu and select <a href="{{ avi_url }}avi/queries/gaia">Gaia</a> Here you will find all the options to select a region of the sky and retrieve the data from that region.</p>
+              </li>
+              <li><p>To query the <a href="http://archives.esac.esa.int/hsa/whsa/">Herschel science archive</a> click on the Queries option in the side menu and select <a href="{{ avi_url }}avi/queries/herschel">Herschel</a> Here you will find all the options to select a region of the sky and retrieve the data from that region.</p></li>
+              <li>
+                <p>You can always check the status of the query by going to the <a href="{{ avi_url }}avi/queries/status">Status</a> page. Here you can also see the results of such query once it is finished.<p>
+              </li>
+            </ul>
+          </div>
+          <div class="smf-text-justify sfm-separator">
+            <h3>How to manage your Data</h3>
+            <ul>
+              <li><p>To manage your files go to Data on the side menu and select <a href="{{ avi_url }}avi/resources/filemanager">Data</a></p></li>
+            </ul>
+          </div>
+	  <!-- ------------------------------------------------------------- -->
+	  <!-- ------------------------------------------------------------- -->
+	  <!-- ------------------------------------------------------------- -->
+	</div>
+      </div>
+    </div>
+  </body>
+</html>

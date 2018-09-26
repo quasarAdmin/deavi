@@ -16,14 +16,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<title>DEAVI</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-{% load static %}
-<link rel="stylesheet" href="{% static 'avi/lib/bootstrap.min.css' %}">
-<script src="{% static 'avi/lib/jquery.min.js' %}"></script>
-<script src="{% static 'avi/lib/bootstrap.min.js' %}"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="{% static 'avi/css/style.css' %}">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<div class="query-container"
+     id="{{ mission }}_{{ id }}_query-container"
+     loaded="false">
+  {% load static %}
+  <script type="text/javascript" 
+          src="{% static 'avi/js/query_results.js' %}"></script>
+  <!-- <h4>Results of {{ name }}</h4> -->
+</div>

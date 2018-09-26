@@ -1,0 +1,16 @@
+{"algorithm":{
+    "name": "colourstars",
+    "view_name": "Colourstars",
+    "input":{
+        "input_1":{
+            "name": "gaia_file",
+            "view_name": "Gaia",
+            "type": "gaia_table"
+        },
+        "input_2":{
+            "name": "n_stars",
+            "view_name": "number of stars",
+            "type": "float"
+        }
+    }
+}}

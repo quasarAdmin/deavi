@@ -86,7 +86,7 @@ class herschel_query_task(parent):
         try:
             ra = None
             dec = None
-            if data.get('name'):
+            if data.get('name') and data.get('name_coord') == 'name':
                 log.info("Name attr %s found, retrieving coordinates from " \
                          + "Simbad/Ned databases", data['name'])
                 coords = simbad().get_object_coordinates(data['name'])
@@ -243,7 +243,7 @@ class herschel_query_task(parent):
 
         data = self.task_data.data
         jm = json_manager()
-        if data.get('input_file'):
+        if data.get('input_file') and data.get('name_coord') == 'file':
             log.info('There is an input file')
             #self.get_herschel_data(log, data)
             try:
@@ -270,7 +270,7 @@ class herschel_query_task(parent):
                 pass
                 #os.remove(data['input_file'])
             return
-        elif data.get('adql'):
+        elif data.get('adql') and data.get('name_coord') == 'adql':
             log.info('ADQL query')
             im = risea().get().interface_manager
             fm = file_manager()
@@ -293,7 +293,7 @@ class herschel_query_task(parent):
                                                         "name":data['output_file']}
                 fm.save_file_plain_data(src,"%s.vot"%(file_name),
                                         wh().get().HSA_PATH,
-                                        self.task_id, "gaia", timezone.now())
+                                        self.task_id, "hsa", timezone.now())
 
             log.info("Everything done!")
             return

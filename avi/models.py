@@ -126,6 +126,9 @@ class gaia_query_model(parent):
     ## pipeline name used to get the pipeline task and start it
     pipeline_task = "gaia_query"
 
+    def __lt__(self, other):
+        return self.pk < other.pk
+
 class herschel_query_model(parent):
     """@class gaia_query_model
     The gaia_query_model defines the data base model for the gaia query 
@@ -177,6 +180,9 @@ class herschel_query_model(parent):
     is_aborted = models.BooleanField(default=False)
     ## pipeline name used to get the pipeline task and start it
     pipeline_task = "herschel_query"
+    
+    def __lt__(self, other):
+        return self.pk < other.pk
 
 class resource_model(models.Model):
     """@class resource_model
@@ -251,3 +257,6 @@ class algorithm_info_model(models.Model):
     definition_file = models.CharField(max_length=255)
     ## the algorithm type -> installed, temporal, uploaded
     algorithm_type = models.CharField(max_length=255)
+
+    def __lt__(self, other):
+        return self.pk < other.pk

@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<!DOCTYPY html>
+<!DOCTYPE html>
 <html lang="en">
   <!-- Start HEAD --> 
   <head>
@@ -26,6 +26,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
     <link rel="stylesheet"
     type="text/css" href="{% static 'avi/css/resources_filemanager.css' %}"/>
     <script src="{% static 'avi/lib/samp.js' %}"></script>   
+    <!-- <script src="{% static 'avi/lib/flXHR.js' %}"></script> -->
     <script src="{% static 'avi/js/samp.js' %}"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   </head>
@@ -82,7 +83,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
          </div>
          <br><br>
       <!-- End GENERAL BUTTONS -->
-    <!-- Start CENTRAL TABLE --> 
+      <!-- Start CENTRAL TABLE --> 
          <div class="table text-center">
           <!-- Start Header Table -->
           <div class="table-row heading">
@@ -265,6 +266,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                    value="{{ ppage }}">
                   Prev
                 </button>
+                Page {{ cpage }} of {{ pages }}
                 <button
                    type="submit"
                    class="btn btn-primary"

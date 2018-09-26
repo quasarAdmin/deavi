@@ -5,4 +5,4 @@ bokeh==0.12.10
 #selenium
 #phantomjs
 #pillow
-
+#astropy_healpix

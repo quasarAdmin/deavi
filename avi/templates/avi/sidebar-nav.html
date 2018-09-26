@@ -18,6 +18,48 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <div class="col-sm-12 col-md-12">
   <div class="panel-group" id="accordion">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse"
+	     data-parent="#accordion"
+	     href="#collapseThree">
+	    <span class="glyphicon glyphicon-th-list">
+            </span> Algorithms</a>
+        </h4>
+      </div>
+      {% if sidebar_menu == "pipeline"%}
+      <div id="collapseThree" class="panel-collapse collapse in">
+      {% else %}
+      <div id="collapseThree" class="panel-collapse collapse">
+      {% endif %}
+        <div class="panel-body">
+          <table class="table">
+            <tr>
+              <td>
+                <!--<span class="glyphicon glyphicon-home"></span>-->
+                <span class=""></span>
+		      <a href="{{ avi_url }}avi/algorithms">Start</a>
+	      </td>
+	    </tr>
+	    <tr>
+              <td>
+                <span class=""></span>
+		      <a href="{{ avi_url }}avi/status">Pipeline</a>
+	      </td>
+	    </tr>
+	    <!--<tr>
+	      <td>
+		<span class="glyphicon glyphicon-console"></span>
+		<a href="#">Notebook</a>
+	      </td>
+	    </tr>-->                                
+	  </table>
+	</div>
+      </div>
+    </div>
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -67,7 +109,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 	     data-parent="#accordion"
 	     href="#collapseTwo">
 	    <span class="glyphicon glyphicon-hdd">
-            </span> Resources</a>
+            </span> Data</a>
         </h4>
       </div>
       {% if sidebar_menu == "resources"%}
@@ -86,50 +128,11 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
             <tr>
               <td>
                 <span class="">
-		</span><a href="{{ avi_url }}avi/resources/filemanager">Local</a>
+		</span><a href="{{ avi_url }}avi/resources/filemanager">Data</a>
               </td>
             </tr>
           </table>
         </div>
-      </div>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse"
-	     data-parent="#accordion"
-	     href="#collapseThree">
-	    <span class="glyphicon glyphicon-th-list">
-            </span> Pipeline</a>
-        </h4>
-      </div>
-      {% if sidebar_menu == "pipeline"%}
-      <div id="collapseThree" class="panel-collapse collapse in">
-      {% else %}
-      <div id="collapseThree" class="panel-collapse collapse">
-      {% endif %}
-        <div class="panel-body">
-          <table class="table">
-            <tr>
-              <td>
-                <span class="glyphicon glyphicon-home"></span>
-		      <a href="{{ avi_url }}avi/algorithms">Home</a>
-	      </td>
-	    </tr>
-	    <tr>
-              <td>
-                <span class=""></span>
-		      <a href="{{ avi_url }}avi/status">Status</a>
-	      </td>
-	    </tr>
-	    <!--<tr>
-	      <td>
-		<span class="glyphicon glyphicon-console"></span>
-		<a href="#">Notebook</a>
-	      </td>
-	    </tr>-->                                
-	  </table>
-	</div>
       </div>
     </div>
     <!--<div class="panel panel-default">
@@ -161,7 +164,12 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
           <table class="table">
             <tr>
               <td>
-		<a href="/avi/help/about">About</a>
+		<a href="/avi/help">Help</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+		<a href="/avi/about">About</a>
               </td>
             </tr>    
           </table>

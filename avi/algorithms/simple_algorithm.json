@@ -1,0 +1,21 @@
+{"algorithm":{
+    "name": "simple_algorithm",
+    "view_name": "Graph 2Dim",
+    "input":{
+        "input_1":{
+            "name": "gaia_file",
+            "view_name": "Gaia",
+            "type": "gaia_table"
+        },
+        "input_2":{
+            "name": "n_stars",
+            "view_name": "number of stars",
+            "type": "float"
+        },
+        "input_3":{
+            "name": "hsa_file",
+            "view_name": "HSA",
+            "type": "hsa_table"
+        }
+    }
+}}

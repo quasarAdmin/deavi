@@ -68,6 +68,8 @@ class get_algorithms(parent):
         all_ms = algorithm_info_model.objects.all().order_by('name_view',
                                                           'name','pk')
         
+        #sall_ms = sorted(all_ms, key = lambda x:(x.name_view is None, x))
+
         self.job_data.data = {}
         self.job_data.ok = all_ms is not None
         if not all_ms:

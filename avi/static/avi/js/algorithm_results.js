@@ -43,7 +43,7 @@ var get_results = function(id){
     var el = $("#"+id+"_algorithm-container");
     if (el.attr("loaded") == "false"){
         el.attr("loaded", "true");
-        el.append("<p>Loading results for the job "+id+"...</p>");
+        el.append('<p id="temp_p_'+id+'">Loading results for the job '+id+"...</p>");
         $.ajax({
             type:"POST",
             url:avi_url+"avi/ajax/get_results",
@@ -64,14 +64,17 @@ var get_results = function(id){
                         $.each(value, function(k,v){
                             //console.log(v);
                             u = avi_url+"avi/api/res/"+k;
-                            el.append('<a href="'+u+'">'+v+"</a>")
+                            el.append('<a href="'+u+'">'+v+"</a>");
                                 //.attr("href", "avi/api/res/"+k);
                         });
                     }
                 });
+                $("#temp_p_"+id).attr("style","display: none");
             },
             error: function(xhr, textStatus, throwError){
-                console.log(xhr);
+                //console.log(xhr);
+                $("#temp_p_"+id).attr("style","display: none");
+                el.append("<h4>An error occurred while retrieving the execution results</h4>");
             }
         });
     }

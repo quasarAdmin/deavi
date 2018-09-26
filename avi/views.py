@@ -332,7 +332,7 @@ def send_samp_data(request):
     return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
 
 def get_results(request):
-    """View for the retrieving of the results of an execution.
+    """View for the retrievement of the results of an execution.
 
     This function is used by an ajax script to retrieve 
     the results of an algorithm execution. If the request is an ajax request,
@@ -361,7 +361,7 @@ def get_results(request):
         return HttpResponse(json.dumps(response.data))
 
 def get_plot(request):
-    """View for the retrieving of a plot.
+    """View for the retrievement of a plot.
 
     This function is used by an ajax script to retrieve 
     a plot created as a result of an algorithm execution. 
@@ -389,6 +389,36 @@ def get_plot(request):
                                            request.POST['id'])
         log.info(request.POST['id'])
         #log.info(response.data)
+        return HttpResponse(json.dumps(response.data))
+
+def get_query_info(request):
+    """View for the retrievement of the information of a query.
+
+    This function is used by an ajax script to retrieve 
+    the information of an query execution. If the request is an ajax request,
+    it will start a get_query_info job.
+
+    Args:
+    request: HttpRequest object.
+    
+    Returns:
+    A HttpResponse object with a json containing all the results information.
+
+    See:
+    django http HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+
+    @see job_get_query_info @link avi.core.pipeline.job_get_query_info
+    """
+    log = logger().get_log("views")
+    log.info(request.POST)
+    if request.is_ajax():
+        response = risea().get().start_job(wh_names().get().JOB_GET_QUERY_INFO,
+                                           {'id':request.POST['id'],
+                                            'mission': request.POST['mission']})
+        log.info(response.data)
         return HttpResponse(json.dumps(response.data))
 
 def query_gaia(request):
@@ -443,7 +473,7 @@ def query_gaia(request):
                 #risea().get().start_gaia_query(form.get_dict())
             #    logger().get_log("query_gaia").info("Query to the gaia "
             #                                        + "archive sent...")
-            log.debug("cleaned data \n%s",str(form.cleaned_data))
+            log.debug("cleaned data %s",str(data))
             risea().get().start_job(wh_names().get().JOB_GAIA_QUERY,
                                     data)
             return HttpResponseRedirect(wh_global_config().get().AVI_URL+'avi/queries/status')
@@ -461,7 +491,8 @@ def query_gaia(request):
                                                 'radius':'0.5',
                                                 'shape':'cone',
                                                 'name_coord':'equatorial',
-                                                'data_release':'dr1'}),
+                                                'data_release':'dr2',
+                                                'adql':"SELECT source_id,ra,ra_error,dec,dec_error,parallax,parallax_error,phot_g_mean_mag,bp_rp,radial_velocity,radial_velocity_error,phot_variable_flag,teff_val,a_g_val FROM gaiadr2.gaia_source  WHERE CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),CIRCLE('ICRS',COORD1(EPOCH_PROP_POS(100.2417,9.895,0,-.6300,-3.8800,17.6800,2000,2015.5)),COORD2(EPOCH_PROP_POS(100.2417,9.895,0,-.6300,-3.8800,17.6800,2000,2015.5)),0.001388888888888889))=1"}),
                'version':wh_global_config().get().VERSION,
                'avi_url':wh_global_config().get().AVI_URL}
     return HttpResponse(template.render(context,request))
@@ -508,7 +539,7 @@ def query_herschel(request):
                 filename = fs.save(full_name, f)
                 data['input_file'] = full_name
                 log.info(full_name)
-            log.debug("cleaned data \n%s", str(data))
+            log.debug("cleaned data %s", str(data))
             risea().get().start_job(wh_names().get().JOB_HSA_QUERY,
                                     data)
             
@@ -523,7 +554,8 @@ def query_herschel(request):
                                                     'shape':'cone',
                                                     'positional_images':'images',
                                                     'instrument':'PACS',
-                                                    'name_coord':'equatorial'}),
+                                                    'name_coord':'equatorial',
+                                                    'adql':"SELECT * FROM  hsa.pacs_point_source_100 WHERE 1= CONTAINS(POINT('ICRS',ra,dec), CIRCLE('ICRS', 100.2417, 9.895, 0.5))"}),
                'version':wh_global_config().get().VERSION,
                'avi_url':wh_global_config().get().AVI_URL}
     return HttpResponse(template.render(context,request))
@@ -820,16 +852,16 @@ def resources_filemanager(request):
 
     return HttpResponse(template.render(context,request))
 
-def help_about(request):
-    """View for the help/about page.
+def about(request):
+    """View for the about page.
 
-    This function provides the view for the help/about page.
+    This function provides the view for the about page.
 
     Args:
     request: HttpRequest object.
     
     Returns:
-    A HttpResponse object of the help_about.html template.
+    A HttpResponse object of the about.html template.
 
     See:
     HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
@@ -837,7 +869,29 @@ def help_about(request):
     See also:
     HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
     """
-    template = loader.get_template('avi/help_about.html')
+    template = loader.get_template('avi/about.html')
+    context = {'version':wh_global_config().get().VERSION,
+               'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
+    return HttpResponse(template.render(context,request))
+
+def help(request):
+    """View for the help page.
+
+    This function provides the view for the help page.
+
+    Args:
+    request: HttpRequest object.
+    
+    Returns:
+    A HttpResponse object of the help.html template.
+
+    See:
+    HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+    
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+    """
+    template = loader.get_template('avi/help.html')
     context = {'version':wh_global_config().get().VERSION,
                'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
     return HttpResponse(template.render(context,request))

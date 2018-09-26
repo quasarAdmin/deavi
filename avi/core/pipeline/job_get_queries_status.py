@@ -73,21 +73,21 @@ class get_queries_status(parent):
         wh = wh_frontend_config().get()
         sorting_wh = wh.SORTING_QUERY_BY
         order_by = 'request__pipeline_state__started_time'
-        order_lambda = lambda query: query.request.pipeline_state.started_time
+        order_lambda = lambda query: (query.request.pipeline_state.started_time is None, query)
         if sorting_wh == 'name':
             order_by = 'name'
-            order_lambda = lambda query: query.name
+            order_lambda = lambda query: (query.name is None, query)
         elif sorting_wh == '-name':
             order_by = '-name'
-            order_lambda = lambda query: query.name
+            order_lambda = lambda query: (query.name is None, query)
         elif sorting_wh == '-date':
             order_by = '-request__pipeline_state__started_time'
         elif sorting_wh == 'status':
             order_by = 'request__pipeline_state__state'
-            order_lambda = lambda query: query.request.pipeline_state.state
+            order_lambda = lambda query: (query.request.pipeline_state.state is None, query)
         elif sorting_wh == '-status':
             order_by = '-request__pipeline_state__state'
-            order_lambda = lambda query: query.request.pipeline_state.state
+            order_lambda = lambda query: (query.request.pipeline_state.state is None, query)
 
         all_gaia = gaia_query_model.objects.all().order_by(order_by,'pk')
         all_hsa = herschel_query_model.objects.all().order_by(order_by,'pk')
@@ -116,10 +116,17 @@ class get_queries_status(parent):
             reverse = True
             order_by.replace('-','',1)
         call = chain(all_gaia, all_hsa)
+        #try:
         all_ms = sorted(call , 
                         #key=attrgetter("name"), 
                         key = order_lambda,
                         reverse=reverse)
+        #except TypeError:
+        #    log.info("whaaat")
+        #    all_ms = sorted(call , 
+                            #key=attrgetter("name"), 
+        #                    key = lambda query: (query.name is None, query),
+        #                    reverse=True)
 
         pg = Paginator(all_ms, wh.MAX_QUERY_PER_PAGE)
         page = wh.CURRENT_QUERY_PAGE

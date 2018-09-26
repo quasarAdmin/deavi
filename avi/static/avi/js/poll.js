@@ -19,6 +19,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 $(document).ready(
     function do_poll()
     {
+        return;
         console.log("polling");
         /*$.post('avi/query_status.html', function(data){
           console.log("polling...");
@@ -35,6 +36,23 @@ $(document).ready(
                 //window.location.reload();
             }
         });
+    });
+
+$(document).ready(
+    function(){
+        $(".query-info").click(
+            function(){
+                //console.log("click");
+                var id = $(this).attr("qid");
+                var mission = $(this).attr("mission");
+                var res_id = "#div_qs-res_" +mission+"_"+id;
+                if($(res_id).css('display') == 'none'){
+                    $(res_id).show();
+                    get_qinfo(id, mission);
+                }else{
+                    $(res_id).hide();
+                }
+            });
     });
 
 $(document).ready(

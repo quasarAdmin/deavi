@@ -160,10 +160,12 @@ class wh_global_config:
                     self.PORTAL_URL = settings.PORTAL_URL
                 if settings.AVI_ROOT_URL:
                     self.AVI_URL = settings.AVI_ROOT_URL
-            #except ImportError:
+                #except ImportError:
             except Exception:
                 pass
             self.RESOURCES_PATH = self.OUTPUT_PATH
+            #self.PORTAL_URL = "https://net.quasarsr.com/deavi"
+            #self.AVI_URL = "https://net.quasarsr.com/deavi/"
 
         #
         #
@@ -221,6 +223,8 @@ class wh_names:
         JOB_GET_PLOT = "get_plot"
         ## Get result job name
         JOB_GET_RESULT = "get_result"
+        ## Get query info job name
+        JOB_GET_QUERY_INFO = "get_query_info"
         ## Abort job name
         JOB_ABORT = "abort"
         ## Delete job name
