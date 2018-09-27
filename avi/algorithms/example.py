@@ -14,11 +14,22 @@ import numpy as np
 from avi.utils.plotter import save_plot
 from avi.utils.data.data_file import data_file as data
 
+import pip
+
 class example:
     gaia_table = ""
     gaia_table2 = ""
     hsa_table = ""
     def run(self, id):
+        
+        #with open("/opt/gavip_avi/avi/pip_requirements.txt") as f:
+        #    f.write("astropy_healpix")
+        #pip.main(['install', 'astropy_healpix'])
+        #from astropy_healpix import HEALPix
+        #pip.main(['uninstall', 'astropy_healpix'])
+
+        return
+
         gaia_file = parse(self.gaia_table)
         # ---------------- Fix me -------------------
         #hsa_file = fits.open(self.hsa_table)

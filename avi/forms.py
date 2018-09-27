@@ -184,6 +184,13 @@ def get_gaia_dr2_tables():
         l.append((v,t))
     ret = tuple(sorted(l))
     return ret
+
+class upload_algorithm_form(forms.Form):
+    """@class upload_algorithm
+    This class defines the form to upload algorithms to the AVI
+    """
+    algorithm_name = forms.CharField(label='Algorithm Name', max_length=255, 
+                                     required=False)
         
 class query_herschel_form(forms.Form):
     """@class query_herschel_form

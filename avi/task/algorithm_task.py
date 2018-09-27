@@ -119,15 +119,20 @@ class algorithm_task(parent):
         head, tail = os.path.split(os.path.normpath(sc_path)) 
         #log.info(head)
         #log.info(self._get_package_str(head))
+        if alg_info.algorithm_type == "uploaded":
+            log.info("from %s import %s", alg_name, alg_name)
+            import sys
+            log.info(sys.path)
+            mod = __import__(alg_name, alg_name)
+        else:    
+            #package_str = "avi.algorithms." + alg_name
+            package_str = self._get_package_str(head) + alg_name
+            module_str = alg_name
 
-        #package_str = "avi.algorithms." + alg_name
-        package_str = self._get_package_str(head) + alg_name
-        module_str = alg_name
+            log.info("from %s import %s", package_str,module_str)
 
-        log.info("from %s import %s", package_str,module_str)
-
-        # FIXME: 
-        mod = __import__(package_str, fromlist=[module_str]) 
+            # FIXME: 
+            mod = __import__(package_str, fromlist=[module_str]) 
 
         log.info("Getting algorithm obj")
         

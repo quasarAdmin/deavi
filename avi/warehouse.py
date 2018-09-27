@@ -126,6 +126,9 @@ class wh_global_config:
             self.SOURCES_FMT = cfg["sources_fmt"]
             self.RESULTS_FMT = cfg["results_fmt"]
             self.USER_FMT = cfg["user_fmt"]
+
+            import sys
+            sys.path.append(wh_global_config().get().UPLOADED_ALGORITHM_PATH)
             
             self.log.debug(self.OUTPUT_PATH)
             self.log.debug(self.SOURCES_PATH)

@@ -24,6 +24,8 @@ This module provides the get_queries_status job.
 """
 from .job import job as parent
 
+import datetime
+
 from django.core.paginator import Paginator
 from itertools import chain
 from operator import attrgetter

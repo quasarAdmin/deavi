@@ -33,7 +33,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.template.defaulttags import register
 
-from .forms import query_gaia_form, query_herschel_form, resources_form
+from .forms import (query_gaia_form, query_herschel_form, resources_form,
+                    upload_algorithm_form)
 
 import sys, os
 from .utils.resources_manager import resources_manager
@@ -157,6 +158,72 @@ def pipeline_v2(request):
     context['avi_url'] = wh_global_config().get().AVI_URL
     context['version'] = wh_global_config().get().VERSION
     log.info(str(context))
+    return HttpResponse(template.render(context,request))
+
+def upload_algorithm(request):
+    """Vew for the uploading of new algorithms.
+
+    This function provides the view for the upload of new algorithms.
+    If recieves a POST request it will save the algorithm retrieved from it.
+
+    Args:
+    request: HttpRequest object.
+
+    Returns:
+    A HttpResponse object of the upload_algorithm.html template. 
+    If recieves a POST request it will return a HttpResponseRedirect object to 
+    the avi/pipeline url.
+    
+    See:
+    HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+
+    See also:
+    HttpResponseRedirect: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+    """
+    log = logger().get_log("views")
+    if request.method=='POST':
+        form = upload_algorithm_form(request.POST)
+        log.info("post")
+        if form.is_valid():
+            log.info("valid")
+            data = form.cleaned_data
+            if not request.FILES.get('input_script') or \
+               not request.FILES.get('input_json'):
+                log.warning("Missing input files")
+                #import pip
+                #pip.main(['install', 'astropy_healpix'])
+                #import subprocess
+                #import sys
+                #subprocess.call([sys.executable, '-m', 'pip', 'install', 'astropy_healpix'])
+                #with open('pip_requirements.txt') as f:
+                #    f.write('astropy_healpix')
+            else:
+                from django.core.files.storage import FileSystemStorage
+                fs = FileSystemStorage()
+                f = request.FILES['input_script']
+                full_name = os.path.join(wh_global_config().get().UPLOADED_ALGORITHM_PATH, 
+                                         f.name)
+                log.info(full_name)
+                filename = fs.save(full_name, f)
+                data['input_script'] = full_name
+                f = request.FILES['input_json']
+                full_name = os.path.join(wh_global_config().get().UPLOADED_ALGORITHM_PATH, 
+                                         f.name)
+                log.info(full_name)
+                filename = fs.save(full_name, f)
+                data['input_json'] = full_name
+                #risea().get().start_job(wh_names().get().JOB_GAIA_QUERY,
+                #                        data)
+                wh_global_config().get().ALGORITHMS_LOADED = False
+                return HttpResponseRedirect(wh_global_config().get().AVI_URL+'avi/algorithms')
+    template = loader.get_template('avi/upload_algorithm.html')
+    context = {}
+    context['avi_url'] = wh_global_config().get().AVI_URL
+    context['version'] = wh_global_config().get().VERSION
+    context['form_upload_algorithm'] = upload_algorithm_form()
     return HttpResponse(template.render(context,request))
 
 def get_alg_info(request):

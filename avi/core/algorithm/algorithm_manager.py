@@ -126,7 +126,7 @@ class algorithm_manager:
 
         self.update_database(wh_global_config().get().ALGORITHM_PATH, 
                              "installed")
-        self.log.info(wh_global_config().get().UPLOADED_ALGORITHM_PATH)
+        #self.log.info(wh_global_config().get().UPLOADED_ALGORITHM_PATH)
         self.update_database(wh_global_config().get().UPLOADED_ALGORITHM_PATH,
                              "uploaded")
 
