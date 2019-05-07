@@ -369,6 +369,20 @@ class resources_manager(object):
 #             wh_frontend_config().get().CURRENT_PATH + "/" + file_name
         path_to_delete =  wh_frontend_config().get().CURRENT_PATH
         self.log.info(path_to_delete)
+        self.log.info(file_name)
+        self.log.info(file_name.startswith('gaia'))
+        if file_name.startswith('gaia'):
+            if 'gaia' not in path_to_delete:
+                path_to_delete = "/data/output/sources/gaia"
+        elif  file_name.startswith('hsa'):
+            if 'hsa' not in path_to_delete:
+                path_to_delete = "/data/output/sources/hsa"
+        elif  file_name.startswith('res'):
+            if 'results' not in path_to_delete:
+                path_to_delete = "/data/output/results"
+        elif  file_name.startswith('user'):
+            if 'user' not in path_to_delete:
+                path_to_delete = "/data/output/user"
 
         try:
 #             os.remove(file_to_delete)

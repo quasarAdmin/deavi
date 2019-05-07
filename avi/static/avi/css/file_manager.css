@@ -1,0 +1,129 @@
+/*
+Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+
+This file is part of DEAVI.
+
+DEAVI is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+DEAVI is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+.file-element {
+    background-color: white;
+    border-radius: 5px 5px 5px 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%
+}
+
+.file-element:hover {
+    /*background-color: rgb(96, 164, 224);*/
+    background-color: rgb(209, 233, 255);
+    border-radius: 5px 5px 5px 5px;
+    cursor: context-menu !important;
+}
+
+.hyperlink_button {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    font-size: 1em;
+    color: #1A89FF;
+    cursor: pointer;
+}
+
+.hyperlink_button:hover {
+    text-decoration: underline;
+    color: #246DBC;
+}
+
+.hyperlink_button_data {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    font-size: 1em;
+    color: #1A89FF;
+    cursor: pointer;
+}
+
+.hyperlink_button_data:hover {
+    text-decoration: underline;
+    color: #246DBC;
+}
+
+.filesource-element {
+    font-size: 1em
+}
+
+#row-board {
+    background-color: rgb(163, 163, 163);
+    border-radius: 5px 5px 5px 5px;
+    margin-top: 10px;
+    width: 90%;
+}
+
+.filemanager-margin-top {
+    margin-top: 10px;
+}
+
+.filemanager-button-home-mr {
+    margin-right: 5px;
+}
+
+.filemanager-button-arrow-mr {
+    margin-right: 10px;
+}
+
+.breadcrumb-disabled {
+    margin-top: 5px;
+}
+
+.breadcrumb-enabled {
+    margin-top: 6px;
+}
+
+.filemanager-row-elements {
+    margin-top: 10px !important;
+    margin-left: 10px !important;
+    margin-bottom: 10px !important;
+    margin-right: 10px !important;
+}
+
+.folder-icon {
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+.folder-ul {
+    margin-top: 15px;
+    margin-left: 5px;
+    text-align: left;
+}
+
+.file-icon {
+    margin-left: 5px;
+    margin-top: 20px;
+}
+
+.file-ul {
+    margin-top: 15px;
+    text-align: left;
+    margin-left: -20px;
+}

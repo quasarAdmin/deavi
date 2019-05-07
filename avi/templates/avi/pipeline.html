@@ -16,144 +16,123 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<!DOCTYPY html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     {% include "avi/header.html" %}
     <!--<script
        src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     </script>-->
-    <link rel="stylesheet"
-          href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     </script>
-    <script
-       src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     </script>
-    <script
-       src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js">
     </script>
     {% load static %}
     <script type="text/javascript" src="{% static 'avi/js/pipeline.js' %}"></script>
-  </head>
-  <body>
+</head>
+
+<body>
     <div id="navbar">
-      {% include "avi/navbar.html" %}
+        {% include "avi/navbar.html" %}
     </div>
     <div class="container-fluid">
-      <div id="content" class="row content">
-        <div id="sidebar" class="col-sm-2 sidenav">
-          {% include "avi/sidebar-nav.html" with sidebar_menu="pipeline" %}
-        </div>
-        <div id="real-content" class="col-sm-10">
-          <!-- -------------------------------------------------------------- -->
-          <!-- -------------------------------------------------------------- -->
-          <!-- -------------------------------------------------------------- -->
-          <h1>Pipeline</h1>
-          <div id="dialog-form"></div>
-          <div class="table">
-            <div class="table-row heading">
-              <div class="table-head">
-                <!-- <h1>Pipeline</h1> -->
-              </div>
-            </div>
-            {% for key, value in alg_data.items %}
-            <div class="table-row">
-              <!-- <p>row {{ key }} {{ value }}</p> -->
-              <div class="table-cell">
-                <div class="row col-sm-12 alg-button" id="row_{{ key }}">
-                  <!--<div class="col-sm-6">-->
-                  <!--<button class="alg-button table-button" type="button"
+        <div id="" class="row content">
+            {% include "avi/sidebar-nav.html" with sidebar_menu="pipeline" %}
+            <div id="real-content" class="col">
+                <!-- -------------------------------------------------------------- -->
+                <!-- -------------------------------------------------------------- -->
+                <!-- -------------------------------------------------------------- -->
+                <h1>Pipeline</h1>
+                <div id="dialog-form"></div>
+                <div class="table">
+                    <div class="table-row heading">
+                        <div class="table-head">
+                            <!-- <h1>Pipeline</h1> -->
+                        </div>
+                    </div>
+                    {% for key, value in alg_data.items %}
+                    <div class="table-row">
+                        <!-- <p>row {{ key }} {{ value }}</p> -->
+                        <div class="table-cell">
+                            <div class="row col-sm-12 alg-button" id="row_{{ key }}">
+                                <!--<div class="col-sm-6">-->
+                                <!--<button class="alg-button table-button" type="button"
                       value="{{ key }}">{{ value.view_name }}</button>-->
-                  <label>{{ value.view_name }}</label>
-                </div>            
-                {% for k1, v1 in value.items %}
-                {% if k1 == "input" %}
-                <!--<div class="table-row" id="{{ key }}">
+                                <label>{{ value.view_name }}</label>
+                            </div>
+                            {% for k1, v1 in value.items %} {% if k1 == "input" %}
+                            <!--<div class="table-row" id="{{ key }}">
                     <div class="table-cell">-->
-                <div class="row col-sm-12" id="{{ key }}">
-                  <a href="" 
-                     onclick="return popup_algorithm('algorithm/{{ key }}')">
+                            <div class="row col-sm-12" id="{{ key }}">
+                                <a href="" onclick="return popup_algorithm('algorithm/{{ key }}')">
                     {{ key }}</a>
-                  <hr>
-                  <form id="{{ key }}_form" method="post">
-                    {% csrf_token %}
-                    {% for k, v in v1.items %}
-                    {% if v.type == "bool" %}
-                    <div class="row">
-                      <label>{{ v.view_name }}</label>
-                      <input name="{{ key }}_{{ k }}" type="checkbox" value="true">
-                    </div>
-                    {% endif %}
-                    {% if v.type == "table" or v.type == "string" %}
-                    <div class="row">
-                      <label>{{ v.view_name }}</label>
-                      <input name="{{ key }}_{{ k }}" type="text" value="">
-                    </div>
-                    {% endif %}
-                    {% if v.type == "float" or v.type == "integer" %}
-                    <div class="row">
-                      <label>{{ v.view_name }}</label>
-                      <input name="{{ key }}_{{ k }}" type="text" value="">
-                    </div>
-                    {% endif %}
-                    {% if v.type == "gaia_table" %}
-                    <div class="row">
-                      <div class="col dropdown">
-                        <button class="btn btn-primary dropdown-toggle"
-                                id="{{ key }}_{{ k }}_dropdown" type="button"
-                                data-toggle="dropdown">
+                                <hr>
+                                <form id="{{ key }}_form" method="post">
+                                    {% csrf_token %} {% for k, v in v1.items %} {% if v.type == "bool" %}
+                                    <div class="row">
+                                        <label>{{ v.view_name }}</label>
+                                        <input name="{{ key }}_{{ k }}" type="checkbox" value="true">
+                                    </div>
+                                    {% endif %} {% if v.type == "table" or v.type == "string" %}
+                                    <div class="row">
+                                        <label>{{ v.view_name }}</label>
+                                        <input name="{{ key }}_{{ k }}" type="text" value="">
+                                    </div>
+                                    {% endif %} {% if v.type == "float" or v.type == "integer" %}
+                                    <div class="row">
+                                        <label>{{ v.view_name }}</label>
+                                        <input name="{{ key }}_{{ k }}" type="text" value="">
+                                    </div>
+                                    {% endif %} {% if v.type == "gaia_table" %}
+                                    <div class="row">
+                                        <div class="col dropdown">
+                                            <button class="btn btn-primary dropdown-toggle" id="{{ key }}_{{ k }}_dropdown" type="button" data-toggle="dropdown">
                           <span id="table-selected">{{ v.view_name }}</span>
                           <span class="caret"></span></button>
-                        <ul class="dropdown-menu scrollable-menu" id="hola">
-                          <!-- id="{{ key }}_{{ k }}_dropdown-menu" -->
-                          {% for item in resources.gaia.items %}
-                          <li><a href="#"
-                                 the_name="{{ key }}"
-                                 type="{{ v.type }}"
-                                 id="{{ k }}">{{ item.1 }}</a></li>
-                          {% endfor %}
-                        </ul>
-                      </div>
-                    </div>
-                    {% endif %}
-                    {% if v.type == "hsa_table" %}
-                    <div class="row">
-                      <div class="col dropdown">
-                        <button class="btn btn-primary dropdown-toggle"
-                                id="{{ key }}_{{ k }}_dropdown" type="button"
-                                data-toggle="dropdown">
+                                            <ul class="dropdown-menu scrollable-menu" id="hola">
+                                                <!-- id="{{ key }}_{{ k }}_dropdown-menu" -->
+                                                {% for item in resources.gaia.items %}
+                                                <li><a href="#" the_name="{{ key }}" type="{{ v.type }}" id="{{ k }}">{{ item.1 }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    {% endif %} {% if v.type == "hsa_table" %}
+                                    <div class="row">
+                                        <div class="col dropdown">
+                                            <button class="btn btn-primary dropdown-toggle" id="{{ key }}_{{ k }}_dropdown" type="button" data-toggle="dropdown">
                           <span id="table-selected">{{ v.view_name }}</span>
                           <span class="caret"></span></button>
-                        <ul class="dropdown-menu scrollable-menu" id="hola">
-                          <!-- id="{{ key }}_{{ k }}_dropdown-menu" -->
-                          {% for item in resources.hsa.items %}
-                          <li><a href="#"
-                                 the_name="{{ key }}"
-                                 type="{{ v.type }}"
-                                 id="{{ k }}">{{ item.1 }}</a></li>
-                          {% endfor %}
-                        </ul>
-                      </div>
+                                            <ul class="dropdown-menu scrollable-menu" id="hola">
+                                                <!-- id="{{ key }}_{{ k }}_dropdown-menu" -->
+                                                {% for item in resources.hsa.items %}
+                                                <li><a href="#" the_name="{{ key }}" type="{{ v.type }}" id="{{ k }}">{{ item.1 }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    <!-- <p>input {{ v }} {{ v.type }}</p> -->
+                                    {% endfor %}
+                                    <button name="algorithm" type="submit" value="{{ key }}">Run</button>
+                                </form>
+                            </div>
+                            <!-- </div>-->
+                            {% endif %} {% endfor %}
+                        </div>
                     </div>
-                    {% endif %}
-                    <!-- <p>input {{ v }} {{ v.type }}</p> -->
                     {% endfor %}
-                    <button name="algorithm" type="submit"
-                            value="{{ key }}">Run</button>
-                  </form>
                 </div>
-                <!-- </div>-->
-                {% endif %}
-                {% endfor %}
-              </div>
+                <!-- --------------------------------------------------------------- -->
+                <!-- --------------------------------------------------------------- -->
+                <!-- --------------------------------------------------------------- -->
             </div>
-            {% endfor %}
-          </div>
-        <!-- --------------------------------------------------------------- -->
-        <!-- --------------------------------------------------------------- -->
-        <!-- --------------------------------------------------------------- -->
         </div>
-      </div>
     </div>
-  </body>
+    {% include "avi/footer.html" %}
+</body>
+
 </html>

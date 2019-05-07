@@ -17,7 +17,10 @@ You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 */
 var get_qinfo = function(id, mission){
+  console.log("id: " + id + ", mission: " + mission);
     var el = $("#"+mission+"_"+id+"_query-container");
+    var content = "";
+    var instrument = false;
     if (el.attr("loaded") == "false"){
         el.attr("loaded", "true");
         el.append('<p id="temp_p_'+id+'">Loading results for the query '+id+"...</p>");
@@ -29,15 +32,43 @@ var get_qinfo = function(id, mission){
                   'mission': mission,
                   csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
             success: function(data){
-                el.append('<h4>Query Parameters</h4>');
-                el.append('RA: '+ data['ra']+'</br>');
-                el.append('DEC: '+ data['dec']+'</br>');
-                el.append('Radius: '+data['radius']+'</br>');
-                if(data['files']){
-                    el.append('<h4>Files</h4>');
-                    $.each(data['files'], function(key, value){
-                        console.log(key+" "+value);
-                        el.append('<div id="file_btn_group_'+key+'">');
+              //console.log(data);
+              content = '<div class="row">'+'<div class="col-sm-5 offset-sm-1 mt-3 query_parameters"><div class="card border-primary"><div class="card-body">'+'<h4 class="text-center">Query Parameters</h4>';
+              for(var i = 0; i < data.length; i++){
+                if( data[i][0]!= 'nofile' &&  data[i][0]!= 'files' && data[i][0]!= 'params' && data[i][0] != 'instrument' && data[i][0] != 'table' && data[i][0] != 'positional_images'){
+                  content += '<p class="card-text" style="text-transform: capitalize"><span class="font-weight-bold">'+data[i][0]+':</span> '+ data[i][1]+'</br></p>';
+                }
+                if(data[i][0] === 'instrument'){
+                  instrument = true;
+                  content += '<p class="card-text" style="text-transform: capitalize"><span class="font-weight-bold">'+data[i][0]+':</span> '+ data[i][1]+'</br></p>';
+                }
+                if(!instrument && data[i][0] === 'table'){
+                  content += '<p class="card-text" style="text-transform: capitalize"><span class="font-weight-bold">'+data[i][0]+':</span> '+ data[i][1]+'</br></p>';
+                }
+                if(data[i][0]=== 'params' &&  data[i][1].length > 0){
+                  content += '<p class="card-text" style="text-transform: capitalize"><span class="font-weight-bold">'+data[i][0]+':</span> '+ data[i][1]+'</br></p>';
+                }
+              }
+              content +='</div></div></div>';
+                
+
+
+                //el.append('<div class="row">'+'<div class="col-sm-6">'+'<h4>Query Parameters</h4>'+'RA: '+ data['ra']+'</br>'+'DEC: '+ data['dec']+'</br>'+'Radius: '+data['radius']+'</br>');
+                
+                //el.append('<h4>Query Parameters</h4>');
+                //el.append('RA: '+ data['ra']+'</br>');
+                //el.append('DEC: '+ data['dec']+'</br>');
+                //el.append('Radius: '+data['radius']+'</br>');
+                //console.log(data);
+                //if(data['files']){
+                content+='<div class="col-sm-5 mt-3 mb-3 query_files"><div class="card border-primary"><div class="card-body"><h4 class="text-center">Files</h4>';
+                if(data[data.length-1][0] === 'files'){
+                    
+                    //el.append('<h4>Files</h4>');
+                    $.each(data[data.length-1][1], function(key, value){
+                        //console.log(key+" "+value);
+                        content+='<div id="file_btn_group_'+key+'">';
+                        //el.append('<div id="file_btn_group_'+key+'">');
                         var e = $("#file_btn_group_"+key);
                         //e.append('<form class="col-inline-button btn-group"  action="'+ avi_url +'avi/api/resource/'+key+'"><div class="col-inline-button"><button class="btn btn-success"type="submit" value="download"title="Download '+value+'"><span class="glyphicon glyphicon-cloud-download"></span></button></div></form>');
                         //e.append('<form class="col-inline-button">'+
@@ -108,17 +139,30 @@ var get_qinfo = function(id, mission){
                         }else{
                             u = "#";
                         }
-                        e.append('    <a class="btn-group" href="'+u+'">'+value+"</a></br>");
+                        //e.append('    <a class="btn-group" href="'+u+'">'+value+"</a></br>");
+                        content+='<a class="btn-group a-link" target="_blank" href="'+u+'" style="display: block; width: 100%; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" data-toggle="tooltip" data-pacement="top" title="' + value + '">'+value+"</a></br>";
+                        content+='</div>';
                         //el.append('</div>');
                     });
+                    
+                }else{
+                  content += '<p>This query has no files</p>';
                 }
+                content+='</div></div></div></div>';
+                el.append(content);
                 $("#temp_p_"+id).attr("style","display: none");
             },
             error: function(xhr, textStatus, throwError){
                 $("#temp_p_"+id).attr("style","display: none");
                 el.append("<h4>An error occurred while retrieving the query information</h4>");
-                console.log(xhr);
             }
         });
     }
 }
+
+
+
+
+
+
+//------------------------------------------

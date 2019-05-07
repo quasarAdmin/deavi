@@ -66,7 +66,7 @@ class get_algorithm_info(parent):
         """
         log = logger().get_log('algorithm_manager')
 
-        #log.info(data)
+        log.info(data)
         
         am = algorithm_info_model.objects.get(pk=data['id'])
         

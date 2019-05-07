@@ -1,0 +1,85 @@
+/*
+Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+
+This file is part of DEAVI.
+
+DEAVI is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+DEAVI is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+.footer {
+    text-align: center;
+    background-color: rgb(241, 241, 241);
+    color: black;
+    width: 100%;
+    height: 600px;
+    position: bottom;
+}
+
+.footer .col-sm-4 {
+    margin-top: 50px;
+}
+
+.form-size {
+    width: 80%;
+    float: right;
+}
+
+#ul-footer li {
+    list-style-type: circle;
+}
+
+.f-li {
+    color: rgb(0, 157, 219);
+}
+
+.a-footer {
+    font-size: 1em !important;
+    padding-left: 0px !important;
+    /*background-color: rgb(231, 231, 231);*/
+    background-color: transparent;
+    border-left: none;
+    border-right: none;
+}
+
+.f-column {
+    padding-bottom: 10px;
+    margin-bottom: 10px
+}
+
+.f-border {
+    border-right: 1px solid black;
+}
+
+.f-back {
+    /*background-color: rgb(231, 231, 231);*/
+    background-color: rgb(241, 241, 241);
+}
+
+.images-footer {
+    width: 80%;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.images-footer-quasar {
+    width: 80%;
+    margin-top: 50px;
+    border-radius: 10px;
+}
+
+.images-footer-last {
+    width: 80%;
+    margin-top: 20px;
+    border-radius: 10px;
+}

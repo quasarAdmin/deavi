@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div class="col-sm-12 col-md-12">
+<!--<div class="col-sm-12 col-md-12">
   <div class="panel-group" id="accordion">
 
     <div class="panel panel-default">
@@ -37,9 +37,9 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
         <div class="panel-body">
           <table class="table">
             <tr>
-              <td>
-                <!--<span class="glyphicon glyphicon-home"></span>-->
-                <span class=""></span>
+              <td>-->
+<!--<span class="glyphicon glyphicon-home"></span>-->
+<!--<span class=""></span>
 		      <a href="{{ avi_url }}avi/algorithms">Start</a>
 	      </td>
 	    </tr>
@@ -49,13 +49,19 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 		      <a href="{{ avi_url }}avi/status">Pipeline</a>
 	      </td>
 	    </tr>
+            <tr>
+              <td>
+                <span class=""></span>
+		<a href="{{ avi_url }}avi/upload_algorithm">New Algorithm</a>
+	      </td>
+	    </tr>
 	    <!--<tr>
 	      <td>
 		<span class="glyphicon glyphicon-console"></span>
 		<a href="#">Notebook</a>
 	      </td>
-	    </tr>-->                                
-	  </table>
+	    </tr>-->
+<!--</table>
 	</div>
       </div>
     </div>
@@ -91,13 +97,13 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
               <td>
                 <a href="{{ avi_url }}avi/queries/status">Status</a>
               </td>
-            </tr>
-	    <!--<tr>
+            </tr>-->
+<!--<tr>
               <td>
                 <a href="/avi/queries/saved">Saved</a>
               </td>
             </tr>-->
-          </table>
+<!--</table>
         </div>
       </div>
     </div>
@@ -118,14 +124,14 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
       <div id="collapseTwo" class="panel-collapse collapse">
       {% endif %}
         <div class="panel-body">
-          <table class="table">
-            <!--<tr>
+          <table class="table">-->
+<!--<tr>
               <td>
                 <span class="">
 		</span><a href="#">Catalog</a>
               </td>
             </tr>-->
-            <tr>
+<!--<tr>
               <td>
                 <span class="">
 		</span><a href="{{ avi_url }}avi/resources/filemanager">Data</a>
@@ -134,8 +140,8 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
           </table>
         </div>
       </div>
-    </div>
-    <!--<div class="panel panel-default">
+    </div>-->
+<!--<div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse"
@@ -145,7 +151,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
         </h4>
       </div>
     </div>-->
-    <div class="panel panel-default">
+<!--<div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse"
@@ -177,4 +183,111 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
       </div>
     </div>
   </div>
-</div>
+</div>-->
+
+
+
+
+<!--<ul class="list-unstyled components">
+    <li class="li-id">
+        <a id="AASubmenu" href="#ASubmenu" onclick="menu(1)" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle a-menu"><i class="fas fa-list"></i></a>
+        <ul class="collapse list-unstyled" id="ASubmenu">
+            <li>
+                <a href="{{ avi_url }}avi/algorithms" class="a-submenu">Start</a>
+            </li>
+            <li>
+                <a href="{{ avi_url }}avi/status" class="a-submenu">Pipeline</a>
+            </li>
+            <li>
+              <a href="{{ avi_url }}avi/upload_algorithm" class="a-submenu last">New Algorithm</a>
+            </li>
+        </ul>
+    </li>
+    <li class="li-id">
+        <a id="QQSubmenu" href="#QSubmenu" onclick="menu(2)" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle a-menu"><i class="fab fa-envira fa-flip-horizontal"></i></a>
+        <ul class="collapse list-unstyled" id="QSubmenu">
+            <li>
+                <a href="{{ avi_url }}avi/queries/gaia" class="a-submenu">Gaia</a>
+            </li>
+            <li>
+                <a href="{{ avi_url }}avi/queries/herschel" class="a-submenu">Herschel</a>
+            </li>
+            <li>
+                <a href="{{ avi_url }}avi/queries/status" class="a-submenu last">Status</a>
+            </li>
+        </ul>
+    </li>
+    <li class="li-id">
+        <a id="DDSubmenu" href="#DSubmenu" onclick="menu(3)" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle a-menu"><i class="fas fa-hdd"></i></a>
+        <ul class="collapse list-unstyled" id="DSubmenu">
+            <li>
+                <a href="{{ avi_url }}avi/resources/filemanager" class="a-submenu last">Data</a>
+            </li>
+        </ul>
+    </li>
+    <li class="li-id">
+        <a id="helpmenu" href="#AbSubmenu" onclick="menu(4)" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle a-menu"><i class="fas fa-question-circle"></i></a>
+        <ul class="collapse list-unstyled" id="AbSubmenu">
+            <li>
+                <a href="{{ avi_url }}avi/help" class="a-submenu">Help</a>
+            </li>
+            <li>
+                <a href="{{ avi_url }}avi/about" class="a-submenu last">About</a>
+            </li>
+        </ul>
+    </li>
+</ul>-->
+<div class="col-2 sidebar float-left pl-0 pr-0 width show" id="sidebar">
+    <div class="list-group border-0 card text-center text-md-left" id="menuhover">
+
+        {% if sidebar_menu == "pipeline"%}
+        <a id="menuStart" href="#menu1" class="list-group-item d-inline-block" data-toggle="collapse" data-target="#menu1" aria-expanded="true" aria-controls="menu1"><i class="fas fa-list"></i> <span class="d-none d-md-inline">Algorithms</span> </a>
+        <div class="collapse display_att show" id="menu1" aria-labelledby="menuStart" data-parent="#menuhover">
+            {% else %}
+            <a id="menuStart" href="#menu1" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-target="#menu1" aria-expanded="false" aria-controls="menu1"><i class="fas fa-list"></i> <span class="d-none d-md-inline">Algorithms</span> </a>
+            <div class="collapse display_att" id="menu1" aria-labelledby="menuStart" data-parent="#menuhover">
+                {% endif %}
+                <a href="{{ avi_url }}avi/algorithms" class="list-group-item submenu samp_confirmation">Start</a>
+                <a href="{{ avi_url }}avi/status" class="list-group-item submenu samp_confirmation">Pipeline</a>
+            </div>
+
+
+            {% if sidebar_menu == "queries"%}
+            <a id="menuQuery" href="#menu2" class="list-group-item d-inline-block" data-toggle="collapse" data-target="#menu2" aria-expanded="true" aria-controls="menu2"><i class="fab fa-envira fa-flip-horizontal"></i> <span class="d-none d-md-inline">Queries</span> </a>
+            <div class="collapse display_att show" id="menu2" aria-labelledby="menuQuery" data-parent="#menuhover">
+                {% else %}
+                <a id="menuQuery" href="#menu2" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-target="#menu2" aria-expanded="false" aria-controls="menu2"><i class="fab fa-envira fa-flip-horizontal"></i> <span class="d-none d-md-inline">Queries</span> </a>
+                <div class="collapse display_att" id="menu2" aria-labelledby="menuQuery" data-parent="#menuhover">
+                    {% endif %}
+
+                    <a href="{{ avi_url }}avi/queries/gaia" class="list-group-item submenu samp_confirmation">Gaia</a>
+                    <a href="{{ avi_url }}avi/queries/herschel" class="list-group-item submenu samp_confirmation">Herschel</a>
+                    <a href="{{ avi_url }}avi/queries/status" class="list-group-item submenu samp_confirmation">Status</a>
+                </div>
+
+
+                {% if sidebar_menu == "resources"%}
+                <a id="menuData" href="#menu3" class="list-group-item d-inline-block" data-toggle="collapse" data-target="#menu3" aria-expanded="true" aria-controls="menu3"><i class="fas fa-hdd"></i> <span class="d-none d-md-inline">Data</span> </a>
+                <div class="collapse display_att show" id="menu3" aria-labelledby="menuData" data-parent="#menuhover">
+                    {% else %}
+                    <a id="menuData" href="#menu3" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-target="#menu3" aria-expanded="false" aria-controls="menu3"><i class="fas fa-hdd"></i> <span class="d-none d-md-inline">Data</span> </a>
+                    <div class="collapse display_att" id="menu3" aria-labelledby="menuData" data-parent="#menuhover">
+                        {% endif %}
+
+                        <a href="{{ avi_url }}avi/resources/filemanager" class="list-group-item submenu samp_confirmation">File Manager</a>
+                    </div>
+
+
+                    {% if sidebar_menu == "help"%}
+                    <a id="menuHelp" href="#menu4" class="list-group-item d-inline-block" data-toggle="collapse" data-target="#menu4" aria-expanded="true" aria-controls="menu4"><i class="fas fa-question-circle"></i> <span class="d-none d-md-inline">Help</span> </a>
+                    <div class="collapse display_att show" id="menu4" aria-labelledby="menuHelp" data-parent="#menuhover">
+                        {% else %}
+                        <a id="menuHelp" href="#menu4" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-target="#menu4" aria-expanded="false" aria-controls="menu4"><i class="fas fa-question-circle"></i> <span class="d-none d-md-inline">Help</span> </a>
+                        <div class="collapse display_att" id="menu4" aria-labelledby="menuHelp" data-parent="#menuhover">
+                            {% endif %}
+
+                            <a href="{{ avi_url }}avi/help" class="list-group-item submenu samp_confirmation">Help</a>
+                            <a href="{{ avi_url }}avi/about" class="list-group-item submenu samp_confirmation">About</a>
+                        </div>
+                    </div>
+                </div>

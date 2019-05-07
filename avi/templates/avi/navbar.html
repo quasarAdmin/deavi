@@ -17,29 +17,16 @@ You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <div class="header">
-<!--
+    <!--
   {% load staticfiles %}
   <link href="{% static 'avi/navbar.css' %}" rel="stylesheet" type="text/css"/>
   
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-	<a class="navbar-brand" href="{{ avi_url }}avi">DEAVI<small> v{{ version }}</small></a>
-      </div><!-- navbar-header -->
-      <script type="text/javascript"> var avi_url = "{{ avi_url }}"</script>
-      <!--
-      <ul class="nav navbar-nav">
-	<li class="active"><a href"#">Home</a></li>
-	<li><a href"#">hola 2</a></li>
-      </ul><!-- nav navbar-nav -->
-      <!--
-      <ul class="nav navbar-nav navbar-right">
-	<li><a href="#"><span class="glyphicon glyphicon-user">
-	    </span>Sign up</a></li>
-      </ul><!-- nav navbar-nav navbar-right -->
-    </div><!-- container-fluid -->
-  </nav><!-- navbar -->
+    <nav class="navbar navbar-dark bg-dark nav-rounded">
+        <a class="nav-color samp_confirmation" href="{{ avi_url }}avi"><span class="navbar-brand mb-0 h1">DEAVI</span><small>v{{ version }}</small></a>
+        <a href="https://ec.europa.eu/" target="_blank"><img src="{% static 'avi/img/logo-ce-horizontal-en-quadri-lr.png' %}" width="150px" style="float: right" /></a>
+    </nav>
+
 </div>

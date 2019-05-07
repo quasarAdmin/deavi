@@ -18,6 +18,13 @@ class example:
     gaia_table = ""
     gaia_table2 = ""
     hsa_table = ""
+    param_float = 0
+    param_string = ""
+    param_integer = 0
+    param_long = 0
+    param_complex = 0
+    param_user = ""
+    param_res = ""
     def run(self, id):
         gaia_file = parse(self.gaia_table)
         # ---------------- Fix me -------------------

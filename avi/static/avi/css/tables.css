@@ -1,0 +1,83 @@
+/*
+Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+
+This file is part of DEAVI.
+
+DEAVI is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+DEAVI is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+*/
+.table {
+    width: 100%;
+}
+
+.table-pipe {
+    margin: 0 auto;
+}
+
+.table-head {
+    background-color: rgb(11, 111, 164);
+    color: #fff;
+    /*padding: 20px 125px 15px 15px;*/
+    border-radius: 5px 5px 0px 0px;
+}
+
+.table-body {
+    border-left: 1px solid rgb(189, 189, 189);
+    border-right: 1px solid rgb(189, 189, 189);
+    border-bottom: 1px solid rgb(189, 189, 189);
+    /*padding: 10px 125px 10px 13px;*/
+}
+
+.table-body-2 {
+    border-left: 1px solid rgb(189, 189, 189);
+    border-right: 1px solid rgb(189, 189, 189);
+    border-bottom: 1px solid rgb(189, 189, 189);
+    /*padding: 10px 0px 10px 13px;*/
+}
+
+.table-body:hover {
+    background-color: rgb(191, 225, 255);
+}
+
+.table-head-pipe {
+    background-color: rgb(11, 111, 164);
+    color: #fff;
+    padding: 20px 0px 15px 0px;
+    border:1px solid black;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.table-head-pipe-element {
+    border-right: 1px solid white;
+}
+
+.table-body-pipe-element {
+    border-right: 1px solid rgb(11, 111, 164);
+}
+
+.table-body-pipe-result {
+    border-right: 1px solid rgb(11, 111, 164);
+    border-left: 1px solid rgb(11, 111, 164);
+    width: 100%;
+}
+
+.table-body-pipe {
+    border-left: 1px solid rgb(189, 189, 189);
+    border-right: 1px solid rgb(189, 189, 189);
+    border-bottom: 1px solid rgb(189, 189, 189);
+    padding: 10px 0px 10px 0px;
+}
+
+.table-body-pipe:hover {
+    background-color: rgb(191, 225, 255);
+}

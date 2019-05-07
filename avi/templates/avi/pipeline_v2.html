@@ -16,82 +16,591 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<!DOCTYPY html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     {% include "avi/header.html" %}
-    <link rel="stylesheet"
-          href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     </script>
-    <script
-       src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-    </script>
-    <script
-       src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js">
     </script>
     {% load static %}
-    <script type="text/javascript" 
-            src="{% static 'avi/js/pipeline_v2.js' %}"></script>
-  </head>
-  <body>
+    <!--<script src="{% static 'avi/js/query_form.js' %}"></script>-->
+    <script>
+        avi_url = "{{ avi_url }}";
+        //var avi_url = avi_url;
+    </script>
+
+</head>
+
+<body>
     <div id="navbar">
-      {% include "avi/navbar.html" %}
+        {% include "avi/navbar.html" %}
     </div>
+
     <div class="container-fluid">
-      <div id="content" class="row content">
-        <div id="sidebar" class="col-sm-2 sidenav">
-          {% include "avi/sidebar-nav.html" with sidebar_menu="pipeline" %}
-        </div>
-        <div id="real-content" class="col-sm-10">
-          <!-- ------------------------------------------------------------- -->
-          <!-- ------------------------------------------------------------- -->
-          <!-- ------------------------------------------------------------- -->
-          <h1>Algorithms</h1>
-          {% csrf_token %}
-          <div class="col-sm-3">
-            <div class="table">
-              <div class="table-row heading">
-                <div class="table-head">
-                  <h4>Algorithms</h4>
-                </div>
-              </div>
-              <!-- {% csrf_token %} -->
-              {% for key, value in algorithms.items %}
-              <div class="table-row">
-                <div class="table-cell">
-                  <div class="row col-sm-12 alg-button" 
-                       id="{{ value.0 }}">
-                    <!-- name="{{ value.1 }}" -->
-                    <label>{{ value.2 }}</label>
-                  </div>         
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-          <div class="col-sm-9">
-            <div class="table">
-              <div class="table-row heading">
-                <div class="table-head">
-                  <h4>Parameters</h4>
-                </div>
-              </div>
-              <div class="table-row">
-                <div class="table-cell">
-                  <div class="row col-sm-12">
-                    <div id="div_alg_info">
-                      <h4>Information</h4>
+        <div id="" class="row content">
+            {% include "avi/sidebar-nav.html" with sidebar_menu="pipeline" %}
+            <div id="real-content" class="col-10 cont">
+                <!-- ------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------- -->
+                <div id="card" class="card bg-light mb-3">
+                    <div class="card-header">
+                        <h1>Algorithms</h1>
                     </div>
-                  </div>         
+                    {% csrf_token %}
+                    <div class="card-body">
+                        <div class="row">
+                            <div id="alert" class="col-sm-12">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row algorithm-row">
+                                    <div style="margin: 0 auto">
+                                        <div class="algorithm-card">
+                                            <div class="table-head">
+                                                <div class="col-sm-12">
+                                                    <label class="algorithm-label-margin"><h4>Algorithms</h4></label>
+                                                </div>
+                                            </div>
+                                            {% for key, value in algorithms.items %}
+                                            <div class=" table-body alg-button" id="{{ value.0 }}">
+                                                <div class="col-sm-12">
+                                                    <label class="algorithm-label-margin">{{ value.2 }}</label>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div style="margin: 0 auto">
+                                        <div class="algorithm-card">
+                                            <div class="table-head">
+                                                <div class="col-sm-12">
+                                                    <label class="algorithm-label-margin"><h4>Parameters</h4></label>
+                                                </div>
+                                            </div>
+                                            <div class="table-body-2">
+                                                <div class="col-sm-12">
+                                                    <div id="div_alg_info" class="algorithm-label-margin2" state="{{loading}}">
+                                                        <label class="table-element algorithm-label-info">Information</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin: 0 auto; display: none;" id="alg_description">
+                                        <div class="algorithm-card">
+                                            <div class="table-head">
+                                                <div class="col-sm-12">
+                                                    <label class="algorithm-label-margin"><h4>Description</h4></label>
+                                                </div>
+                                            </div>
+                                            <div class="table-body-2">
+                                                <div class="col-sm-12">
+                                                    <div class="algorithm-label-margin2">
+                                                        <label class="table-element algorithm-label-info" id="div_description"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="modals"></div>
+                        <div id="script"></div>
+
+                        <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 id="modal-title" class="modal-title">Gaia Query</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="_algorithm-container"></div>
+                                        <form id="gaia_query_form" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div style="display: none">
+                                                    <input type="text" id="algorithm_pk_gaia_form" name="algorithm_pk_gaia_form" value="">
+                                                </div>
+                                                <div class="col-sm-10 offset-sm-1">
+                                                    <div class="card border-primary mb-3 card-form">
+                                                        <div class="card-body text-primary">
+                                                            <div class="form-group row">
+                                                                <div class="col-sm-5">
+                                                                    <div class="row">
+                                                                        <div style="margin:0 auto">
+                                                                            <div class="col text-left">
+                                                                                <div id="div_id_name_coord">
+                                                                                    {{ gaia_query.form.name_coord.errors }} {{ gaia_query.form.name_coord }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6 offset-1">
+                                                                    <div id="div_id_name" title="{{ gaia_query.form.name.help_text}}">
+                                                                        {{ gaia_query.form.name.errors }} {{ gaia_query.form.name }}
+                                                                    </div>
+                                                                    <div id="div_id_ra">
+                                                                        <div class="form-group row">
+                                                                            {{ gaia_query.form.ra.errors }}
+                                                                            <label for="{{ gaia_query.form.ra.id_for_label }}" title="{{ gaia_query.form.ra.help_text }}" class="col-form-label">RA: </label>
+                                                                            <div class="col-sm-6" title="{{ gaia_query.form.ra.help_text }}">
+                                                                                {{ gaia_query.form.ra }}
+                                                                            </div>
+                                                                            <div class="col-sm-2 mt-1 text-center" style="min-width: 80px !important" title="International Celestial Reference System"><span>(ICRS)</span></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div id="div_id_dec">
+                                                                        <div class="form-group row">
+                                                                            {{ gaia_query.form.dec.errors }}
+                                                                            <label for="{{ gaia_query.form.dec.id_for_label }}" title="{{ gaia_query.form.dec.help_text }}" class="col-form-label">DEC: </label>
+                                                                            <div class="col-sm-6" title="{{ gaia_query.form.dec.help_text }}">{{ gaia_query.form.dec }}</div>
+                                                                            <div class="col-sm-2 mt-1 text-center" style="min-width: 80px !important" title="International Celestial Reference System"><span>(ICRS)</span></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div id="div_id_input_file" title="{{ gaia_query.form.input_file.help_text }}">
+                                                                        <!-- {{ form.input_file.erros }}
+                              {{ form.input_file }} -->
+                                                                        <input type="file" name="input_file">
+                                                                    </div>
+                                                                    <div id="div_id_adql" title="{{ gaia_query.form.adql.help_text }}">
+                                                                        {{ gaia_query.form.adql.errors }}
+                                                                        <label for="{{ gaia_query.form.adql.id_for_label }}">ADQL: </label> {{ gaia_query.form.adql }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- name coord row -->
+
+                                            <div id="data-form">
+                                                <div class="row">
+                                                    <div class="col-sm-10 offset-sm-1">
+                                                        <div class="card border-primary mb-3 card-form">
+                                                            <div class="card-body text-primary">
+                                                                <div class="from-group row">
+                                                                    <div class="col-sm-5">
+                                                                        <div class="row">
+                                                                            <div style="margin:0 auto">
+                                                                                <div class="col text-left">
+                                                                                    <div id="div_id_shape">
+                                                                                        {{ gaia_query.form.shape.errors }} {{ gaia_query.form.shape }}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 offset-sm-1">
+                                                                        <div id="div_id_radius">
+                                                                            <div class="form-group row">
+                                                                                {{ gaia_query.form.radius.errors }}
+                                                                                <label for="{{ gaia_query.form.radius.id_for_label }}" title="{{ gaia_query.form.radius.help_text }}" class="col-form-label">Radius: </label>
+                                                                                <div class="col-sm-6" title="{{ gaia_query.form.radius.help_text }}">{{ gaia_query.form.radius }}</div>
+                                                                                <div class="col-sm-2 mt-2 text-center" style="min-width: 80px !important" title="Degrees">DEG</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div id="div_id_height">
+                                                                            <div class="form-group row" title="{{ gaia_query.form.height.help_text }}">
+                                                                                {{ gaia_query.form.height.errors }}
+                                                                                <label for="{{ gaia_query.form.height.id_for_label }}" class="col-form-label">Height: </label>
+                                                                                <div class="col-sm-8">{{ gaia_query.form.height }}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div id="div_id_width">
+                                                                            <div class="form-group row">
+                                                                                {{ gaia_query.form.width.errors }}
+                                                                                <label for="{{ gaia_query.form.width.id_for_label }}" title="{{ gaia_query.form.width.help_text }}" class="col-form-label">Width: </label>
+                                                                                <div class="col-sm-8" title="{{ gaia_query.form.width.help_text }}">{{ gaia_query.form.width }}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div id="div_id_polygon">
+                                                                            <div class="form-group row" title="{{ gaia_query.form.polygon.help_text }}">
+                                                                                {{ gaia_query.form.polygon.errors }}
+                                                                                <label for="{{ gaia_query.form.polygon.id_for_label }}" class="col-form-label">Polygon: </label>
+                                                                                <div class="col-sm-8">{{ gaia_query.form.polygon }}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- shape row -->
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-5">
+                                                                        <div class="row">
+                                                                            <div style="margin:0 auto">
+                                                                                <div class="col text-left">
+                                                                                    <div id="div_id_drs">
+                                                                                        {{ gaia_query.form.data_release.errors }} {{ gaia_query.form.data_release }}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 offset-1">
+                                                                        <div id="div_id_table">
+                                                                            {{ gaia_query.form.table_dr1.errors }}
+                                                                            <label for="{{ gaia_query.form.table_dr1.id_for_label }}">Table: </label> {{ gaia_query.form.table_dr1 }}
+                                                                        </div>
+                                                                        <div id="div_id_table_dr2">
+                                                                            {{ gaia_query.form.table_dr2.errors }}
+                                                                            <label for="{{ gaia_query.form.table_dr2.id_for_label }}">Table: </label> {{ gaia_query.form.table_dr2 }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- table row -->
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-12">
+                                                                        <div id="div_id_file_name">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-6 offset-sm-3">
+                                                                                    {{ gaia_query.form.file_name.errors }}
+                                                                                    <label for="{{ gaia_query.form.file_name.id_for_label }}">Output File: </label> {{ gaia_query.form.file_name }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- output file row -->
+                                                                <!-- <div class="form-group row">
+                            <div class="col-sm-12">
+                              <div id="div_id_adql">
+                                {{ form.adql.errors }}
+                                <label for="{{ form.adql.id_for_label }}">ADQL: </label>
+                                {{ form.adql }}
+                              </div>
+                            </div>
+                          </div><!-- output adql row -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- data-form -->
+                                            <input type="submit" class="btn btn-outline-primary" value="Submit" onclick="click('Go to query status to see the state of the query.')" />
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
+                        <div class="modal fade" tabindex="-1" role="dialog" id="myModal2">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 id="modal-title" class="modal-title">HSA Query</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="_algorithm-container"></div>
+                                        <form id="herschel_query_form" class="herschel_query_form" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %} {{ hsa_query.form.non_field_errors }}
+                                            <div class="row">
+                                                <div style="display: none">
+                                                    <input type="text" id="algorithm_pk_hsa_form" name="algorithm_pk_hsa_form" value="">
+                                                </div>
+                                                <div class="col-sm-10 offset-sm-1">
+                                                    <div class="card border-primary mb-3 card-form">
+                                                        <div class="card-body text-primary">
+                                                            <div class="from-group row">
+                                                                <div class="col-sm-5">
+                                                                    <div class="row">
+                                                                        <div style="margin:0 auto">
+                                                                            <div class="col text-left">
+                                                                                <div id="div_id_name_coord">
+                                                                                    {{ hsa_query.form.name_coord.errors }} {{ hsa_query.form.name_coord }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6 offset-sm-1">
+                                                                    <div id="div_id_name">
+                                                                        {{ hsa_query.form.name.errors }} {{ hsa_query.form.name }}
+                                                                    </div>
+                                                                    <div id="div_id_ra">
+                                                                        <div class="form-group row">
+                                                                            {{ hsa_query.form.ra.errors }}
+                                                                            <label for="{{ form.ra.id_for_label }}" class="col-form-label">RA: </label>
+                                                                            <div class="col-sm-8">{{ hsa_query.form.ra }}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div id="div_id_dec">
+                                                                        <div class="form-group row">
+                                                                            {{ hsa_query.form.dec.errors }}
+                                                                            <label for="{{ form.dec.id_for_label }}" class="col-form-label">DEC: </label>
+                                                                            <div class="col-sm-8">{{ hsa_query.form.dec }}</div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div id="div_id_input_file">
+                                                                        <input type="file" name="input_file">
+                                                                    </div>
+                                                                    <div id="div_id_adql">
+                                                                        {{ hsa_query.form.adql.errors }}
+                                                                        <label for="{{ form.adql.id_for_label }}">ADQL: </label> {{ hsa_query.form.adql }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- name coord row -->
+                                            <div id="data-form2">
+                                                <div class="row">
+                                                    <div class="col-sm-10 offset-sm-1">
+                                                        <div class="card border-primary mb-3 card-form">
+                                                            <div class="card-body text-primary">
+                                                                <div class="from-group row">
+                                                                    <div class="col-sm-5">
+                                                                        <div class="row">
+                                                                            <div style="margin:0 auto">
+                                                                                <div class="col text-left">
+                                                                                    <div id="div_id_shape">
+                                                                                        {{ hsa_query.form.shape.errors }} {{ hsa_query.form.shape }}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 offset-sm-1">
+                                                                        <div id="div_id_radius">
+                                                                            <div class="form-group row">
+                                                                                {{ hsa_query.form.radius.errors }}
+                                                                                <label for="{{ form.radius.id_for_label }}" class="col-form-label">Radius: </label>
+                                                                                <div class="col-sm-8">{{ hsa_query.form.radius }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div id="div_id_height">
+                                                                            <div class="form-group row">
+                                                                                {{ hsa_query.form.height.errors }}
+                                                                                <label for="{{ from.height.id_for_label }}" class="col-form-label">Height: </label>
+                                                                                <div class="col-sm-8">{{ hsa_query.form.height }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div id="div_id_width">
+                                                                            <div class="form-group row">
+                                                                                {{ hsa_query.form.width.errors }}
+                                                                                <label for="{{ form.width.id_for_label }}" class="col-form-label">Width: </label>
+                                                                                <div class="col-sm-8">{{ hsa_query.form.width }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div id="div_id_polygon">
+                                                                            <div class="form-group row">
+                                                                                {{ hsa_query.form.polygon.errors }}
+                                                                                <label for="{{ form.polygon.id_for_label }}" class="col-form-label">Polygon: </label>
+                                                                                <div class="col-sm-8">{{ hsa_query.form.polygon }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- shape row -->
+                                                                <div class="from-group row">
+                                                                    <div class="col-sm-3 offset-sm-1">
+                                                                        <div class="row">
+                                                                            <div style="margin:0 auto">
+                                                                                <div class="col text-left">
+                                                                                    <div id="div_id_positional_images">
+                                                                                        {{ hsa_query.form.positional_images.errors }} {{ hsa_query.form.positional_images }}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 offset-sm-2">
+                                                                        <div id="div_id_table">
+                                                                            {{ hsa_query.form.table.errors }} {{ hsa_query.form.table }}
+                                                                        </div>
+                                                                        <div id="div_id_instrument">
+                                                                            {{ hsa_query.form.instrument.errors }}
+                                                                            <label class="radio-inline radio-circle" for="id_instrument_0">
+                                  <input id="id_instrument_0"
+                                         type="radio"
+                                         name="instrument" value="PACS" checked="checked"> PACS</label>
+                                                                            <label class="radio-inline radio-circle" for="id_instrument_1">
+                                  <input id="id_instrument_1"
+                                         type="radio"
+                                         name="instrument" value="SPIRE"> SPIRE</label>
+                                                                            <label class="radio-inline radio-circle" for="id_instrument_2">
+                                  <input id="id_instrument_2"
+                                         type="radio"
+                                         name="instrument" value="HIFI"> HIFI</label>
+                                                                        </div>
+                                                                        <div id="div_id_level">
+                                                                            {{ hsa_query.form.level.errors }} {{ hsa_query.form.level }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- position image row -->
+                                                                <div class="form-group row">
+                                                                    <div class="col-sm-12">
+                                                                        <div id="div_id_file_name">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-6 offset-sm-3">
+                                                                                    {{ hsa_query.form.file_name.errors }}
+                                                                                    <label for="{{ form.file_name.id_for_label }}">Output File: </label> {{ hsa_query.form.file_name }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- output file row -->
+                                                                <!-- <div class="form-group row">
+                            <div class="col-sm-12">
+                              <div id="div_id_adql">
+                                {{ form.adql.errors }}
+                                <label for="{{ form.adql.id_for_label }}">ADQL: </label>
+                                {{ form.adql }}
+                              </div>
+                            </div>
+                          </div><!-- output adql row -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- data-form -->
+                                            <input type="submit" class="btn btn-outline-primary" value="Submit" onclick="click('Go to query status to see the state of the query.')" />
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
+                        <!--<div class="row justify-content-between">
+                            <div class="col-sm-5">
+                                <div class="table-1">
+                                    <div class="row table-head">
+                                        <h4>Algorithms</h4>
+                                    </div>
+                                    {% for key, value in algorithms.items %}
+                                    <div class="row table-body alg-button" id="{{ value.0 }}">
+                                        <label>{{ value.2 }}</label>
+                                    </div>
+                                    {% endfor %}
+                                    <!--<div class="row table-body">
+                                <a>Graph 2Dim</a>
+                            </div>
+                            <div class="row table-body">
+                                <a>Example</a>
+                            </div>-->
+                        <!--</div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row table-head">
+                                    <h4>Parameters</h4>
+                                </div>
+                                <div class="row table-body-2">
+                                    <div id="div_alg_info">
+                                        <label class="table-element">Information</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
                 </div>
-              </div>
+                <!-- ------------------------------------------------------------- -->
+                <!--<h1>Algorithms</h1>
+                {% csrf_token %}
+                <div class="col-sm-3">
+                    <div class="table">
+                        <div class="table-row heading">
+                            <div class="table-head">
+                                <h4>Algorithms</h4>
+                            </div>
+                        </div>-->
+                <!-- {% csrf_token %} -->
+                <!-- {% for key, value in algorithms.items %}
+                        <div class="table-row">
+                            <div class="table-cell">
+                                <div class="row col-sm-12 alg-button" id="{{ value.0 }}">-->
+                <!-- name="{{ value.1 }}" -->
+                <!--<label>{{ value.2 }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <div class="table">
+                        <div class="table-row heading">
+                            <div class="table-head">
+                                <h4>Parameters</h4>
+                            </div>
+                        </div>
+                        <div class="table-row">
+                            <div class="table-cell">
+                                <div class="row col-sm-12">
+                                    <div id="div_alg_info">
+                                        <h4>Information</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+                <!-- ------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------- -->
             </div>
-          </div>
-          <!-- ------------------------------------------------------------- -->
-          <!-- ------------------------------------------------------------- -->
-          <!-- ------------------------------------------------------------- -->
         </div>
-      </div>
     </div>
-  </body>
+    <!--<script>
+    console.log(document.getElementById('myModal'));
+    var modal = document.getElementById('myModal');
+    document.getElementById('myModal').remove();
+    var modal2 = document.getElementById('myModal2');
+    document.getElementById('myModal2').remove();
+    function clic(value){
+        console.log(value);
+        if(value.textContent === "Launch Gaia query"){
+            if(document.getElementById('myModal2')){
+                document.getElementById('myModal2').remove();
+            }
+            document.getElementById('modals').appendChild(modal);
+        }else{
+            if(document.getElementById('myModal')){
+                document.getElementById('myModal').remove();
+            }
+            document.getElementById('modals').appendChild(modal2);
+        }
+
+    }
+    </script>-->
+
+    <script type="text/javascript" src="{% static 'avi/js/pipeline_v2.js' %}"></script>
+    <script>
+        query_form();
+    </script>
+    {% include "avi/footer.html" %}
+</body>
+
 </html>

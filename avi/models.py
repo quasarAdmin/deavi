@@ -90,8 +90,8 @@ class gaia_query_model(parent):
     It inherits from the AviJob class or the avi_job class, depending on which 
     platform is the application running on.
     """
-    ## has the query to be done by coordiantes or name?
-    name_coord = models.BooleanField()
+    ## has the query to be done by coordiantes, name, input file or adql?
+    name_coord = models.CharField(max_length=255)
     ## name of the object to be queried
     name = models.CharField(max_length=255)
     ## input file containing multiple queries information
@@ -140,8 +140,8 @@ class herschel_query_model(parent):
     It inherits from the AviJob class or the avi_job class, depending on which 
     platform is the application running on.
     """
-    ## has the query to be done by coordiantes or name?
-    name_coord = models.BooleanField()
+    ## has the query to be done by coordiantes, name, input file or adql?
+    name_coord = models.CharField(max_length=255)
     ## name of the object to be queried
     name = models.CharField(max_length=255)#,null=True)
     ## input file containing multiple queries information

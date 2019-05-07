@@ -17,286 +17,402 @@ You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <!DOCTYPE html>
-<html lang="en">
-  <!-- Start HEAD --> 
-  <head>
-    {% include "avi/header.html" %}
-  
-  {% load static %}
-    <link rel="stylesheet"
-    type="text/css" href="{% static 'avi/css/resources_filemanager.css' %}"/>
-    <script src="{% static 'avi/lib/samp.js' %}"></script>   
+<html lang="en"> 
+<!-- Start HEAD -->
+
+<head>
+    {% include "avi/header.html" %} {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'avi/css/resources_filemanager.css' %}" />
+    <script src="{% static 'avi/lib/samp-2.js' %}"></script>
+    <script src="{% static 'avi/lib/json2.js' %}"></script>
+    <script src="{% static 'avi/lib/flXHR-2.js' %}"></script>
+    <script src="{% static 'avi/lib/flensed.js' %}"></script>
+    <script src="{% static 'avi/lib/checkplayer.js' %}"></script>
+    <script src="{% static 'avi/lib/swfobject.js' %}"></script>
+    <!-- <script src="{% static 'avi/lib/samp.js' %}"></script> -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js">
+    </script>
     <!-- <script src="{% static 'avi/lib/flXHR.js' %}"></script> -->
     <script src="{% static 'avi/js/samp.js' %}"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  </head>
-  <!-- End HEAD -->
-  <!-- Start BODY --> 
-  <body>
-    <div id="navbar">{% include "avi/navbar.html" %}</div>
-    <div class="container-fluid">
-      <div id="content" class="row content">
-        <div id="sidebar" class="col-sm-2 sidenav">
-	     {% include "avi/sidebar-nav.html" with sidebar_menu="resources"%}
-	    </div>
-	    <div id="real-content" class="col-sm-10">
-    	<!-- -------------------------------------------------------------- -->
-    	<!-- -------------------------------------------------------------- -->
-    	<!-- -------------------------------------------------------------- -->
-    	 <h1>Local</h1>
-         <!-- Start GENERAL BUTTONS --> 
-         <div class="col-inline-button"> 
-          <!-- Start Home button --> 
-          <form id = "home_form" class="col-inline-button">
-            <div class="col-inline-button">  
-              {% csrf_token %}
-              <button 
-                type="submit" 
-                class="btn btn-primary" 
-                formmethod="POST"
-                id="home_button" 
-                name="go_home"
-                title="Home" 
-                value="home">
-                  <span class="glyphicon glyphicon-home"></span>
-              </button>
-            </div>
-          </form>       
-          <!-- End Home button --> 
-          <!-- Start Up button -->
-          <form id = "up_form" class="col-inline-button">
-            <div class="col-inline-button">
-              {% csrf_token %} 
-              <button 
-                type="submit" 
-                class="btn btn-primary" 
-                formmethod="POST"
-                id="up_directory_button" 
-                name="up_directory"
-                title="Up" 
-                value="up_directory">
-                  <span class="glyphicon glyphicon-arrow-up"></span>
-              </button>
-            </div>
-          </form>       
-          <!-- End Up button -->     
-         </div>
-         <br><br>
-      <!-- End GENERAL BUTTONS -->
-      <!-- Start CENTRAL TABLE --> 
-         <div class="table text-center">
-          <!-- Start Header Table -->
-          <div class="table-row heading">
-            <div class="table-head text-left">Name</div>
-            <div class="table-head cell-size-1">Size</div>
-            <div class="table-head text-left">File Manager</div>
-          </div>
-          <!-- End Header Table -->
-          <!-- Start directories Table -->
-          {% for directory, size in directories_list.items %}
-          <div class="table-row data">
-            <div class="table-cell text-left">
-              <form  id={{directory}}>
-                {% csrf_token %}
-                <!-- Start folder icon -->
-                <span class="glyphicon glyphicon-folder-open"></span>
-                <!-- End folder icon -->
-                <!-- Start directories buttons -->
-                <button class="btn btn-link" 
-                  role="link" 
-                  type="submit"
-                  formmethod="POST" 
-                  name="{{directories_list|getkey:directory}}"
-                  id="{{directories_list|getkey:directory}}" 
-                  value="{{directories_list|getkey:directory}}">
-                  {{directories_list|getkey:directory}}
-                </button>
-                <!-- End directories buttons -->
-              </form>
-            </div>
-            <div class="table-cell cell-size-1">{{size}}</div>
-            <div class="table-cell text-left"></div>                  
-         </div>    
-         {% endfor %}
-         <!-- End directories Table -->
-         <!-- Start files Table -->
-         {% for file, data in files_list.items %}
-         <div class="table-row data">
-          <div class="table-cell text-left">
-            <form  id="form_name_{{ file }}">
-              {% csrf_token %}
-              <!-- Start files buttons -->        
-              <button class="btn btn-link" 
-                role="link" 
-                type="submit"
-                formmethod="POST" 
-                name="button_name_{{ file }}"
-                id="button_name_{{ file }}" 
-                value="{{ file.1 }}">
-                {{ data.0 }}
-              </button>       
-          <!-- End files buttons -->             
-            </form>
-          </div>
-          <!-- Start Size files -->
-          <div class="table-cell cell-size-1">{{ data.1}}</div>
-          <!-- End Size files -->
-          <!-- Start actions buttons files -->
-          <div class="table-cell text-left">
-            <!-- Start Delete file button-->
-            <form class="col-inline-button">
-              <div class="col-inline-button">
-                {% csrf_token %}
-                <button 
-                  type="button" 
-                  class="btn btn-danger" 
-                  data-toggle="modal"
-                  data-target="#call_delete_file_{{ file|cut:"." }}" 
-                  id="pre_delete_file_button_{{ file|cut:" " }}" 
-                  name="{{files_list|getkey:file}}"
-                  title="Delete {{ data.0 }}" 
-                  value="pre_delete_file_{{ file|cut:" " }}"
-                  data-whatever="@fat">
-                  <span class="glyphicon glyphicon-trash"></span>
-                </button>
-                <!-- End Delete file button -->
-              </div>
-              <!-- Start Delete file button pop up -->
-              <div class="modal fade" tabindex="-1" role="dialog"
-                aria-labelledby="confirmation_file_modal" aria-hidden="true"
-                id="call_delete_file_{{ file|cut:"." }}">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button"
-                        class="close" 
-                        data-dismiss="modal" 
-                        aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                      <div class="alert alert-warning alert-white rounded">
-                        <h4 class="modal-title"
-                          id="modal_confirmation_file_pop_up_{{files_list|getkey:file}}">
-                          <img src="https://vignette.wikia.nocookie.net/lego/images/c/cd/Warning_sign.png/revision/latest/scale-to-width-down/1000?cb=20110705195119" width="42" height="42">
-                          Are you sure you want to permanently delete 
-                          <strong>"{{ data.0 }}" </strong>?
-                        </h4>
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          type="submit"
-                          formmethod="POST" 
-                          type="button"
-                          name="delete_file" 
-                          class="btn btn-default"
-                          value="{{ data.0 }}"
-                          title="Click to delete the file" 
-                          id="modal_btn__delete_yes_file">Yes
-                        </button>
-                        <button 
-                          type="button"
-                          data-dismiss="modal" 
-                          class="btn btn-primary"
-                          title="Click to close" 
-                          id="modal_btn_no_file">No
-                        </button>     
-                      </div>     
-                    </div>
-                  </div>
-                </div>
-                <div class="alert" role="alert" id="result"></div>
-              </div>                 
-            </form>
-            <!-- End Delete file button pop up -->
-            <!-- Start Download file button-->
-            <form class="col-inline-button"  action="{{ avi_url }}avi/api/resource/{{ file }}">
-              <div class="col-inline-button">
-                {% csrf_token %}
-                <button class="btn btn-success"
-                  type="submit" 
-                  value="download"
-                  title="Download {{ data.0 }}">
-                  <span class="glyphicon glyphicon-cloud-download"></span>
-                </button>  
-              </div>
-            </form>
-            <!-- End Download file button -->  
-            <!-- Start SAMP file button-->
-            <div class="col-inline-button">
-              {% csrf_token %}
-              <button
-                type="button" 
-                class="btn btn-warning samp_button"
-                id="samp_button_{{ file }}"
-                onclick="samp_send({{ file }},'{{ data.0 }}')"
-                title="Send to SAMP {{ data.0 }}">
-                <span class="glyphicon glyphicon-send"></span>  
-              </button>
-            </div>
-            <!-- End SAMP file button-->       
-          </div>
-          <!-- End actions buttons files --> 
-         </div>
-         {% endfor %}
-         <!-- End files Table -->
-	    </div>
-        <!-- Start foot Table -->
-	    <div class="table-footer text-right">
-              <!-- <a href="#">{{ ppage }} - {{ npage }} - {{ cpage }} - {{ pages }}</a> -->
-              <form id="form_page"
-                    method="post">
-                {% csrf_token %}
-                <button
-                   type="submit"
-                   class="btn btn-primary"
-                   formmethod="POST"
-                   id="first_page_button" 
-                   name="page"
-                   title="Page" 
-                   value="1">
-                  First
-                </button>
-                <button
-                   type="submit"
-                   class="btn btn-primary"
-                   formmethod="POST"
-                   id="prev_page_button" 
-                   name="page"
-                   title="Page" 
-                   value="{{ ppage }}">
-                  Prev
-                </button>
-                Page {{ cpage }} of {{ pages }}
-                <button
-                   type="submit"
-                   class="btn btn-primary"
-                   formmethod="POST"
-                   id="next_page_button" 
-                   name="page"
-                   title="Page" 
-                   value="{{ npage }}">
-                  Next
-                </button>
-                <button
-                   type="submit"
-                   class="btn btn-primary"
-                   formmethod="POST"
-                   id="last_page_button" 
-                   name="page"
-                   title="Page" 
-                   value="{{ pages }}">
-                  Last
-                </button>
-              </form>
-	    </div>
-            <div id="samp-test"></div>
-         <!-- End foot Table -->
-    <!-- End CENTRAL TABLE -->
-    <!-- ----------------------------------------------------------------- -->
-    <!-- ----------------------------------------------------------------- -->
-    <!-- ----------------------------------------------------------------- -->
-      </div>
-     </div>
+    <script src="{% static 'avi/js/filemanager.js' %}"></script>
+    <script src="{% static 'avi/js/filemanager_search.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'avi/lib/bootstrap.css' %}">
+
+    <link rel="stylesheet" href="{% static 'avi/css/style2.css' %}">
+    <link rel="stylesheet" href="{% static 'avi/css/nav-style.css' %}">
+    <link rel="stylesheet" href="{% static 'avi/css/mediaqueries.css' %}">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <script>
+        avi_url = "{{ avi_url }}";
+        //var avi_url = avi_url;
+    </script>
+</head>
+<!-- End HEAD -->
+<!-- Start BODY -->
+
+<body>
+    <div>
+        {% include "avi/navbar.html" %}
     </div>
-  </body>
+    <div class="container-fluid">
+        <div id="" class="row content">
+            {% include "avi/sidebar-nav.html" with sidebar_menu="resources"%}
+            <div id="real-content" class="col-10 cont">
+                <!-- -------------------------------------------------------------- -->
+                <!-- -------------------------------------------------------------- -->
+                <!-- -------------------------------------------------------------- -->
+
+                <div id="card" class="card bg-light mb-3">
+                    <div class="card-header">
+                        <h1>Local</h1>
+                    </div>
+                    <!--Card body start-->
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-sm-10 offset-sm-1">
+                                <div class="row filemanager-margin-top">
+                                    <div class="col-sm-12">
+                                        <div class="d-inline-flex mt-2">
+                                            <div class="mr-2">
+                                                <label for="from_order"><small><strong>Order by:</strong></small></label>
+                                            </div>
+                                            <div>
+                                                <form id="fileManagerOrder" method="POST">
+                                                    <select name="fileManagerOrder" class="form-control form-control-sm order-by" id="from_order" onchange='order(this.value)'>
+                                                        <option value="0" selected disabled>Select</option>
+                                                        <option value="name">Name</option>
+                                                        <option value="size">Size</option>
+                                                    </select>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row autocomplete">
+
+                                    {% for h in gaia_files.1.items %}
+                                    <script>
+                                        take_all_files('{{h.0}}', '{{h.1.0}}', '{{h.1.1}}')
+                                    </script>
+                                    {% endfor %}
+                                    <script>
+                                        test()
+                                    </script>
+                                    {% for h in hsa_files.1.items %}
+                                    <script>
+                                        take_all_files('{{h.0}}', '{{h.1.0}}', '{{h.1.1}}')
+                                    </script>
+                                    {% endfor %}
+                                    <script>
+                                        test()
+                                    </script>
+                                    {% for h in results_files.1.items %}
+                                    <script>
+                                        take_all_files('{{h.0}}', '{{h.1.0}}', '{{h.1.1}}')
+                                    </script>
+                                    {% endfor %}
+                                    <script>
+                                        test()
+                                    </script>
+                                    {% for h in user_files.1.items %}
+                                    <script>
+                                        take_all_files('{{h.0}}', '{{h.1.0}}', '{{h.1.1}}')
+                                    </script>
+                                    {% endfor %}
+                                    <script>
+                                        test()
+                                    </script>
+                                    <!--{{gaia_files.1}}{{hsa_files.1}}
+                                    {{results_files.1}}
+                                    {{user_files.1}}-->
+                                    <div class="col-sm-12 offset-1 text-center mb-1 mt-2">
+                                        <form class="form-inline" method="dialog">
+                                            <input class="form-control form-control-sm mr-3 w-75 search_bar" id="search" type="text" placeholder="Search" aria-label="Search" name="search">
+                                            <label id="search_icon" data-toggle="modal" data-target="#myModal" for="search" onclick="searchF()"><i class="fa fa-search" aria-hidden="true"></i></label>
+                                        </form>
+                                    </div>
+                                    <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content" style="min-height: 400px; max-height: 100%">
+                                                <div class="modal-header">
+                                                    <h4 id="modal-title" class="modal-title">Title</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div id="_file-container"></div>
+                                                    <div id="_size-container"></div>
+                                                    <div id="_buttons-container">
+                                                        <form class="col-inline-button">
+                                                            <div class="col-inline-button">
+                                                                {% csrf_token %}
+                                                                <button type="button" data-dismiss="modal" class="btn btn-danger delete_file_modal" id="pre_delete_file_button_" name="" title="Delete" value="pre_delete_file_" data-whatever="@fat">
+                                                                <i class="far fa-trash-alt"></i>
+                                                                </button>
+                                                            </div>
+                                                            <!-- Start Delete file button pop up data-toggle="modal" data-target="#call_delete_file_"-->
+
+                                                            <!-- End Delete file button -->
+                                                        </form>
+                                                        <form class="col-inline-button download_modal" action="">
+                                                            <div class="col-inline-button">
+                                                                {% csrf_token %}
+                                                                <button class="btn btn-success download_modal" type="submit" value="download" title="Download">
+                                                            <i class="fas fa-cloud-download-alt"></i>
+                                                            </button>
+                                                            </div>
+                                                        </form>
+                                                        {% csrf_token %}
+                                                        <button type="button" class="btn btn-warning samp_button samp_modal_button" id="samp_button_" onclick="" title="Send to SAMP">
+                                                        <i class="fas fa-paper-plane"></i>  
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <!--<form id="form_" method="post">
+                                                        {% csrf_token %}
+                                                    <button type="submit" class="btn btn-info btn-block" formmethod="POST" id="form_relaunch_button" name="relaunch" title="Relaunch" value="">
+                                                            <a class="thrash-icon"><i class="fas fa-play-circle"></i></a><a class="delete">Relaunch</a>
+                                                    </button>
+                                                </form>-->
+                                                </div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
+                                    <!-- /.modal -->
+                                    <div class="modal fade delete_file_modal" tabindex="-1" role="dialog" aria-labelledby="confirmation_file_modal" aria-hidden="true" id="call_delete_file_">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="alert alert-warning alert-white rounded">
+                                                        <p class="modal-title delete_file_modal" id="modal_confirmation_file_pop_up_" style="display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                                            <img src="https://vignette.wikia.nocookie.net/lego/images/c/cd/Warning_sign.png/revision/latest/scale-to-width-down/1000?cb=20110705195119" width="42" height="42"> Are you sure you want to permanently
+                                                            delete?
+                                                        </p>
+                                                        <p style="text-align: center; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"><strong class="delete_file_modal"></strong></p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form>
+                                                        {% csrf_token %}
+                                                        <button type="submit" formmethod="POST" name="delete_file" class="btn btn-default delete_file_modal" value="" title="Click to delete the file" id="modal_btn__delete_yes_file">Yes
+                                                            </form>    
+                                                        </button>
+                                                        <button type="button" data-dismiss="modal" class="btn btn-primary" title="Click to close" id="modal_btn_no_file">No
+                                                            </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="alert" role="alert" id="result"></div>
+                                    </div>
+
+                                    <script>
+                                        searchF();
+                                    </script>
+                                </div>
+                                <script>
+                                    enter_search();
+                                </script>
+                                <!--Row for breadcrumb filemanager-->
+                                <div class="row filemanager-margin-top">
+                                    <div class="col-sm-12">
+                                        <nav aria-label="breadcrumb">
+                                            <form id="bcform">
+                                                {% csrf_token %}
+                                                <ol class="breadcrumb">
+                                                    <li><button type="submit" class="btn btn-primary filemanager-button-home-mr samp_confirmation" formmethod="POST" id="home_button" name="go_home" title="Home" value="home"><i class="fas fa-home"></i></button></li>
+                                                    <li><button type="submit" class="btn btn-primary filemanager-button-arrow-mr samp_confirmation" formmethod="POST" id="up_directory_button" name="up_directory" title="Up" value="up_directory"><i class="fas fa-long-arrow-alt-up"></i></button></li>
+                                                    {% for p in paths %} {% if paths|length == 1 %}
+                                                    <li class="breadcrumb-item active breadcrumb-disabled" aria-current="page">Home</li>
+                                                    {% else %} {% if p == ""%}
+                                                    <li class="breadcrumb-item"><button type="submit" value="home" class="hyperlink_button breadcrumb-enabled samp_confirmation" formmethod="POST" id="home_button_bc" name="go_home" title="Home">Home</button></li>
+                                                    {% elif p == paths|last %}
+                                                    <li class="breadcrumb-item active breadcrumb-disabled" aria-current="page">{{p}}</li>
+                                                    {% else %}
+                                                    <li class="breadcrumb-item"><button type="submit" value="up_directory" class="hyperlink_button breadcrumb-enabled samp_confirmation" formmethod="POST" id="up_directory_button_bc_{{forloop.counter}}" name="up_directory" title="Up">{{p}}</button></li>
+                                                    {% endif %} {% endif %} {% endfor %}
+                                                </ol>
+                                            </form>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <!--End breadcrumb-->
+                                <!--Row for the filemanager board-->
+                                <div class="row">
+                                    <div id="row-board" class="col-sm-12">
+                                        <!--Row for the elements of the filemanager-->
+                                        <div class="row filemanager-row-elements">
+                                            <!--One element folder-->
+                                            {% for directory, size in directories_list.items %}
+                                            <div class="folders" style="margin:0 auto;">
+                                                <form id={{directory}}>
+                                                    {% csrf_token %}
+                                                    <button class="file-element btn samp_confirmation" role="link" type="submit" formmethod="POST" name="{{directories_list|getkey:directory}}" id="{{directories_list|getkey:directory}}" value="{{directories_list|getkey:directory}}">
+                                                        <div class="">
+                                                            <div class="row">
+                                                                <div class="col-sm-3">
+                                                                    <div class="folder-icon"><i class="fas fa-folder fa-4x"></i></div>
+                                                                </div>
+                                                                <div class="col-sm-9">
+                                                                    <ul class="folder-ul">
+                                                                        <li class="filesource-element">{{directories_list|getkey:directory}}</li>
+                                                                        <li class="filesource-element">{{size}}</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            {% endfor %}
+                                            <!--End of the element folder-->
+                                            {% for file, data in files_list.items %}
+                                            <!--One element Data-->
+                                            <div class="data-manager" style="margin:0 auto; max-width: 100%; min-width: 50px">
+                                                <div class="file-element btn">
+                                                    <div class="row">
+                                                        <div class="col-sm-2">
+                                                            <div class="file-icon"><i class="fas fa-file fa-4x"></i></div>
+                                                        </div>
+                                                        <div class="col-sm-10">
+                                                            <ul class="file-ul">
+                                                                <li>
+                                                                    <form id="form_name_{{ file }}">
+                                                                        {% csrf_token %}
+                                                                        <!-- Start files buttons -->
+                                                                        <a class="btn-group a-link hyperlink_data" target="_blank" href="/avi/api/res/{{ file }}" style="display: block; width: 100%; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" data-toggle="tooltip" data-pacement="top" title="{{data.0}}">{{data.0}}</a>
+                                                                        <!--<button class="hyperlink_button_data" role="link" type="submit" formmethod="POST" name="button_name_{{ file }}" id="button_name_{{ file }}" value="{{ file.1 }}">
+                                                                <span class="data_name">{{ data.0 }}</span>
+                                                              </button>-->
+                                                                        <!-- End files buttons -->
+                                                                    </form>
+                                                                </li>
+                                                                <li class="filesource-element">{{ data.1}}</li>
+                                                                <li>
+                                                                    <form class="col-inline-button">
+                                                                        <div class="col-inline-button">
+                                                                            {% csrf_token %}
+                                                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#call_delete_file_{{ file|cut:" . " }}" id="pre_delete_file_button_{{ file|cut:" " }}" name="{{files_list|getkey:file}}" title="Delete {{ data.0 }}" value="pre_delete_file_{{ file|cut:"
+                                                                                " }}" data-whatever="@fat">
+                                                                            <i class="far fa-trash-alt"></i>
+                                                                            </button>
+                                                                            <!-- Start Delete file button pop up -->
+                                                                            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmation_file_modal" aria-hidden="true" id="call_delete_file_{{ file|cut:" . " }}">
+                                                                                <div class="modal-dialog">
+                                                                                    <div class="modal-content">
+                                                                                        <div class="modal-header">
+                                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                                                                                        </div>
+                                                                                        <div class="modal-body">
+                                                                                            <div class="alert alert-warning alert-white rounded">
+                                                                                                <p class="modal-title" id="modal_confirmation_file_pop_up_{{files_list|getkey:file}}" style="display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                                                                                    <img src="https://vignette.wikia.nocookie.net/lego/images/c/cd/Warning_sign.png/revision/latest/scale-to-width-down/1000?cb=20110705195119" width="42" height="42">                                                                                                    Are you sure you want to permanently delete?</p>
+                                                                                                <p style="text-align: center; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"><strong>"{{ data.0 }}" </strong></p>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <div class="modal-footer">
+                                                                                            <button type="submit" formmethod="POST" type="button" name="delete_file" class="btn btn-default" value="{{ data.0 }}" title="Click to delete the file" id="modal_btn__delete_yes_file">Yes
+                                                                                </button>
+                                                                                            <button type="button" data-dismiss="modal" class="btn btn-primary" title="Click to close" id="modal_btn_no_file">No
+                                                                                </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="alert" role="alert" id="result"></div>
+                                                                            </div>
+                                                                            <!-- End Delete file button -->
+                                                                        </div>
+                                                                    </form>
+                                                                    <form class="col-inline-button" action="{{ avi_url }}avi/api/resource/{{ file }}">
+                                                                        <div class="col-inline-button">
+                                                                            {% csrf_token %}
+                                                                            <button class="btn btn-success" type="submit" value="download" title="Download {{ data.0 }}">
+                                                                        <i class="fas fa-cloud-download-alt"></i>
+                                                                        </button>
+                                                                        </div>
+                                                                    </form>
+                                                                    {% csrf_token %}
+                                                                    <button type="button" class="btn btn-warning samp_button" id="samp_button_{{ file }}" onclick="samp_send({{ file }},'{{ data.0 }}')" title="Send to SAMP {{ data.0 }}">
+                                                                        <i class="fas fa-paper-plane"></i>  
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--End of the element data-->
+                                            {% endfor %}
+                                            <script>
+                                                file();
+                                            </script>
+                                            <script>
+                                                source();
+                                            </script>
+                                            <!--<script>data_names()</script>-->
+                                        </div>
+                                        <!--End of the row elements-->
+                                    </div>
+                                </div>
+                                <!--End of the filemanager board-->
+                                <div class="row">
+                                    <div class="col-sm-10 offset-sm-1 filemanager-margin-top">
+                                        <div class="table-footer text-right">
+                                            <!-- <a href="#">{{ ppage }} - {{ npage }} - {{ cpage }} - {{ pages }}</a> -->
+                                            <form id="form_page" method="post">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-primary samp_confirmation" formmethod="POST" id="first_page_button" name="page" title="Page" value="1">
+                              First
+                            </button>
+                                                <button type="submit" class="btn btn-primary samp_confirmation" formmethod="POST" id="prev_page_button" name="page" title="Page" value="{{ ppage }}">
+                              Prev
+                            </button> Page {{ cpage }} of {{ pages }}
+                                                <button type="submit" class="btn btn-primary samp_confirmation" formmethod="POST" id="next_page_button" name="page" title="Page" value="{{ npage }}">
+                              Next
+                            </button>
+                                                <button type="submit" class="btn btn-primary samp_confirmation" formmethod="POST" id="last_page_button" name="page" title="Page" value="{{ pages }}">
+                              Last
+                            </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="samp-test" class="filemanager-margin-top"></div>
+                                <div id="samp-status" class="filemanager-margin-top"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        auto_names();
+    </script>
+    <script src="{% static 'avi/js/samp_alert.js' %}"></script>
+    {% include "avi/footer.html" %}
+</body>
+
 </html>

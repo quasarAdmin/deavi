@@ -76,7 +76,7 @@ class herschel_query(parent):
         @see herschel_query_model @link avi.models.herschel_query_model
         @see herschel_query_task @link avi.task.herschel_query_task
         """
-        m = herschel_query_model(name_coord = data['name_coord'] == "name",
+        m = herschel_query_model(name_coord = data['name_coord'],
                                  name = data['name'], #if data['name'] != "" \
                                  #else None,
                                  input_file = data['input_file'],

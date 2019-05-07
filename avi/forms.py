@@ -190,111 +190,119 @@ class query_herschel_form(forms.Form):
     This class defines the form to query the herschel archive
     """
     ## has the query to be done by coordinates or name?
-    name_coord = forms.ChoiceField(label='Name  Coordinates',
+    name_coord = forms.ChoiceField(label='Name  Coordinates',help_text='Search by target name,Search by equatorial coordinates,Select a file,Search by ADQL querie',
                                    widget=forms.RadioSelect,
                                    required=True,
                                    choices=get_name_coord())
     ## name of the object to be queried
-    name = forms.CharField(label='Name', max_length=255,required=False)
+    name = forms.CharField(label='Name', max_length=255,help_text='Targe Name',required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
     ## input file containing multiple queries information
-    input_file = forms.CharField(label='Input File', max_length=255, 
+    input_file = forms.CharField(label='Input File',help_text='Input File', max_length=255, 
                                  required=False)
     ## ra
-    ra = forms.FloatField(label='ra',required=False)
+    ra = forms.FloatField(label='ra',help_text='Right Ascension',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
     ## dec
-    dec = forms.FloatField(label='dec',required=False)
+    dec = forms.FloatField(label='dec',help_text='Declination',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
     ## shape of the query
-    shape = forms.ChoiceField(label='Shape',
+    shape = forms.ChoiceField(label='Shape', help_text='Target in Cone,Target in Box,Target in Polygon',
                               widget=forms.RadioSelect,
                               required=True,
                               choices=get_shapes())
     ## radius of the query
-    radius = forms.FloatField(label='radius',required=False)
+    radius = forms.FloatField(label='radius',help_text='Radius',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
     ## width of the query
-    width = forms.FloatField(label='width',required=False)
+    width = forms.FloatField(label='width',help_text='Width',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
     ## height of the query
-    height = forms.FloatField(label='height',required=False)
+    height = forms.FloatField(label='height',help_text='Height',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
     ## array containing the vertexes of a polygon
-    polygon = forms.CharField(label='polygon', max_length=255,required=False)
+    polygon = forms.CharField(label='polygon',help_text='Polygon: A B,C D, ...', max_length=255,required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
     ## is it a positional source catalog query or images?
-    positional_images = forms.ChoiceField(label='Positional Images',
+    positional_images = forms.ChoiceField(label='Positional Images',help_text="Positional Source,Instrument Image",
                                           widget=forms.RadioSelect,
                                           required=True,
                                           choices=get_pos_img())
     ## table of the archive to be queried
-    table = forms.ChoiceField(label='Table',
-                              widget=forms.Select,
+    table = forms.ChoiceField(label='Table',help_text="Table to be queried",
+                              widget=forms.Select(attrs={'class': 'form-control'}),
                               required=False,
                               choices=get_hs_tables())
     ## herschel instrument
-    instrument = forms.ChoiceField(label='Instrument',
+    instrument = forms.ChoiceField(label='Instrument',help_text="Photodetector Array Camera and Spectrometer,Spectral and Photometric Imaging Receiver,Heterodyne Instrument for the Far Infrared",
                                    widget=forms.RadioSelect,
                                    required=False,
                                    choices=get_hs_instruments())
     ## processing level
-    level = forms.ChoiceField(label='level',
-                              widget=forms.Select,
+    level = forms.ChoiceField(label='level',help_text="Level",
+                              widget=forms.Select(attrs={'class': 'form-control'}),
                               required=False,
                               choices=get_hs_levels())
     ## output file name
-    file_name = forms.CharField(label='File Name', max_length=255,required=False)
+    file_name = forms.CharField(label='File Name',help_text='File Name', max_length=255,required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
     ## an ADQL query
-    adql = forms.CharField(label='ADQL query', 
+    adql = forms.CharField(label='ADQL query', help_text='ADQL Query',
                            #max_length=255,
                            required=False,
-                           widget=forms.Textarea)
+                           widget=forms.Textarea(attrs={'class': 'form-control'}))
 
 class query_gaia_form(forms.Form):
     """@class query_gaia_form
     This class defines the form to query the gaia archive
     """
     ## has the query to be done by coordinates or name?
-    name_coord = forms.ChoiceField(label='Name  Coordinates',
+    name_coord = forms.ChoiceField(label='Name  Coordinates',help_text='Search by target name,Search by equatorial coordinates,Select a file,Search by ADQL querie',
                                    widget=forms.RadioSelect,
                                    required=True,
                                    choices=get_name_coord())
     ## name of the object to be queried
-    name = forms.CharField(label='Name', max_length=255,required=False)
+    name = forms.CharField(label='Name',help_text='Targe Name', max_length=255,required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    ##name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'text'}))
     ## input file containing multiple queries information
-    input_file = forms.CharField(label='Input File', max_length=255, 
+    input_file = forms.CharField(label='Input File',help_text='Input File', max_length=255, 
                                  required=False)
     ## ra
-    ra = forms.FloatField(label='ra',required=False)
+    ra = forms.FloatField(label='ra',required=False,help_text='Right Ascension',widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    ##ra = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number'}))
     ## dec
-    dec = forms.FloatField(label='dec',required=False)
+    dec = forms.FloatField(label='dec',required=False,help_text='Declination',widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    ##dec = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number'}))
     ## shape of the query
-    shape = forms.ChoiceField(label='Shape',
+    shape = forms.ChoiceField(label='Shape', help_text='Target in Cone,Target in Box,Target in Polygon',
                               widget=forms.RadioSelect,
                               required=True,
                               choices=get_shapes())
     ## radius of the query
-    radius = forms.FloatField(label='radius',required=False)
+    radius = forms.FloatField(label='radius',help_text='Radius',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    ##radius = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number'}))
     ## width of the query
-    width = forms.FloatField(label='width',required=False)
+    width = forms.FloatField(label='width',help_text='Width',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    ##width = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number'}))
     ## height of the query
-    height = forms.FloatField(label='height',required=False)
+    height = forms.FloatField(label='height',help_text='Height',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    ##height = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number'}))
     ## array containing the vertexes of a polygon
-    polygon = forms.CharField(label='polygon', max_length=255,required=False)
-    data_release = forms.ChoiceField(label='Data Release',
+    polygon = forms.CharField(label='polygon',help_text='Polygon: A B,C D, ...', max_length=255,required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    ##polygon = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number'}))
+    data_release = forms.ChoiceField(label='Data Release',help_text="Data Release 1,Data Release 2",
                                      widget=forms.RadioSelect,
                                      required=True,
                                      choices=get_data_releases())
     ## table of the archive to be queried
-    table_dr1 = forms.ChoiceField(label='Table',
-                                  widget=forms.Select,
+    table_dr1 = forms.ChoiceField(label='Table',help_text='Data Release 1 Tables',
+                                  widget=forms.Select(attrs={'class': 'form-control'}),
                                   required=False,
                                   choices=get_gaia_dr1_tables())
-    table_dr2 = forms.ChoiceField(label='Table',
-                                  widget=forms.Select,
+    table_dr2 = forms.ChoiceField(label='Table',help_text='Data Release 2 Tables',
+                                  widget=forms.Select(attrs={'class': 'form-control'}),
                                   required=False,
                                   choices=get_gaia_dr2_tables())
     ## output file name
-    file_name = forms.CharField(label='File Name', max_length=255,required=False)
+    file_name = forms.CharField(label='File Name',help_text='File Name', max_length=255,required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    ##file_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'text'}))
     ## an ADQL query
-    adql = forms.CharField(label='ADQL query', 
+    adql = forms.CharField(label='ADQL query', help_text='ADQL Query',
                            #max_length=255,
                            required=False,
-                           widget=forms.Textarea)
+                           widget=forms.Textarea(attrs={'class': 'form-control'}))
 
 # deprecated
 class _query_gaia_form():

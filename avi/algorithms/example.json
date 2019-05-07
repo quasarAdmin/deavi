@@ -1,20 +1,66 @@
 {"algorithm":{
     "name": "example",
+    "view_name": "Example",
+    "description": "<h3>An example to test the interface</h3><p>This is just a simple example to test the input parameters and charts on the application</p>",
     "input":{
         "input_1":{
             "name": "gaia_table",
             "view_name": "gaia table",
-            "type": "gaia_table"
+            "type": "gaia_table",
+            "info": "A gaia table"
         },
         "input_2":{
             "name": "hsa_table",
             "view_name": "hsa table",
-            "type": "hsa_table"
+            "type": "hsa_table",
+            "info": "A hsa table"
         },
         "input_3":{
             "name": "gaia_table2",
             "view_name": "gaia table 2",
             "type": "gaia_table"
+        },
+        "input_4":{
+            "name": "param_float",
+            "view_name": "float param",
+            "type": "float",
+            "info": "A float parameter"
+        },
+        "input_5":{
+            "name": "param_string",
+            "view_name": "string param",
+            "type": "string",
+            "info": "A string parameter"
+        },
+        "input_6":{
+            "name": "param_integer",
+            "view_name": "int param",
+            "type": "integer",
+            "info": "An integer parameter"
+        },
+        "input_7":{
+            "name": "param_long",
+            "view_name": "long param",
+            "type": "long",
+            "info": "A long parameter"
+        },
+        "input_8":{
+            "name": "param_complex",
+            "view_name": "complex param",
+            "type": "complex",
+            "info": "A complex parameter"
+        },
+        "input_9":{
+            "name": "param_user",
+            "view_name": "User param",
+            "type": "user_data",
+            "info": "User data parameter"
+        },
+        "input_10":{
+            "name": "param_res",
+            "view_name": "Results param",
+            "type": "results_data",
+            "info": "Results data parameter"
         }
     }
 }}

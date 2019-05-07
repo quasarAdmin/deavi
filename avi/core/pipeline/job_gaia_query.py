@@ -85,7 +85,7 @@ class gaia_query(parent):
             data['table'] = data['table_dr1']
         elif data['data_release'] == 'dr2':
             data['table'] = data['table_dr2']
-        m = gaia_query_model(name_coord = data['name_coord'] == "name",
+        m = gaia_query_model(name_coord = data['name_coord'],
                              name = data['name'],
                              input_file = data['input_file'],
                              ra = float(data['ra']),

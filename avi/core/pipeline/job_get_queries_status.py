@@ -131,12 +131,27 @@ class get_queries_status(parent):
         pg = Paginator(all_ms, wh.MAX_QUERY_PER_PAGE)
         page = wh.CURRENT_QUERY_PAGE
         #log.info(page)
+        #------------------
+        #---all data queries
+        allqueries = {}
+        k = 0
+        for h in pg.object_list:
+            try:
+                status = h.request.pipe_state.state
+                date = h.request.pipe_state.started_time
+            except AttributeError:
+                status = h.request.pipeline_state.state
+                date = h.request.pipeline_state.started_time
+            #status = h.request.pipeline_state.state
+            #date = h.request.pipeline_state.started_time
+            allqueries[k] = ("query %s"%(h.name), status, date, h.pk, h.archive)
+            k += 1
+        #------------------
         if page < 1:
             wh.CURRENT_QUERY_PAGE = 1
         elif page > pg.num_pages:
             wh.CURRENT_QUERY_PAGE = pg.num_pages
 
-        #log.info(wh.CURRENT_QUERY_PAGE)
 
         all_ms = pg.page(wh.CURRENT_QUERY_PAGE)
 
@@ -166,6 +181,7 @@ class get_queries_status(parent):
                 count_started += 1
             #data[q.pk] = (q.name, status)
             data[i] = ("query %s"%(q.name), status, date, error, q.pk, q.archive)
+            log.info(data[i])
             i+=1
 
         self.job_data.data[1] = data
@@ -174,7 +190,7 @@ class get_queries_status(parent):
         #if current_started != 0:
         self.job_data.data[0] = count_started < current_started
         self.job_data.ok = [pg.num_pages, wh.CURRENT_QUERY_PAGE, \
-                            wh.CURRENT_QUERY_PAGE + 1, wh.CURRENT_QUERY_PAGE - 1]
+                            wh.CURRENT_QUERY_PAGE + 1, wh.CURRENT_QUERY_PAGE - 1, allqueries, wh.SORTING_QUERY_BY]
 
         return self.job_data
         # OLD

@@ -18,63 +18,89 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     {% include "avi/header.html" %}
-  </head>
-  <body>
+</head>
+
+<body>
     <div id="navbar">
-      {% include "avi/navbar.html" %}
+        {% include "avi/navbar.html" %}
     </div>
     <div class="container-fluid">
-      <div id="content" class="row content">
-	<div id="sidebar" class="col-sm-2 sidenav">
-	  {% include "avi/sidebar-nav.html" with sidebar_menu="help"%}
-	</div>
-	<div id="real-content" class="col-sm-10">
-	  <!-- ------------------------------------------------------------- -->
-	  <!-- ------------------------------------------------------------- -->
-	  <!-- ------------------------------------------------------------- -->
-          {% load static %}
-	  <h1>Partners</h1>
-          <div class="row sfm-text-justify sfm-separator">
-            <div class="col-sm-3"><img class="sfm-center" src="{% static 'avi/img/partners-university-of-leeds.gif' %}"></div>
-            <div class="col-sm-9">
-              <p><a href="http://www.physics.leeds.ac.uk/research/groups/astrophysics-group.html">Leeds astrophysicists</a> investigate star formation by:</p>
-              <ul>
-                <li>leading international teams in conducting and exploiting infrared and radio surveys, one of which will result in the identification of nearly all of the young massive stars in the Milky Way</li>
-                <li>performing focused follow-up observations of individual sources utilising cutting-edge velocity-resolved spectroscopic, infrared interferometric and spectropolarimetric techniques</li>
-                <li>obtaining millimeter, submillimeter and infrared data for molecular line emissions and interpreting them with chemical models to probe the dynamics</li>
-                <li>constructing multidimensional, multifluid hydromagnetic models of the births of Giant Molecular Clouds and the development and evolution of structure within them.</li>
-              </ul>
-              <p>Group members serve on committees defining the scientific objectives for a number of the most important, upcoming international facilities including the space-borne Herschel infrared mission, the radio frequency Square Kilometer Array and the Magdalena Ridge optical/infrared interferometer. They also study diffuse astrophysical matter in many other environments including discs where planets form, discs around evolved stars, powerful outflows occurring during stellar death, starburst superwinds and clusters of galaxies with central active galaxies similar to quasars.</p>
-              <p>The group’s studies of physical processes important in many diffuse astrophysical sources include investigations of how cosmic rays affect dynamics, the effects of charged nanoparticles on magnetic field evolution and the formation and escape of molecules from the surfaces of nanoparticles.</p>
+        <div id="" class="row content">
+            {% include "avi/sidebar-nav.html" with sidebar_menu="help"%}
+            <div id="real-content" class="col cont">
+                <!-- ------------------------------------------------------------- -->
+                <div id="card" class="card bg-light mb-3">
+                    <div class="card-header">
+                        {% load static %}
+                        <h1>PARTNERS</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="row sfm-text-justify sfm-separator">
+                            <div class="col-sm-3"><img class="sfm-center images-about" src="{% static 'avi/img/partners-university-of-leeds.gif' %}" alt="image of leeds university"></div>
+                            <div class="col-sm-8 text-list">
+                                <p><a class="a-link" href="http://www.physics.leeds.ac.uk/research/groups/astrophysics-group.html">Leeds astrophysicists</a> investigate star formation by:</p>
+                                <ul>
+                                    <li class="about-li">Leading international teams in conducting and exploiting infrared and radio surveys, one of which will result in the identification of nearly all of the young massive stars in the Milky Way</li>
+                                    <li class="about-li">Performing focused follow-up observations of individual sources utilising cutting-edge velocity-resolved spectroscopic, infrared interferometric and spectropolarimetric techniques</li>
+                                    <li class="about-li">Obtaining millimeter, submillimeter and infrared data for molecular line emissions and interpreting them with chemical models to probe the dynamics</li>
+                                    <li class="about-li">Constructing multidimensional, multifluid hydromagnetic models of the births of Giant Molecular Clouds and the development and evolution of structure within them.</li>
+                                </ul>
+                                <p>Group members serve on committees defining the scientific objectives for a number of the most important, upcoming international facilities including the space-borne Herschel infrared mission, the radio frequency Square
+                                    Kilometer Array and the Magdalena Ridge optical/infrared interferometer. They also study diffuse astrophysical matter in many other environments including discs where planets form, discs around evolved stars, powerful
+                                    outflows occurring during stellar death, starburst superwinds and clusters of galaxies with central active galaxies similar to quasars.</p>
+                                <p>The group’s studies of physical processes important in many diffuse astrophysical sources include investigations of how cosmic rays affect dynamics, the effects of charged nanoparticles on magnetic field evolution and the
+                                    formation and escape of molecules from the surfaces of nanoparticles.</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row sfm-text-justify sfm-separator ">
+                            <div class="col-sm-3"><img class="sfm-center images-about" src="{% static 'avi/img/partners-cardiff-university.gif' %}" alt="image of cardiff university"></div>
+                            <div class="col-sm-8 text-list">
+                                <p><a class="a-link" href="http://www.astro.cardiff.ac.uk/">The Astronomy Group at Cardiff University</a> contains an unique mix of theoretical, observational and instrumentation expertise, covering the research topics of
+                                    Star and Planet Formation, Galaxy Evolution and Astronomical Instrumentation. The synergy between these groups played a central role in the development of the SPIRE camera on the Herschel Satellite, and continues to
+                                    shape the way in which astronomical research is conducted, for example through its influence over the James Clerk Maxwell Telescope in Hawaii, and via its contributions to a new camera on the IMRAM 30m telescope in
+                                    Spain. The Star Formation Group is also heavily involved in the development of numerical techniques, such as fluid dynamics and radiative transfer, and the production of codes that are used throughout the astronomical
+                                    community.
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row sfm-text-justify sfm-separator">
+                            <div class="col-sm-3"><img class="sfm-center images-about" src="{% static 'avi/img/partners-quasar.gif' %}" alt="image of quasar science resources"></div>
+                            <div class="col-sm-8 text-list">
+                                <p><a class="a-link" href="http://www.quasarsr.com/">Quasar Science Resources</a> is a newly formed private company that provides consulting Software and System Engineering services for Research and Development projects. Quasar
+                                    S.R. provides high quality tailored-made services targeted at Research Centres, Universities and Private Companies looking to expand their activity domain. Quasar S.R. activities cover many different areas, including,
+                                    scientific software development and data reduction techniques, handling and exploitation of scientific data bases, archive engineering and data mining, computer systems engineering, including virtual machine infrastructure,
+                                    network, data storage and backup. Quasar S.R. personnel has ample experience working in big international collaborations and entities including experience with ground and space-based scientific astronomical observatories.</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row sfm-text-justify sfm-separator">
+                            <div class="col-sm-3">
+                                <img class="sfm-center images-about" src="{% static 'avi/img/IPAGlogoPosRGB-150x150.png' %}" alt="image of planetary sciences and astrophysics of grenoble"></div>
+                            <div class=" col-sm-8 text-list">
+                                <p><a class="a-link" href="http://ipag.osug.fr/ ">The Institute for Planetary sciences and Astrophysics of Grenoble (IPAG)</a> is a laboratory under the authority of CNRS and Unversity Grenoble Alpes and was born in 2011 from
+                                    the merger of two laboratories (LPG and LAOG). With almost 100 permanent staff in 2015, IPAG is one of the largest laboratories of the Observatory of Sciences of the Universe of Grenoble (OSUG).</p>
+                                <p>Research areas at IPAG range from the planetary sub-surfaces to the outer reaches of the Universe, with a strong involvement in the study of stellar and planetary formation. A major part of these activities includes the
+                                    design, the building and the scientific use of several instruments dedicated to the most powerful telescopes on Earth, as well as space missions.</p>
+                                <p>Most of the astrophysics research being conducted at the University of Grenoble is done at IPAG, from laboratory experiments to theoretical calculations, including R&amp;D, the building of instruments, data processing,
+                                    modelling and interpretation. Thanks to its international collaborations, foreign students and post-doctoral scientists, IPAG has emerged as a leading international institute on the Grenoble campus.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------- -->
             </div>
-          </div>
-          <div class="row sfm-text-justify sfm-separator ">
-            <div class="col-sm-3"><img class="sfm-center" src="{% static 'avi/img/partners-cardiff-university.gif' %}"></div>
-            <div class="col-sm-9">
-              <p><a href="http://www.astro.cardiff.ac.uk/">The Astronomy Group at Cardiff University</a> contains an unique mix of theoretical, observational and instrumentation expertise, covering the research topics of Star and Planet Formation, Galaxy Evolution and Astronomical Instrumentation. The synergy between these groups played a central role in the development of the SPIRE camera on the Herschel Satellite, and continues to shape the way in which astronomical research is conducted, for example through its influence over the James Clerk Maxwell Telescope in Hawaii, and via its contributions to a new camera on the IMRAM 30m telescope in Spain. The Star Formation Group is also heavily involved in the development of numerical techniques, such as fluid dynamics and radiative transfer, and the production of codes that are used throughout the astronomical community.</p>
-            </div>
-          </div>
-          <div class="row sfm-text-justify sfm-separator">
-            <div class="col-sm-3"><img class="sfm-center" src="{% static 'avi/img/partners-quasar.gif' %}"></div>
-            <div class="col-sm-9">
-              <p><a href="http://www.quasarsr.com/">Quasar Science Resources</a> is a newly formed private company that provides consulting Software and System Engineering services for Research and Development projects. Quasar S.R. provides high quality tailored-made services targeted at Research Centres, Universities and Private Companies looking to expand their activity domain. Quasar S.R. activities cover many different areas, including, scientific software development and data reduction techniques, handling and exploitation of scientific data bases, archive engineering and data mining, computer systems engineering, including virtual machine infrastructure, network, data storage and backup. Quasar S.R. personnel has ample experience working in big international collaborations and entities including experience with ground and space-based scientific astronomical observatories.</p>
-            </div>
-          </div>
-          <div class="row sfm-text-justify sfm-separator">
-            <div class="col-sm-3"><img class="sfm-center" src="{% static 'avi/img/IPAGlogoPosRGB-150x150.png' %}"></div>
-            <div class="col-sm-9">
-              <p><a href="http://ipag.osug.fr/">The Institute for Planetary sciences and Astrophysics of Grenoble (IPAG)</a> is a laboratory under the authority of CNRS and Unversity Grenoble Alpes and was born in 2011 from the merger of two laboratories (LPG and LAOG). With almost 100 permanent staff in 2015, IPAG is one of the largest laboratories of the Observatory of Sciences of the Universe of Grenoble (OSUG).</p>
-              <p>Research areas at IPAG range from the planetary sub-surfaces to the outer reaches of the Universe, with a strong involvement in the study of stellar and planetary formation. A major part of these activities includes the design, the building and the scientific use of several instruments dedicated to the most powerful telescopes on Earth, as well as space missions.</p>
-              <p>Most of the astrophysics research being conducted at the University of Grenoble is done at IPAG, from laboratory experiments to theoretical calculations, including R&amp;D, the building of instruments, data processing, modelling and interpretation. Thanks to its international collaborations, foreign students and post-doctoral scientists, IPAG has emerged as a leading international institute on the Grenoble campus.</p>
-            </div>
-          </div>
-	  <!-- ------------------------------------------------------------- -->
-	  <!-- ------------------------------------------------------------- -->
-	  <!-- ------------------------------------------------------------- -->
-	</div>
-      </div>
+        </div>
     </div>
-  </body>
+    {% include "avi/footer.html" %}
+</body>
+
 </html>

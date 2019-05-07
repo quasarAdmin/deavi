@@ -24,9 +24,11 @@ This module provides the get_pipeline_status job.
 """
 from .job import job as parent
 
+from ast import literal_eval
 from django.core.paginator import Paginator
 
-from avi.models import algorithm_model
+from avi.models import algorithm_model, algorithm_info_model
+from avi.core.algorithm.algorithm_manager import algorithm_manager
 from avi.warehouse import wh_frontend_config
 
 from avi.log import logger
@@ -85,6 +87,39 @@ class get_pipeline_status(parent):
 
         pg = Paginator(all_ms, wh.MAX_EXEC_PER_PAGE)
         page = wh.CURRENT_EXEC_PAGE
+        #------------------
+        #----all data algorithms
+        alldata = {}
+        k = 0
+        for h in pg.object_list:
+            try:
+                status = h.request.pipe_state.state
+                date = h.request.pipe_state.started_time
+            except AttributeError:
+                status = h.request.pipeline_state.state
+                date = h.request.pipeline_state.started_time
+            #status = h.request.pipeline_state.state
+            #date = h.request.pipeline_state.started_time
+            params = {}
+            params['algorithm'] = {'name': h.alg_name, 'params':{}}
+            ainfo_ms = algorithm_info_model.objects.filter(name=h.alg_name)[0]
+            if ainfo_ms:
+                qparams = literal_eval(h.params)
+                mng = algorithm_manager()
+                ainfo = mng.get_info(ainfo_ms.definition_file, 'input')
+                for l in ainfo:
+                    if 'view_name' in ainfo[l]:
+                        params['algorithm']['params'][ainfo[l]['view_name']] = qparams['algorithm']['params'][ainfo[l]['name']]
+                    else:
+                        params['algorithm']['params'][ainfo[l]['name']] = qparams['algorithm']['params'][ainfo[l]['name']]
+                params = str(params)
+                    
+            else:
+                params = h.params
+            alldata[k] = (h.alg_name, h.pk, params, date, status)
+            log.info(params)
+            k += 1
+        #------------------
         if page < 1:
             wh.CURRENT_EXEC_PAGE = 1
         elif page > pg.num_pages:
@@ -102,6 +137,8 @@ class get_pipeline_status(parent):
         i = 0
         for j in ms:
             name = j.alg_name
+            params = {}
+            params['algorithm'] = {'name': j.alg_name, 'params':{}}
             try:
                 status = j.request.pipe_state.state
                 date = j.request.pipe_state.started_time
@@ -111,7 +148,20 @@ class get_pipeline_status(parent):
                 error = j.request.pipeline_state.exception
                 pos = error.rfind("Exception: ")
                 error = error[pos+11:]
-                params = j.params
+                ainfo_ms = algorithm_info_model.objects.filter(name=j.alg_name)[0]
+                if ainfo_ms:
+                    qparams = literal_eval(j.params)
+                    mng = algorithm_manager()
+                    ainfo = mng.get_info(ainfo_ms.definition_file, 'input')
+                    for k in ainfo:
+                        if 'view_name' in ainfo[k]:
+                            params['algorithm']['params'][ainfo[k]['view_name']] = str(qparams['algorithm']['params'][ainfo[k]['name']])
+                        else:
+                            params['algorithm']['params'][ainfo[k]['name']] = str(qparams['algorithm']['params'][ainfo[k]['name']])
+                    params = str(params)
+                        
+                else:
+                    params = j.params
                 #log.info(error)
             if not error or error == "":
                 error = "OK"
@@ -121,7 +171,7 @@ class get_pipeline_status(parent):
             i += 1
         
         self.job_data.ok = (pg.num_pages, wh.CURRENT_EXEC_PAGE, \
-                            wh.CURRENT_EXEC_PAGE + 1, wh.CURRENT_EXEC_PAGE - 1)
+                            wh.CURRENT_EXEC_PAGE + 1, wh.CURRENT_EXEC_PAGE - 1, alldata, wh.SORTING_EXEC_BY)
         self.job_data.data = data
         return self.job_data
         

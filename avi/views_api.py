@@ -189,7 +189,7 @@ class resource(APIView):
         if wh().get().production:
             response = HttpResponse()
             response['Content-Disposition'] = 'attachment; filename="%s"'%res[0].name
-            reponse['X-Sendfile'] = full_name
+            response['X-Sendfile'] = full_name
             return response
 
         if size <= 20:

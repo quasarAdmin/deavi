@@ -142,20 +142,101 @@ def pipeline_v2(request):
     log.info('host %s', request.build_absolute_uri())
     log.info('base %s', wh_global_config().get().AVI_URL)
     log.info('base %s', wh_global_config().get().PORTAL_URL)
+    loading = {}
+    loading['state'] = 'False'
     if request.method == 'POST':
         log.info("Post %s",str(request.POST))
         data = dict(request.POST)
         log.info("Data %s", str(data))
-        risea().get().start_job(wh_names().get().JOB_ALGORITHM,
-                                data)
-        
-        return HttpResponseRedirect(wh_global_config().get().AVI_URL+'avi/status')
-    
+        if type(data) == dict:
+            log.info("Im in!!!!!!!!!!!")
+            if 'table' in data:
+                log.info("hsa query")
+                f = query_herschel_form(request.POST)
+                log = logger().get_log("views")
+                log.debug("Post \n%s",str(request.POST))
+                if f.is_valid():
+                    log.info("Valid form")
+                    loading['algorithm_flag'] = data["algorithm_pk_hsa_form"]
+                    data = f.cleaned_data
+                    if request.FILES.get('input_file'):
+                        log.info("There is a file %s", request.FILES['input_file'].name)
+                        from django.core.files.storage import FileSystemStorage
+                        fs = FileSystemStorage()
+                        f = request.FILES['input_file']
+                        full_name = os.path.join(wh_global_config().get().TMP_PATH, f.name)
+                        filename = fs.save(full_name, f)
+                        data['input_file'] = full_name
+                        log.info(full_name)
+                    log.debug("cleaned data %s", str(data))
+                    job_data = risea().get().start_job(wh_names().get().JOB_HSA_QUERY,
+                                            data)
+                    
+                    #return HttpResponseRedirect(wh_global_config().get().AVI_URL+'avi/queries/status')
+                    loading['state'] = 'True'
+                    loading['table'] = 'hsa'
+                    loading['pk'] = job_data.data.pk
+                else:
+                    log.error("Invalid form")
+            elif 'table_dr2' in data:
+                log.info("gaia query")
+                form = query_gaia_form(request.POST)
+
+                if form.is_valid():
+                    log.info("Valid query gaia form!")
+                    loading['algorithm_flag'] = data["algorithm_pk_gaia_form"]
+                    data = form.cleaned_data
+                    if request.FILES.get('input_file'):
+                        log.info("There is a file")
+                        from django.core.files.storage import FileSystemStorage
+                        fs = FileSystemStorage()
+                        f = request.FILES['input_file']
+                        full_name = os.path.join(wh_global_config().get().TMP_PATH, f.name)
+                        filename = fs.save(full_name, f)
+                        data['input_file'] = full_name
+                    
+                    log.debug("cleaned data %s",str(data))
+                    job_data = risea().get().start_job(wh_names().get().JOB_GAIA_QUERY,
+                                                      data)   
+                    #return HttpResponseRedirect(wh_global_config().get().AVI_URL+'avi/queries/status')
+                    loading['state'] = 'True'
+                    loading['table'] = 'gaia'
+                    loading['pk'] = job_data.data.pk
+                    #log.info("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa: " + str(job_data.data.name))
+                else:
+                    log.error("Invalid form")
+            else:
+                risea().get().start_job(wh_names().get().JOB_ALGORITHM,data)
+                return HttpResponseRedirect(wh_global_config().get().AVI_URL+'avi/status')
     template = loader.get_template('avi/pipeline_v2.html')
     res = risea().get().start_job(wh_names().get().JOB_GET_ALGORITHMS, None)
+    gaia_query = {'form': query_gaia_form(initial={'ra':'100.2417',
+                                                'dec':'9.895',
+                                                'radius':'0.5',
+                                                'height':'10',
+                                                'width':'10',
+                                                'polygon':'10 10,20 20',
+                                                'shape':'cone',
+                                                'name_coord':'equatorial',
+                                                'data_release':'dr2',
+                                                'adql':"SELECT source_id,ra,ra_error,dec,dec_error,parallax,parallax_error,phot_g_mean_mag,bp_rp,radial_velocity,radial_velocity_error,phot_variable_flag,teff_val,a_g_val FROM gaiadr2.gaia_source  WHERE CONTAINS(POINT('ICRS',gaiadr2.gaia_source.ra,gaiadr2.gaia_source.dec),CIRCLE('ICRS',COORD1(EPOCH_PROP_POS(100.2417,9.895,0,-.6300,-3.8800,17.6800,2000,2015.5)),COORD2(EPOCH_PROP_POS(100.2417,9.895,0,-.6300,-3.8800,17.6800,2000,2015.5)),0.001388888888888889))=1"})}
+    hsa_query = {'form': query_herschel_form(initial={'ra':'100.2417',
+                                                    'dec':'9.895',
+                                                    'radius':'0.5',
+                                                    'height':'10',
+                                                    'width':'10',
+                                                    'polygon':'10 10,20 20',
+                                                    'shape':'cone',
+                                                    'positional_images':'images',
+                                                    'instrument':'PACS',
+                                                    'name_coord':'equatorial',
+                                                    'adql':"SELECT * FROM  hsa.pacs_point_source_100 WHERE 1= CONTAINS(POINT('ICRS',ra,dec), CIRCLE('ICRS', 100.2417, 9.895, 0.5))"})}
     context = res.data
     context['avi_url'] = wh_global_config().get().AVI_URL
     context['version'] = wh_global_config().get().VERSION
+    context['gaia_query'] = gaia_query
+    context['hsa_query'] = hsa_query
+    context['loading'] = loading
     log.info(str(context))
     return HttpResponse(template.render(context,request))
 
@@ -261,6 +342,7 @@ def status(request):
     @see job_sort_by @link avi.core.pipeline.job_sort_by
     """
     log = logger().get_log("views")
+    rel = None
     if request.method == 'POST':
         if request.POST.get('abort'):
             log.info("Abort %s",str(request.POST['abort']))
@@ -274,6 +356,21 @@ def status(request):
             data['type'] = "algorithm"
             data['pk'] = request.POST['delete']
             risea().get().start_job(wh_names().get().JOB_DELETE,data)
+        if request.POST.get('relaunch'):
+            log.info("Relaunch %s",str(request.POST['relaunch']))
+            data = {}
+            data['type'] = "algorithm"
+            data['pk'] = request.POST['relaunch']
+            aux_rel = risea().get().start_job(wh_names().get().JOB_RELAUNCH_ALGORITHM,data)
+            #log.info("ret: %s", str(ret.data))
+            rel = {}
+            rel['ok'] = aux_rel.ok
+            rel['data'] = aux_rel.data
+        if request.POST.get('algorithm_id'):
+            log.info("Algorithm_relaunch %s",str(request.POST['algorithm_id']))
+            data = dict(request.POST)
+            log.info("Data %s", str(data))
+            risea().get().start_job(wh_names().get().JOB_ALGORITHM, data)
         if request.POST.get('page'):
             log.info("Page %s",str(request.POST['page']))
             data = {}
@@ -295,7 +392,11 @@ def status(request):
                     'cpage': jobs.ok[1], 'pages': jobs.ok[0],
                     'npage': jobs.ok[2], 'ppage': jobs.ok[3],
                     'version':wh_global_config().get().VERSION,
-                    'avi_url':wh_global_config().get().AVI_URL}
+                    'avi_url':wh_global_config().get().AVI_URL,
+                    'alljobs': jobs.ok[4], 'ordby':jobs.ok[5]}
+        if rel is not None and rel['ok']:
+            context['relaunch'] = rel['data']
+            log.info("context: %s", context)
     else:
         context = {'version':wh_global_config().get().VERSION,
                    'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
@@ -324,11 +425,16 @@ def send_samp_data(request):
     #log = logger().get_log("views")
     #log.info("send_samp")
     #log.info(request.POST['data'])
+    template = loader.get_template('avi/resources_filemanager.html')
+    context = {'version':wh_global_config().get().VERSION,
+               'avi_url':wh_global_config().get().AVI_URL}
     if request.is_ajax():
         response = risea().get().start_job(wh_names().get().JOB_SAVE_SAMP_DATA,
                                            {'name':request.POST['name'],
                                             'data':request.POST['data']})
         #log.info(request.POST['data'])
+        context["samp"] = response.data
+    return HttpResponse(json.dumps(context))
     return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
 
 def get_results(request):
@@ -418,9 +524,15 @@ def get_query_info(request):
         response = risea().get().start_job(wh_names().get().JOB_GET_QUERY_INFO,
                                            {'id':request.POST['id'],
                                             'mission': request.POST['mission']})
-        log.info(response.data)
         return HttpResponse(json.dumps(response.data))
-
+def get_query_status(request):
+    # TODO: doc
+    log = logger().get_log("views")
+    if request.is_ajax():
+        response = risea().get().start_job(wh_names().get().JOB_GET_QUERY_STATUS,
+                                            {'id':request.POST['id'],
+                                            'mission': request.POST['mission']})
+        return HttpResponse(json.dumps(response.data))
 def query_gaia(request):
     """View for the gaia query page.
 
@@ -489,6 +601,9 @@ def query_gaia(request):
     context = {'form': query_gaia_form(initial={'ra':'100.2417',
                                                 'dec':'9.895',
                                                 'radius':'0.5',
+                                                'height':'10',
+                                                'width':'10',
+                                                'polygon':'10 10,20 20',
                                                 'shape':'cone',
                                                 'name_coord':'equatorial',
                                                 'data_release':'dr2',
@@ -551,6 +666,9 @@ def query_herschel(request):
     context = {'form': query_herschel_form(initial={'ra':'100.2417',
                                                     'dec':'9.895',
                                                     'radius':'0.5',
+                                                    'height':'10',
+                                                    'width':'10',
+                                                    'polygon':'10 10,20 20',
                                                     'shape':'cone',
                                                     'positional_images':'images',
                                                     'instrument':'PACS',
@@ -602,6 +720,7 @@ def query_status(request):
     @see job_sort_by @link avi.core.pipeline.job_sort_by
     """
     log = logger().get_log("views")
+    ret = None
     if request.method == 'POST':
         if request.POST.get('abort_gaia'):
             log.info("Post %s",str(request.POST['abort_gaia']))
@@ -627,6 +746,19 @@ def query_status(request):
             data['type'] = "hsa"
             data['pk'] = request.POST['delete_hsa']
             risea().get().start_job(wh_names().get().JOB_DELETE,data)
+        if request.POST.get('launch'):
+            log.info("Post %s",str(request.POST['launch']))
+            data = {}
+            data['mission'] = ""
+            data['id'] = request.POST['launch']
+            ret = risea().get().start_job(wh_names().get().JOB_LAUNCH,data)
+            log.info("ret: %s", str(ret.data))
+            ret = ret.data
+        if request.POST.get('algorithm_id'):
+            log.info("Algorithm_relaunch %s",str(request.POST['algorithm_id']))
+            data = dict(request.POST)
+            log.info("Data %s", str(data))
+            risea().get().start_job(wh_names().get().JOB_ALGORITHM, data)
         if request.POST.get('page'):
             log.info("Page %s",str(request.POST['page']))
             data = {}
@@ -654,8 +786,13 @@ def query_status(request):
                    'cpage': queries.ok[1], 'pages': queries.ok[0],
                    'npage': queries.ok[2], 'ppage': queries.ok[3],
                    'version':wh_global_config().get().VERSION,
-                   'avi_url':wh_global_config().get().AVI_URL}
+                   'avi_url':wh_global_config().get().AVI_URL,
+                   'allqueries': queries.ok[4], 'ordby':queries.ok[5]}
         #log.debug("get_queries_status context: %s", str(context))
+        if ret:
+            #log.info("context ret: %s", str(ret))
+            context['launch'] = ret
+            #log.info("context: %s", context)
     else:
         context = {'version':wh_global_config().get().VERSION,
                    'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
@@ -738,6 +875,11 @@ def resources_filemanager(request):
 
     directories_list = job.data[0] 
     files_list = job.data[1]
+    paths = job.data[2]
+    gaia_files = job.data[3]
+    hsa_files = job.data[4]
+    results_files = job.data[5]
+    user_files = job.data[6]
 #     current_path_files = risea().get().get_current_path()
     
     if request.method=='POST':
@@ -806,6 +948,7 @@ def resources_filemanager(request):
         if 'delete_file' in request.POST:
             log.debug("There is a delete_file POST")
             log.debug(request.POST)
+            log.info("hellooooooooooo: " + str(request.POST))
             risea().get().delete_file(request.POST['delete_file'])
             log.debug("The file has been deleted")
             return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
@@ -844,7 +987,8 @@ def resources_filemanager(request):
     
   
     template = loader.get_template('avi/resources_filemanager.html')
-    context = {'directories_list': directories_list, 'files_list': files_list,
+    context = {'directories_list': directories_list, 'files_list': files_list,'paths': paths, 'gaia_files':gaia_files,
+                'hsa_files':hsa_files, 'results_files':results_files, 'user_files':user_files,
                'cpage': job.ok[1], 'pages': job.ok[0],
                'npage': job.ok[2], 'ppage': job.ok[3],
                'version':wh_global_config().get().VERSION,

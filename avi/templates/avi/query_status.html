@@ -18,91 +18,185 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    {% include "avi/header.html" %}
-    {% load static %}
+
+<head>
+    {% include "avi/header.html" %} {% load static %}
     <script src="{% static 'avi/js/poll.js' %}"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js">
+    </script>
+    <script src="{% static 'avi/js/query_launch.js' %}"></script>
+    <script src="{% static 'avi/js/query_search.js' %}"></script>
     <!-- <link rel="stylesheet" href="{% static 'avi/style.css' %}"> -->
-  </head>
-  <body>
+    <script>
+        avi_url = "{{ avi_url }}";
+        //var avi_url = avi_url;
+    </script>
+</head>
+
+<body>
     {% csrf_token %}
-  <div id="navbar">
-    {% include "avi/navbar.html" %}
-  </div>
-  <div class="container-fluid">
-  <div id="content" class="row content">
-    <div id="sidebar" class="col-sm-2 sidenav">
-      {% include "avi/sidebar-nav.html" with sidebar_menu="queries"%}
+    <div id="navbar">
+        {% include "avi/navbar.html" %}
     </div>
-    <div id="real-content" class="col-sm-10">
-      <!-- ----------------------------------------------------------------- -->
-      <!-- ----------------------------------------------------------------- -->
-      <!-- ----------------------------------------------------------------- -->
-      {% if update == True %}
-      <script>
-	window.location.reload();
-      </script>
-      <h1>{{ update }}</h1>
-      {% endif %}
-      <h1>Queries Status</h1>
-      <div class="table text-center">
-	<div class="table-row heading">
-          <div class="table-head">
-            <div class="row-sm-12">
-	      <div class="col-sm-4 cell-border text-left sort-by-name">
-	        Name
-	      </div>
-	      <div class="col-sm-4 cell-border sort-by-date">
-	        Date
-	      </div>
-	      <div class="col-sm-2 cell-border sort-by-status">
-	        Status
-	      </div>
-	      <div class="col-sm-1 cell-border">
-	        Info
-	      </div>
-	      <div class="col-sm-1 cell-border">
-	        Abort
-	      </div>
-            </div>
-	  </div>
-        </div>
-	{% for q in queries.items %}
-	<div class="table-row data">
-          <div class="table-cell">
-            <div class="row-sm-12">
-	      <div id="{{ q.1.5 }}_{{ q.1.4 }}"
-                   mission="{{ q.1.5 }}"
-                   qid="{{ q.1.4 }}"
-                   title="TODO"
-                   class="col-sm-4 text-left cell-border query-info
-                          hover-info">
-	        {# {{queries|get_item:q}} #}
-	        {{ q.1.0 }} - {{ q.1.4 }}
-	      </div>
-	      <div class="col-sm-4 cell-border">
-	        {{ q.1.2 }}
-	      </div>
-	      <div class="col-sm-2 cell-border">
-	        {{ q.1.1 }}
-	      </div>
-	      <div class="col-sm-1 cell-border">
-	        {{ q.1.3 }}
-	      </div>
-	      <div class="col-sm-1 cell-border">
-                <form id="form_{{ q.1.4 }}"
-                      method="post">
-                  {% csrf_token %}
-                  <button
-                     type="submit"
-                     class="btn btn-primary btn-block"
-                     formmethod="POST"
-                     id="form_button_{{ q.1.4 }}" 
-                     {% if q.1.1 in "SUCCESS" or q.1.1 in "FAILURE" %}
-                     name="delete_{{ q.1.5 }}"
-                     title="Delete" 
-                     value="{{ q.1.4 }}">
-                    Delete
+    <div class="container-fluid">
+        <div id="" class="row content">
+            {% include "avi/sidebar-nav.html" with sidebar_menu="queries"%}
+            <div id="real-content" class="col cont">
+                <div id="card" class="card bg-light mb-3">
+                    <div class="card-header">
+                        {% if update == True %}
+                        <script>
+                            window.location.reload();
+                        </script>
+                        <h1>{{ update }}</h1>
+                        {% endif %}
+                        <h1>Queries Status</h1>
+                    </div>
+                    <div class="card-body">
+                        {% for h in allqueries.items %}
+                        <script>
+                            take_all_queries('{{h.1.0}}', '{{h.1.1}}', '{{h.1.2}}', '{{h.1.3}}', '{{h.1.4}}')
+                        </script>
+                        {% endfor %}
+                        <div class="end_scripts"></div>
+                        <div class="row">
+                            <div id="alert" class="col-sm-12">
+                            </div>
+                        </div>
+                        <div class="row autocomplete">
+                            <div class="col text-center mb-3">
+                                <!--<form class="form-inline " method="GET" action="{{ avi_url }}avi/queries/status">
+                                    <input class="form-control form-control-sm mr-3 w-75 search_bar" id="search" type="text" placeholder="Search" aria-label="Search" name="search">
+                                    <label id="search_icon" data-toggle="modal" data-target="#myModal" for="search"><i class="fa fa-search" aria-hidden="true"></i></label>
+                                </form>-->
+                                <form class="form-inline" method="dialog">
+                                    <input class="form-control form-control-sm mr-3 w-75 search_bar" id="search" type="text" placeholder="Search" aria-label="Search" name="search" style="margin: 0 auto !important">
+                                    <label id="search_icon" data-toggle="modal" data-target="#myModal" for="search" onclick="searchQ()"><i class="fa fa-search" aria-hidden="true"></i></label>
+                                </form>
+                                <!--<div id="alert" style="color: red"></div>-->
+                            </div>
+                            <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 id="modal-title" class="modal-title">No Query</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="_query-container"></div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <form id="form_" method="post">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-primary btn-block" formmethod="POST" id="form_launch_button" name="launch" title="Launch" value="">
+                                                        <a class="thrash-icon"><i class="fas fa-play-circle"></i></a><a class="delete">Launch</a>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+
+                            <script>
+                                searchQ();
+                            </script>
+                        </div>
+                        <script>
+                            enter_search();
+                        </script>
+                        {% if launch %}
+                        <div class="row">
+                            {% csrf_token %}
+                            <div class="col-sm-10 offset-sm-1">
+                                <div class="card bg-light mb-3">
+                                    <div class="card-body">
+                                        {% if launch.files == 'No data found' %}
+                                        <div class="alert alert-warning mt-3" role="alert">
+                                            This query has no files to launch
+                                        </div>
+                                        {% else %}
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group row mt-3" style="width: 100%">
+                                                                <label class="col-sm-5 col-form-label font-weight-bold" for="form_launch">Select Algorithm</label>
+                                                                <div class="col-sm-7" style="padding: 0px">
+                                                                    <select class="form-control" id="form_launch" name="alg_launch" onchange='launch(this.value)'>
+                                                                            <option selected="">Algorithms</option>
+                                                                            {% for key, value in launch.algorithms.items %}
+                                                                            <option class="alg-button" params="{{launch}}" id="{{ value.pk }}" value="{{ value.pk }}">{{value.view_name}}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--{% for key, value in launch.algorithms.items %}
+                                                    <div class="btn btn-info alg-button mt-2" params="{{launch}}" id="{{ value.pk }}">{{value.view_name}}</div>
+                                                    {% endfor %}-->
+                                                <div id="div_alg_info" class="algorithm-label-margin2">
+
+                                                </div>
+                                                <script>
+                                                    launch()
+                                                </script>
+                                                <script>
+                                                    autocomp()
+                                                </script>
+                                            </div>
+                                        </div>
+                                        {% endif%}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-sm-11 table-pipe">
+                                <div class="row table-head-pipe">
+                                    <div class="col-md-3 table-head-pipe-element sort-by-name">Name <i class="fas fa-sort name-sort"></i></div>
+                                    <div class="col-md-2 table-head-pipe-element sort-by-date">Date <i class="fas fa-sort date-sort"></i></div>
+                                    <div class="col-md-2 table-head-pipe-element sort-by-status">Status <i class="fas fa-sort status-sort"></i></div>
+                                    <div class="col-md-1 table-head-pipe-element">Info</div>
+                                    <div class="col-md-2 table-head-pipe-element">Launch</div>
+                                    <div class="col-md-2 table-head-pipe-element-last">Abort</div>
+                                </div>
+                                {% for q in queries.items %}
+                                <div class="row table-body-pipe data">
+                                    <div id="{{ q.1.5 }}_{{ q.1.4 }}" mission="{{ q.1.5 }}" qid="{{ q.1.4 }}" data="{{q.1.2}}_{{q.1.1}}" title="TODO" class="name_search col-md-3 table-body-pipe-element query-info
+                                    hover-info">{# {{queries|get_item:q}} #} {{ q.1.0 }} - {{ q.1.4 }} <i class="fas fa-angle-down"></i></div>
+                                    <div class="col-md-2 table-body-pipe-element">{{ q.1.2 }}</div>
+                                    <div class="col-md-2 table-body-pipe-element">{{ q.1.1 }}</div>
+                                    <div class="col-md-1 table-body-pipe-element">{{ q.1.3 }}</div>
+                                    <div class="col-md-2 table-body-pipe-element pipe-button">
+                                        <form id="form_{{ q.1.4 }}" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-primary btn-block" formmethod="POST" id="form_launch_button_{{ q.1.4 }}" {% if q.1.1 in "SUCCESS" %} name="launch" title="Launch" value="{{ q.1.4 }}-{{q.1.5}}">
+                                                <a class="thrash-icon"><i class="fas fa-play-circle"></i></a><a class="delete">Launch</a>
+                    {% else %}
+                    disabled>
+                    Launch
+                    {% endif %}
+                  </button>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-2 table-head-pipe-element-last pipe-button">
+                                        <form id="form_{{ q.1.4 }}" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-primary btn-block" formmethod="POST" id="form_button_{{ q.1.4 }}" {% if q.1.1 in "SUCCESS" or q.1.1 in "FAILURE" %} name="delete_{{ q.1.5 }}" title="Delete" value="{{ q.1.4 }}">
+                                                <a class="thrash-icon"><i class="fas fa-trash-alt"></i></a><a class="delete">Delete</a>
                     {% else %}
                     name="abort_{{ q.1.5 }}"
                     title="Abort" 
@@ -110,76 +204,72 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                     Abort
                     {% endif %}
                   </button>
-                </form>
-              </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div id="div_qs-res_{{ q.1.5 }}_{{ q.1.4 }}" class="row table-body-pipe data qs-res" style="display: none;">
+                                    <div class="data alg-res" style="width: 100%">
+                                        <div class="table-cell text-left">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    {% with id=q.1.4 name=q.1.0 mission=q.1.5 %} {% include "avi/query_results.html" %} {% endwith %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-10 offset-sm-1" style="margin-top: 10px">
+                                <div class="table-footer text-right">
+                                    <!-- <a href="#">{{ ppage }} - {{ npage }} - {{ cpage }} - {{ pages }}</a> -->
+                                    <form id="form_page" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary" formmethod="POST" id="first_page_button" name="page" title="Page" value="1">
+                                    First
+                                  </button>
+                                        <button type="submit" class="btn btn-primary" formmethod="POST" id="prev_page_button" name="page" title="Page" value="{{ ppage }}">
+                                    Prev
+                                  </button> Page {{ cpage }} of {{ pages }}
+                                        <button type="submit" class="btn btn-primary" formmethod="POST" id="next_page_button" name="page" title="Page" value="{{ npage }}">
+                                    Next
+                                  </button>
+                                        <button type="submit" class="btn btn-primary" formmethod="POST" id="last_page_button" name="page" title="Page" value="{{ pages }}">
+                                    Last
+                                  </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="hidden_q">
+                        </div>
+                        <script>
+                            make_divs()
+                        </script>
+                    </div>
+                </div>
+                <!-- ----------------------------------------------------------------- -->
+                <!-- ----------------------------------------------------------------- -->
+                <!-- ----------------------------------------------------------------- -->
+
+                <!-- ----------------------------------------------------------------- -->
+                <!-- ----------------------------------------------------------------- -->
+                <!-- ----------------------------------------------------------------- -->
             </div>
-	  </div>
-	</div>
-        <div id="div_qs-res_{{ q.1.5 }}_{{ q.1.4 }}"
-             class="table-row data qs-res" style="display: none">
-          <div class="table-cell text-left">
-            <div class="row-sm-12">
-              {% with id=q.1.4 name=q.1.0 mission=q.1.5 %}
-              {% include "avi/query_results.html" %}
-              {% endwith %}
-            </div>
-          </div>
         </div>
-	{% endfor %}
-      </div>
-      <div class="table-footer text-right">
-	<!-- <a href="#">{{ ppage }} - {{ npage }} - {{ cpage }} - {{ pages }}</a> -->
-        <form id="form_page"
-              method="post">
-          {% csrf_token %}
-          <button
-             type="submit"
-             class="btn btn-primary"
-             formmethod="POST"
-             id="first_page_button" 
-             name="page"
-             title="Page" 
-             value="1">
-            First
-          </button>
-          <button
-             type="submit"
-             class="btn btn-primary"
-             formmethod="POST"
-             id="prev_page_button" 
-             name="page"
-             title="Page" 
-             value="{{ ppage }}">
-            Prev
-          </button>
-          Page {{ cpage }} of {{ pages }}
-          <button
-             type="submit"
-             class="btn btn-primary"
-             formmethod="POST"
-             id="next_page_button" 
-             name="page"
-             title="Page" 
-             value="{{ npage }}">
-            Next
-          </button>
-          <button
-             type="submit"
-             class="btn btn-primary"
-             formmethod="POST"
-             id="last_page_button" 
-             name="page"
-             title="Page" 
-             value="{{ pages }}">
-            Last
-          </button>
-        </form>
-      </div>
-      <!-- ----------------------------------------------------------------- -->
-      <!-- ----------------------------------------------------------------- -->
-      <!-- ----------------------------------------------------------------- -->
     </div>
-  </div>
-  </div>
+
+    <script>
+        auto_names();
+    </script>
+    <script>
+        check_order('{{ordby}}')
+    </script>
+    {% include "avi/footer.html" %}
 </body>
+
 </html>

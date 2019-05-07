@@ -16,12 +16,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 body {
-    margin-bottom: 40px;
-    padding-top: 60px;
+    /*margin-bottom: 40px;
+    padding-top: 60px;*/
 }
 
+
 /*Vertical dividier stuff*/
+
 .navbar .divider-vertical {
     height: 50px;
     margin: 0 9px;
@@ -30,12 +33,14 @@ body {
 }
 
 @media (max-width: 767px) {
-    .navbar-collapse .nav > .divider-vertical {
-	display: none;
+    .navbar-collapse .nav>.divider-vertical {
+        display: none;
     }
 }
 
+
 /*Buttons*/
+
 .navbar-btn-gavip-dash {
     background-color: #484848;
     color: hsl(203, 96%, 54%);

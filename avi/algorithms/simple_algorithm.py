@@ -113,4 +113,9 @@ class simple_algorithm:
             save_plot(id, "gaia", p)  # open a browser
         #The function above is called to obtain the wanted graph
         p = radvel(x,y,max_ra, min_ra, max_de, min_de, u , v)
+
+        res = self.n_stars
+        my_file = data(id).file("my_results.txt")
+        my_file.write(str(res))
+        my_file.close()
         

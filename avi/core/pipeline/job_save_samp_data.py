@@ -69,4 +69,6 @@ class save_samp_data(parent):
                                 "user",
                                 timezone.now())
         self.job_data.ok = True
+        self.job_data.data = {}
+        self.job_data.data['status'] = 'success'
         return self.job_data

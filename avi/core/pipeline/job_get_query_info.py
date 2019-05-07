@@ -77,23 +77,134 @@ class get_query_info(parent):
             return self.job_data
         query = qq[0]
 
+        ret = []
+        if data['mission'] == 'gaia':
+            mytuple = ("type", query.name_coord)
+            ret.append(mytuple)
+            if query.name_coord == 'file':
+                mytuple = ("name", query.name_coord)
+                ret.append(mytuple)
+            elif query.name_coord == 'adql':
+                mytuple = ("adql", query.adql)
+                ret.append(mytuple)
+            else:
+                if query.name_coord == 'name':
+                    mytuple = ("name", query.name)
+                    ret.append(mytuple)
+                else:
+                    mytuple = ("ra", query.ra)
+                    ret.append(mytuple)
+                    mytuple = ("dec", query.dec)
+                    ret.append(mytuple)
+                if query.shape == 'cone':
+                    mytuple = ("shape", query.shape)
+                    ret.append(mytuple)
+                    mytuple = ("radius", query.radius)
+                    ret.append(mytuple)
+                elif query.shape == 'box':
+                    mytuple = ("shape", query.shape)
+                    ret.append(mytuple)
+                    mytuple = ("width", query.width)
+                    ret.append(mytuple)
+                    mytuple = ("height", query.height)
+                    ret.append(mytuple)
+                elif query.shape == 'polygon':
+                    mytuple = ("shape", query.shape)
+                    ret.append(mytuple)
+                    mytuple = ("polygon", query.polygon)
+                    ret.append(mytuple)
+                mytuple = ("table", query.table)
+                ret.append(mytuple)
+        elif data['mission'] == 'hsa' or data['mission'] == 'herschel':
+            mytuple = ("type", query.name_coord)
+            ret.append(mytuple)
+            if query.name_coord == 'file':
+                mytuple = ("name", query.name_coord)
+                ret.append(mytuple)
+            elif query.name_coord == 'adql':
+                mytuple = ("adql", query.adql)
+                ret.append(mytuple)
+            else:
+                if query.name_coord == 'name':
+                    mytuple = ("name", query.name)
+                    ret.append(mytuple)
+                else:
+                    mytuple = ("ra", query.ra)
+                    ret.append(mytuple)
+                    mytuple = ("dec", query.dec)
+                    ret.append(mytuple)
+                if query.shape == 'cone':
+                    mytuple = ("shape", query.shape)
+                    ret.append(mytuple)
+                    mytuple = ("radius", query.radius)
+                    ret.append(mytuple)
+                elif query.shape == 'box':
+                    mytuple = ("shape", query.shape)
+                    ret.append(mytuple)
+                    mytuple = ("width", query.width)
+                    ret.append(mytuple)
+                    mytuple = ("height", query.height)
+                    ret.append(mytuple)
+                elif query.shape == 'polygon':
+                    mytuple = ("shape", query.shape)
+                    ret.append(mytuple)
+                    mytuple = ("polygon", query.polygon)
+                    ret.append(mytuple)
+                if query.positional_images == False:
+                    mytuple = ("positional_images", query.positional_images)
+                    ret.append(mytuple)
+                elif query.positional_images == True:
+                    mytuple = ("instrument", query.instrument)
+                    ret.append(mytuple)
+                    mytuple = ("level", query.level)
+                    ret.append(mytuple)
+                    mytuple = ("params", query.params)
+                    ret.append(mytuple)
+                
+                mytuple = ("table", query.table)
+                ret.append(mytuple)
+        '''
         ret = {}
-        ret['ra'] = query.ra
-        ret['dec'] = query.dec
-        ret['radius'] = query.radius
-        
+        if data['mission'] == 'gaia':
+            if query.name_coord == 'file':
+                ret['name'] = query.name_coord
+            elif query.name_coord == 'adql':
+                ret['adql'] = query.adql
+            else:
+                if query.name_coord == 'name':
+                    ret['name'] = query.name
+                else:
+                    ret['ra'] = query.ra
+                    ret['dec'] = query.dec
+                if query.shape == 'cone':
+                    ret['radius'] = query.radius
+                    ret['shape'] = query.shape
+                elif query.shape == 'box':
+                    ret['height'] = query.height
+                    ret['width'] = query.width
+                    ret['shape'] = query.shape
+                elif query.shape == 'polygon':
+                    ret['polygon'] = query.polygon
+                    ret['shape'] = query.shape
+                ret['table'] = query.table
+        ret['type'] = query.name_coord
+        '''
         ms = resource_model.objects.filter(file_type=file_type). \
              filter(job_id=data['id'])
 
         if not ms:
-            ret['nofile'] = 'No data found'
+            #ret['nofile'] = 'No data found'
+            mytuple = ("nofile", "No data found")
+            ret.append(mytuple)
         else:
             files = {}
             for r in ms:
                 files[r.pk] = r.name
 
-            ret['files'] = files
-
+            #ret['files'] = files
+            mytuple = ("files", files)
+            ret.append(mytuple)
+        log.info("%s",str(ret))
         self.job_data.ok = True
         self.job_data.data = ret
         return self.job_data

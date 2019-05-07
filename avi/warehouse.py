@@ -104,6 +104,7 @@ class wh_global_config:
             self.log.info('loading cfg...')
             self.CONTAINER_NAME = cfg['container']
             self.VERSION = cfg['version']
+            self.production = cfg['production'] == 'True'
             #self.RESOURCES_PATH = cfg['resources_path']
             self.SOURCES_PATH = os.path.join(self.OUTPUT_PATH, 
                                              cfg["sources_path"])
@@ -225,10 +226,16 @@ class wh_names:
         JOB_GET_RESULT = "get_result"
         ## Get query info job name
         JOB_GET_QUERY_INFO = "get_query_info"
+        ## Get query status job name
+        JOB_GET_QUERY_STATUS = "get_query_status"
         ## Abort job name
         JOB_ABORT = "abort"
         ## Delete job name
         JOB_DELETE = "delete"
+        ## Relaunch job name
+        JOB_RELAUNCH_ALGORITHM = "relaunch_algorithm"
+        ## Launch in query job name
+        JOB_LAUNCH = "launch"
         ## Change page job name
         JOB_CHANGE_PAGE = "change_page"
         ## Sort by job name

@@ -18,8 +18,9 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    {% include "avi/header.html"  %}
+
+<head>
+    {% include "avi/header.html" %}
     <!--<script
        src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     </script>-->
@@ -27,118 +28,170 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
     <!--<link rel="stylesheet"
         type="text/css" href="{% static 'avi/queries.css' %}"/>-->
     <script src="{% static 'avi/js/query_form.js' %}"></script>
-  </head>
+</head>
+
 <body>
-  <div id="navbar">
-    {% include "avi/navbar.html" %}
-  </div>
-  <div class="container-fluid">
-  <div id="content" class="row content">
-    <div id="sidebar" class="col-sm-2 sidenav">
-      {% include "avi/sidebar-nav.html" with sidebar_menu="queries"%}
+    <div id="navbar">
+        {% include "avi/navbar.html" %}
     </div>
-    <div id="real-content" class="col-sm-10">
-      <!-- ----------------------------------------------------------------- -->
-      <!-- ----------------------------------------------------------------- -->
-      <!-- ----------------------------------------------------------------- -->
-      <h1>Gaia</h1>
-      <form id="gaia_query_form" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-group row">
-          <div class="col-sm-3">
-            <div id="div_id_name_coord">
-              {{ form.name_coord.errors }}
-              {{ form.name_coord }}
-            </div>
-          </div>
-          <div class="col-sm-9">
-            <div id="div_id_name">
-              {{ form.name.errors }}
-              {{ form.name }}
-            </div>
-            <div id="div_id_ra">
-              {{ form.ra.errors }}
-              <label for"{{ form.ra.id_for_label }}">RA: </label>
-              {{ form.ra }}
-            </div>
-            <div id="div_id_dec">
-              {{ form.dec.errors }}
-              <label for="{{ form.dec.id_for_label }}">DEC: </label>
-              {{ form.dec }}
-            </div>
-            <div id="div_id_input_file">
-              <!-- {{ form.input_file.erros }}
+    <div class="container-fluid">
+        <div id="" class="row content">
+            {% include "avi/sidebar-nav.html" with sidebar_menu="queries"%}
+            <div id="real-content" class="col cont">
+
+                <!-- ----------------------------------------------------------------- -->
+                <!-- ----------------------------------------------------------------- -->
+                <!-- ----------------------------------------------------------------- -->
+                <div id="card" class="card bg-light mb-3">
+                    <div class="card-header">
+                        <h1>GAIA</h1>
+                    </div>
+                    <div class="card-body body-page">
+                        <form id="gaia_query_form" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-sm-10 offset-sm-1">
+                                    <div class="card border-primary mb-3 card-form">
+                                        <div class="card-body text-primary">
+                                            <div class="form-group row">
+                                                <div class="col-sm-5">
+                                                    <div class="row">
+                                                        <div style="margin:0 auto">
+                                                            <div class="col text-left">
+                                                                <div id="div_id_name_coord">
+                                                                    {{ form.name_coord.errors }} {{ form.name_coord }}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 offset-1">
+                                                    <div id="div_id_name" title="{{form.name.help_text}}">
+                                                        {{ form.name.errors }} {{ form.name }}
+                                                    </div>
+                                                    <div id="div_id_ra">
+                                                        <div class="form-group row">
+                                                            {{ form.ra.errors }}
+                                                            <label for="{{ form.ra.id_for_label }}" title="{{ form.ra.help_text }}" class="col-form-label">RA: </label>
+                                                            <div class="col-sm-6" title="{{ form.ra.help_text }}">
+                                                                {{ form.ra }}
+                                                            </div>
+                                                            <div class="col-sm-2 mt-1 text-center" style="min-width: 80px !important" title="International Celestial Reference System"><span>(ICRS)</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="div_id_dec">
+                                                        <div class="form-group row">
+                                                            {{ form.dec.errors }}
+                                                            <label for="{{ form.dec.id_for_label }}" title="{{ form.dec.help_text }}" class="col-form-label">DEC: </label>
+                                                            <div class="col-sm-6" title="{{ form.dec.help_text }}">{{ form.dec }}</div>
+                                                            <div class="col-sm-2 mt-1 text-center" style="min-width: 80px !important" title="International Celestial Reference System"><span>(ICRS)</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="div_id_input_file" title="{{ form.input_file.help_text }}">
+                                                        <!-- {{ form.input_file.erros }}
               {{ form.input_file }} -->
-              <input type="file" name="input_file">
-            </div>
-            <div id="div_id_adql">
-              {{ form.adql.errors }}
-              <label for="{{ form.adql.id_for_label }}">ADQL: </label>
-              {{ form.adql }}
-            </div>
-          </div>
-        </div><!-- name coord row -->
-        <div id="data-form">
-          <div class="from-group row">
-            <div class="col-sm-3">
-              <div id="div_id_shape">
-                {{ form.shape.errors }}
-                {{ form.shape }}
-              </div>
-            </div>
-            <div class="col-sm-9">
-              <div id="div_id_radius">
-                {{ form.radius.errors }}
-                <label for="{{ form.radius.id_for_label }}">Radius: </label>
-                {{ form.radius }}
-              </div>
-              <div id="div_id_height">
-                {{ form.height.errors }}
-                <label for="{{ from.height.id_for_label }}">Height: </label>
-                {{ form.height }}
-              </div>
-              <div id="div_id_width">
-                {{ form.width.errors }}
-                <label for="{{ form.width.id_for_label }}">Width: </label>
-                {{ form.width }}
-              </div>
-              <div id="div_id_polygon">
-                {{ form.polygon.errors }}
-                <label for="{{ form.polygon.id_for_label }}">Polygon: </label>
-                {{ form.polygon }}
-              </div>
-            </div>
-          </div><!-- shape row -->
-          <div class="form-group row">
-            <div class="col-sm-3">
-              <div id="div_id_drs">
-                {{ form.data_release.errors }}
-                {{ form.data_release }}
-              </div>
-            </div>
-            <div class="col-sm-9">
-              <div id="div_id_table">
-                {{ form.table_dr1.errors }}
-                <label for="{{ form.table_dr1.id_for_label }}">Table: </label>
-                {{ form.table_dr1 }}
-              </div>
-              <div id="div_id_table_dr2">
-                {{ form.table_dr2.errors }}
-                <label for="{{ form.table_dr2.id_for_label }}">Table: </label>
-                {{ form.table_dr2 }}
-              </div>
-            </div>
-          </div><!-- table row -->
-          <div class="form-group row">
-            <div class="col-sm-12">
-              <div id="div_id_file_name">
-                {{ form.file_name.errors }}
-                <label for="{{ form.file_name.id_for_label }}">Output File: </label>
-                {{ form.file_name }}
-              </div>
-            </div>
-          </div><!-- output file row -->
-          <!-- <div class="form-group row">
+                                                        <input type="file" name="input_file">
+                                                    </div>
+                                                    <div id="div_id_adql" title="{{ form.adql.help_text }}">
+                                                        {{ form.adql.errors }}
+                                                        <label for="{{ form.adql.id_for_label }}">ADQL: </label> {{ form.adql }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- name coord row -->
+
+                            <div id="data-form">
+                                <div class="row">
+                                    <div class="col-sm-10 offset-sm-1">
+                                        <div class="card border-primary mb-3 card-form">
+                                            <div class="card-body text-primary">
+                                                <div class="from-group row">
+                                                    <div class="col-sm-5">
+                                                        <div class="row">
+                                                            <div style="margin:0 auto">
+                                                                <div class="col text-left">
+                                                                    <div id="div_id_shape">
+                                                                        {{ form.shape.errors }} {{ form.shape }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 offset-sm-1">
+                                                        <div id="div_id_radius">
+                                                            <div class="form-group row">
+                                                                {{ form.radius.errors }}
+                                                                <label for="{{ form.radius.id_for_label }}" title="{{ form.radius.help_text }}" class="col-form-label">Radius: </label>
+                                                                <div class="col-sm-6" title="{{ form.radius.help_text }}">{{ form.radius }}</div>
+                                                                <div class="col-sm-2 mt-2 text-center" style="min-width: 80px !important" title="Degrees">DEG</div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="div_id_height">
+                                                            <div class="form-group row" title="{{ form.height.help_text }}">
+                                                                {{ form.height.errors }}
+                                                                <label for="{{ from.height.id_for_label }}" class="col-form-label">Height: </label>
+                                                                <div class="col-sm-8">{{ form.height }}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="div_id_width">
+                                                            <div class="form-group row" title="{{ form.width.help_text }}">
+                                                                {{ form.width.errors }}
+                                                                <label for="{{ form.width.id_for_label }}" class="col-form-label">Width: </label>
+                                                                <div class="col-sm-8">{{ form.width }}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="div_id_polygon">
+                                                            <div class="form-group row" title="{{ form.polygon.help_text }}">
+                                                                {{ form.polygon.errors }}
+                                                                <label for="{{ form.polygon.id_for_label }}" class="col-form-label">Polygon: </label>
+                                                                <div class="col-sm-8">{{ form.polygon }}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- shape row -->
+                                                <div class="form-group row">
+                                                    <div class="col-sm-5">
+                                                        <div class="row">
+                                                            <div style="margin:0 auto">
+                                                                <div class="col text-left">
+                                                                    <div id="div_id_drs">
+                                                                        {{ form.data_release.errors }} {{ form.data_release }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 offset-1">
+                                                        <div id="div_id_table" title="{{ form.table_dr1.help_text }}">
+                                                            {{ form.table_dr1.errors }}
+                                                            <label for="{{ form.table_dr1.id_for_label }}">Table: </label> {{ form.table_dr1 }}
+                                                        </div>
+                                                        <div id="div_id_table_dr2" title="{{ form.table_dr2.help_text }}">
+                                                            {{ form.table_dr2.errors }}
+                                                            <label for="{{ form.table_dr2.id_for_label }}">Table: </label> {{ form.table_dr2 }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- table row -->
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <div id="div_id_file_name">
+                                                            <div class="row">
+                                                                <div class="col-sm-6 offset-sm-3" title="{{ form.file_name.help_text }}">
+                                                                    {{ form.file_name.errors }}
+                                                                    <label for="{{ form.file_name.id_for_label }}">Output File: </label> {{ form.file_name }}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- output file row -->
+                                                <!-- <div class="form-group row">
             <div class="col-sm-12">
               <div id="div_id_adql">
                 {{ form.adql.errors }}
@@ -147,14 +200,26 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
               </div>
             </div>
           </div><!-- output adql row -->
-        </div><!-- data-form -->
-        <input type="submit" value="Submit"/>
-      </form>
-      <!-- ----------------------------------------------------------------- -->
-      <!-- ----------------------------------------------------------------- -->
-      <!-- ----------------------------------------------------------------- -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- data-form -->
+                            <input type="submit" class="btn btn-outline-primary" value="Submit" />
+                        </form>
+                    </div>
+                </div>
+                <!-- ----------------------------------------------------------------- -->
+                <!-- ----------------------------------------------------------------- -->
+                <!-- ----------------------------------------------------------------- -->
+            </div>
+        </div>
     </div>
-  </div>
-  </div>
+    {% include "avi/footer.html" %}
+    <script>
+        set_titles('{{ form.name_coord.help_text }}', '{{ form.shape.help_text }}', '{{ form.data_release.help_text }}', 0, 0);
+    </script>
 </body>
+
 </html>

@@ -18,54 +18,84 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     {% include "avi/header.html" %}
-  </head>
-  <body>
-    <div id="navbar">
-      {% include "avi/navbar.html" %}
+</head>
+
+<body>
+    <div>
+        {% include "avi/navbar.html" %}
     </div>
     <div class="container-fluid">
-      <div id="content" class="row content">
-	<div id="sidebar" class="col-sm-2 sidenav">
-	  {% include "avi/sidebar-nav.html" with sidebar_menu="help"%}
-	</div>
-	<div id="real-content" class="col-sm-10">
-	  <!-- ------------------------------------------------------------- -->
-	  <!-- ------------------------------------------------------------- -->
-	  <!-- ------------------------------------------------------------- -->
-	  <h1>Help</h1>
-          <div class="smf-text-justify sfm-separator">
-            <h3>How to start an algorithm</h3>
-            <ul>
-              <li><p>To start an algorithm click on the Algorithms option in the side menu and select <a href="{{ avi_url }}avi/algorithms">Start</a></p></li>
-              <li>
-                <p>You can always check the status of the execution by going to the <a href="{{ avi_url }}avi/status">Pipeline</a> page. Here you can also see the results of such execution once it is finished.<p>
-              </li>
-            </ul>
-          </div>
-          <div class="smf-text-justify sfm-separator">
-            <h3>How to query the mission archives</h3>
-            <ul>
-              <li><p>To query the <a href="https://gea.esac.esa.int/archive/">Gaia archive</a> click on the Queries option in the side menu and select <a href="{{ avi_url }}avi/queries/gaia">Gaia</a> Here you will find all the options to select a region of the sky and retrieve the data from that region.</p>
-              </li>
-              <li><p>To query the <a href="http://archives.esac.esa.int/hsa/whsa/">Herschel science archive</a> click on the Queries option in the side menu and select <a href="{{ avi_url }}avi/queries/herschel">Herschel</a> Here you will find all the options to select a region of the sky and retrieve the data from that region.</p></li>
-              <li>
-                <p>You can always check the status of the query by going to the <a href="{{ avi_url }}avi/queries/status">Status</a> page. Here you can also see the results of such query once it is finished.<p>
-              </li>
-            </ul>
-          </div>
-          <div class="smf-text-justify sfm-separator">
-            <h3>How to manage your Data</h3>
-            <ul>
-              <li><p>To manage your files go to Data on the side menu and select <a href="{{ avi_url }}avi/resources/filemanager">Data</a></p></li>
-            </ul>
-          </div>
-	  <!-- ------------------------------------------------------------- -->
-	  <!-- ------------------------------------------------------------- -->
-	  <!-- ------------------------------------------------------------- -->
-	</div>
-      </div>
+        <div id="" class="row content">
+            {% include "avi/sidebar-nav.html" with sidebar_menu="help"%}
+            <div id="real-content" class="col cont">
+                <!-- ------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------- -->
+                <div id="card" class="card bg-light mb-3">
+                    <div class="card-header">
+                        <h1>HELP</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="smf-text-justify sfm-separator">
+                            <h3>How to start an algorithm</h3>
+                            <div class="row">
+                                <div class="col-sm-8 offset-sm-2">
+                                    <ul class="text-list">
+                                        <li>
+                                            <p>To start an algorithm click on the Algorithms option in the side menu and select <a class="a-link" href="{{ avi_url }}avi/algorithms">Start</a></p>
+                                        </li>
+                                        <li>
+                                            <p>You can always check the status of the execution by going to the <a class="a-link" href="{{ avi_url }}avi/status">Pipeline</a> page. Here you can also see the results of such execution once it is finished.
+                                                <p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="smf-text-justify sfm-separator">
+                            <h3>How to query the mission archives</h3>
+                            <div class="row">
+                                <div class="col-sm-8 offset-sm-2">
+                                    <ul class="text-list">
+                                        <li>
+                                            <p>To query the <a class="a-link" target="_blank" href="https://gea.esac.esa.int/archive/">Gaia archive</a> click on the Queries option in the side menu and select <a class="a-link" href="{{ avi_url }}avi/queries/gaia">Gaia</a>                                                Here you will find all the options to select a region of the sky and retrieve the data from that region.</p>
+                                        </li>
+                                        <li>
+                                            <p>To query the <a class="a-link" target="_blank" href="http://archives.esac.esa.int/hsa/whsa/">Herschel science archive</a> click on the Queries option in the side menu and select <a class="a-link" href="{{ avi_url }}avi/queries/herschel">Herschel</a>                                                Here you will find all the options to select a region of the sky and retrieve the data from that region.</p>
+                                        </li>
+                                        <li>
+                                            <p>You can always check the status of the query by going to the <a class="a-link" href="{{ avi_url }}avi/queries/status">Status</a> page. Here you can also see the results of such query once it is finished.
+                                                <p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="smf-text-justify sfm-separator">
+                            <h3>How to manage your Data</h3>
+                            <div class="row">
+                                <div class="col-sm-8 offset-sm-2">
+                                    <ul class="text-list">
+                                        <li>
+                                            <p>To manage your files go to Data on the side menu and select <a class="a-link" href="{{ avi_url }}avi/resources/filemanager">Data</a></p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------- -->
+            </div>
+        </div>
     </div>
-  </body>
+    {% include "avi/footer.html" %}
+</body>
+
 </html>
