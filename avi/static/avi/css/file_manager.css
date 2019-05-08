@@ -92,11 +92,11 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 }
 
 .breadcrumb-disabled {
-    margin-top: 5px;
+    margin-top: 15px;
 }
 
 .breadcrumb-enabled {
-    margin-top: 6px;
+    margin-top: 16px;
 }
 
 .filemanager-row-elements {
@@ -126,4 +126,8 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
     margin-top: 15px;
     text-align: left;
     margin-left: -20px;
+}
+
+#selectFile {
+    display: none;
 }

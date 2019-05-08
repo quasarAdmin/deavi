@@ -21,7 +21,7 @@ var gaia_array = [];
 var hsa_array = [];
 var res_array = [];
 var user_array = [];
-var avi_url = "/";
+//var avi_url = "/";
 var id_selected = 0;
 /*
 var get_files_list = function(type){
@@ -540,6 +540,49 @@ function click(value) {
         }
         document.getElementById('modals').appendChild(asdf2);
     }*/
+
+}
+
+function set_gaia_titles(name_coord_titles, shape_titles, data_release_titles, positional_images_titles, instrument_titles) {
+    let array_name_coord_titles = name_coord_titles.split(",");
+    let array_shape_titles = shape_titles.split(",");
+    let array_data_release_titles = data_release_titles.split(",");
+
+    document.querySelector("label[for='id_name_coord_0']").setAttribute('title', array_name_coord_titles[0]);
+    document.querySelector("label[for='id_name_coord_1']").setAttribute('title', array_name_coord_titles[1]);
+    document.querySelector("label[for='id_name_coord_2']").setAttribute('title', array_name_coord_titles[2]);
+    document.querySelector("label[for='id_name_coord_3']").setAttribute('title', array_name_coord_titles[3]);
+
+    document.querySelector("label[for='id_shape_0']").setAttribute('title', array_shape_titles[0]);
+    document.querySelector("label[for='id_shape_1']").setAttribute('title', array_shape_titles[1]);
+    document.querySelector("label[for='id_shape_2']").setAttribute('title', array_shape_titles[2]);
+
+    document.querySelector("label[for='id_data_release_0']").setAttribute('title', array_data_release_titles[0]);
+    document.querySelector("label[for='id_data_release_1']").setAttribute('title', array_data_release_titles[1]);
+
+}
+
+function set_hsa_titles(name_coord_titles, shape_titles, positional_images_titles, instrument_titles) {
+    let array_name_coord_titles = name_coord_titles.split(",");
+    let array_shape_titles = shape_titles.split(",");
+    let array_positional_images_titles = positional_images_titles.split(",");
+    let array_instrument_titles = instrument_titles.split(",");
+
+    document.querySelector("label[for='id_name_coord_02']").setAttribute('title', array_name_coord_titles[0]);
+    document.querySelector("label[for='id_name_coord_12']").setAttribute('title', array_name_coord_titles[1]);
+    document.querySelector("label[for='id_name_coord_22']").setAttribute('title', array_name_coord_titles[2]);
+    document.querySelector("label[for='id_name_coord_32']").setAttribute('title', array_name_coord_titles[3]);
+
+    document.querySelector("label[for='id_shape_02']").setAttribute('title', array_shape_titles[0]);
+    document.querySelector("label[for='id_shape_12']").setAttribute('title', array_shape_titles[1]);
+    document.querySelector("label[for='id_shape_22']").setAttribute('title', array_shape_titles[2]);
+
+    document.querySelector("label[for='id_positional_images_02']").setAttribute('title', array_positional_images_titles[0]);
+    document.querySelector("label[for='id_positional_images_12']").setAttribute('title', array_positional_images_titles[1]);
+
+    document.querySelector("label[for='id_instrument_02']").setAttribute('title', array_instrument_titles[0]);
+    document.querySelector("label[for='id_instrument_12']").setAttribute('title', array_instrument_titles[1]);
+    document.querySelector("label[for='id_instrument_22']").setAttribute('title', array_instrument_titles[2]);
 
 }
 

@@ -65,7 +65,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6 offset-sm-1">
-                                                    <div id="div_id_name" title="{{form.name.help_text}}">
+                                                    <div id="div_id_name" title="{{ form.name.help_text }}">
                                                         {{ form.name.errors }} {{ form.name }}
                                                     </div>
                                                     <div id="div_id_ra">
@@ -121,8 +121,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                             <div class="form-group row">
                                                                 {{ form.radius.errors }}
                                                                 <label for="{{ form.radius.id_for_label }}" title="{{ form.radius.help_text }}" class="col-form-label">Radius: </label>
-                                                                <div class="col-sm-6" title="{{ form.radius.help_text }}">{{ form.radius }}
-                                                                </div>
+                                                                <div class="col-sm-6" title="{{ form.radius.help_text }}">{{ form.radius }}</div>
                                                                 <div class="col-sm-2 mt-2 text-center" style="min-width: 80px !important" title="Degrees">DEG</div>
                                                             </div>
                                                         </div>

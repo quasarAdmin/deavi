@@ -248,11 +248,11 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6 offset-1">
-                                                                        <div id="div_id_table">
+                                                                        <div id="div_id_table" title="{{ gaia_query.form.table_dr1.help_text }}">
                                                                             {{ gaia_query.form.table_dr1.errors }}
                                                                             <label for="{{ gaia_query.form.table_dr1.id_for_label }}">Table: </label> {{ gaia_query.form.table_dr1 }}
                                                                         </div>
-                                                                        <div id="div_id_table_dr2">
+                                                                        <div id="div_id_table_dr2" title="{{ gaia_query.form.table_dr2.help_text }}">
                                                                             {{ gaia_query.form.table_dr2.errors }}
                                                                             <label for="{{ gaia_query.form.table_dr2.id_for_label }}">Table: </label> {{ gaia_query.form.table_dr2 }}
                                                                         </div>
@@ -263,7 +263,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                                     <div class="col-sm-12">
                                                                         <div id="div_id_file_name">
                                                                             <div class="row">
-                                                                                <div class="col-sm-6 offset-sm-3">
+                                                                                <div class="col-sm-6 offset-sm-3" title="{{ gaia_query.form.file_name.help_text }}">
                                                                                     {{ gaia_query.form.file_name.errors }}
                                                                                     <label for="{{ gaia_query.form.file_name.id_for_label }}">Output File: </label> {{ gaia_query.form.file_name }}
                                                                                 </div>
@@ -332,30 +332,32 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6 offset-sm-1">
-                                                                    <div id="div_id_name">
+                                                                    <div id="div_id_name" title="{{ hsa_query.form.name.help_text }}">
                                                                         {{ hsa_query.form.name.errors }} {{ hsa_query.form.name }}
                                                                     </div>
                                                                     <div id="div_id_ra">
                                                                         <div class="form-group row">
                                                                             {{ hsa_query.form.ra.errors }}
-                                                                            <label for="{{ form.ra.id_for_label }}" class="col-form-label">RA: </label>
-                                                                            <div class="col-sm-8">{{ hsa_query.form.ra }}</div>
+                                                                            <label for="{{ hsa_query.form.ra.id_for_label }}" title="{{ hsa_query.form.ra.help_text }}" class="col-form-label">RA: </label>
+                                                                            <div class="col-sm-6" title="{{ hsa_query.form.ra.help_text }}">{{ hsa_query.form.ra }}</div>
+                                                                            <div class="col-sm-2 mt-1 text-center" style="min-width: 80px !important" title="International Celestial Reference System"><span>(ICRS)</span></div>
                                                                         </div>
                                                                     </div>
                                                                     <div id="div_id_dec">
                                                                         <div class="form-group row">
                                                                             {{ hsa_query.form.dec.errors }}
-                                                                            <label for="{{ form.dec.id_for_label }}" class="col-form-label">DEC: </label>
-                                                                            <div class="col-sm-8">{{ hsa_query.form.dec }}</div>
+                                                                            <label for="{{ hsa_query.form.dec.id_for_label }}" title="{{ hsa_query.form.dec.help_text }}" class="col-form-label">DEC: </label>
+                                                                            <div class="col-sm-6" title="{{ hsa_query.form.dec.help_text }}">{{ hsa_query.form.dec }}</div>
+                                                                            <div class="col-sm-2 mt-1 text-center" style="min-width: 80px !important" title="International Celestial Reference System"><span>(ICRS)</span></div>
                                                                         </div>
                                                                     </div>
 
-                                                                    <div id="div_id_input_file">
+                                                                    <div id="div_id_input_file" title="{{ hsa_query.form.input_file.help_text }}">
                                                                         <input type="file" name="input_file">
                                                                     </div>
-                                                                    <div id="div_id_adql">
+                                                                    <div id="div_id_adql" title="{{ hsa_query.form.adql.help_text }}">
                                                                         {{ hsa_query.form.adql.errors }}
-                                                                        <label for="{{ form.adql.id_for_label }}">ADQL: </label> {{ hsa_query.form.adql }}
+                                                                        <label for="{{ hsa_query.form.adql.id_for_label }}">ADQL: </label> {{ hsa_query.form.adql }}
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -385,31 +387,30 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                                         <div id="div_id_radius">
                                                                             <div class="form-group row">
                                                                                 {{ hsa_query.form.radius.errors }}
-                                                                                <label for="{{ form.radius.id_for_label }}" class="col-form-label">Radius: </label>
-                                                                                <div class="col-sm-8">{{ hsa_query.form.radius }}
-                                                                                </div>
+                                                                                <label for="{{ hsa_query.form.radius.id_for_label }}" title="{{ hsa_query.form.radius.help_text }}" class="col-form-label">Radius: </label>
+                                                                                <div class="col-sm-6" title="{{ hsa_query.form.radius.help_text }}">{{ hsa_query.form.radius }}</div>
+                                                                                <div class="col-sm-2 mt-2 text-center" style="min-width: 80px !important" title="Degrees">DEG</div>
                                                                             </div>
                                                                         </div>
                                                                         <div id="div_id_height">
-                                                                            <div class="form-group row">
+                                                                            <div class="form-group row" title="{{ hsa_query.form.height.help_text }}">
                                                                                 {{ hsa_query.form.height.errors }}
-                                                                                <label for="{{ from.height.id_for_label }}" class="col-form-label">Height: </label>
-                                                                                <div class="col-sm-8">{{ hsa_query.form.height }}
-                                                                                </div>
+                                                                                <label for="{{ hsa_query.from.height.id_for_label }}" class="col-form-label">Height: </label>
+                                                                                <div class="col-sm-8">{{ hsa_query.form.height }}</div>
                                                                             </div>
                                                                         </div>
                                                                         <div id="div_id_width">
-                                                                            <div class="form-group row">
+                                                                            <div class="form-group row" title="{{ hsa_query.form.width.help_text }}">
                                                                                 {{ hsa_query.form.width.errors }}
-                                                                                <label for="{{ form.width.id_for_label }}" class="col-form-label">Width: </label>
+                                                                                <label for="{{ hsa_query.form.width.id_for_label }}" class="col-form-label">Width: </label>
                                                                                 <div class="col-sm-8">{{ hsa_query.form.width }}
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         <div id="div_id_polygon">
-                                                                            <div class="form-group row">
+                                                                            <div class="form-group row" title="{{ hsa_query.form.polygon.help_text }}">
                                                                                 {{ hsa_query.form.polygon.errors }}
-                                                                                <label for="{{ form.polygon.id_for_label }}" class="col-form-label">Polygon: </label>
+                                                                                <label for="{{ hsa_query.form.polygon.id_for_label }}" class="col-form-label">Polygon: </label>
                                                                                 <div class="col-sm-8">{{ hsa_query.form.polygon }}
                                                                                 </div>
                                                                             </div>
@@ -430,7 +431,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6 offset-sm-2">
-                                                                        <div id="div_id_table">
+                                                                        <div id="div_id_table" title="{{ hsa_query.form.table.help_text }}">
                                                                             {{ hsa_query.form.table.errors }} {{ hsa_query.form.table }}
                                                                         </div>
                                                                         <div id="div_id_instrument">
@@ -448,7 +449,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                          type="radio"
                                          name="instrument" value="HIFI"> HIFI</label>
                                                                         </div>
-                                                                        <div id="div_id_level">
+                                                                        <div id="div_id_level" title="{{ hsa_query.form.level.help_text }}">
                                                                             {{ hsa_query.form.level.errors }} {{ hsa_query.form.level }}
                                                                         </div>
                                                                     </div>
@@ -458,7 +459,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                                     <div class="col-sm-12">
                                                                         <div id="div_id_file_name">
                                                                             <div class="row">
-                                                                                <div class="col-sm-6 offset-sm-3">
+                                                                                <div class="col-sm-6 offset-sm-3" title="{{ hsa_query.form.file_name.help_text }}">
                                                                                     {{ hsa_query.form.file_name.errors }}
                                                                                     <label for="{{ form.file_name.id_for_label }}">Output File: </label> {{ hsa_query.form.file_name }}
                                                                                 </div>
@@ -599,6 +600,14 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
     <script type="text/javascript" src="{% static 'avi/js/pipeline_v2.js' %}"></script>
     <script>
         query_form();
+    </script>
+
+    <script>
+        set_gaia_titles('{{ gaia_query.form.name_coord.help_text }}', '{{ gaia_query.form.shape.help_text }}', '{{ gaia_query.form.data_release.help_text }}');
+    </script>
+
+    <script>
+        set_hsa_titles('{{ hsa_query.form.name_coord.help_text }}', '{{ hsa_query.form.shape.help_text }}', '{{ hsa_query.form.positional_images.help_text }}', '{{ hsa_query.form.instrument.help_text }}');
     </script>
     {% include "avi/footer.html" %}
 </body>

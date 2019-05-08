@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <!-- Start HEAD -->
 
 <head>
@@ -168,9 +168,9 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                             </div>
                                                         </form>
                                                         {% csrf_token %}
-                                                        <button type="button" class="btn btn-warning samp_button samp_modal_button" id="samp_button_" onclick="" title="Send to SAMP">
+                                                        <!--<button type="button" class="btn btn-warning samp_button samp_modal_button" id="samp_button_" onclick="" title="Send to SAMP">
                                                         <i class="fas fa-paper-plane"></i>  
-                                                        </button>
+                                                        </button>-->
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -231,11 +231,16 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                 <div class="row filemanager-margin-top">
                                     <div class="col-sm-12">
                                         <nav aria-label="breadcrumb">
-                                            <form id="bcform">
+                                            <form id="bcform" method="post" enctype="multipart/form-data">
                                                 {% csrf_token %}
                                                 <ol class="breadcrumb">
-                                                    <li><button type="submit" class="btn btn-primary filemanager-button-home-mr samp_confirmation" formmethod="POST" id="home_button" name="go_home" title="Home" value="home"><i class="fas fa-home"></i></button></li>
-                                                    <li><button type="submit" class="btn btn-primary filemanager-button-arrow-mr samp_confirmation" formmethod="POST" id="up_directory_button" name="up_directory" title="Up" value="up_directory"><i class="fas fa-long-arrow-alt-up"></i></button></li>
+                                                    <li class="mt-2">
+                                                        <label class="btn btn-primary filemanager-button-home-mr" for="selectFile">File Select</label>
+                                                        <input type="file" id="selectFile" name="input_file">
+                                                    </li>
+                                                    <li class="mt-2"><button type="submit" class="btn btn-primary filemanager-button-home-mr samp_confirmation" formmethod="POST" id="upload_file_button" name="upload_file" title="Upload File" value="upload_file"><i class="fas fa-file-upload"></i></button></li>
+                                                    <li class="mt-2"><button type="submit" class="btn btn-primary filemanager-button-home-mr samp_confirmation" formmethod="POST" id="home_button" name="go_home" title="Home" value="home"><i class="fas fa-home"></i></button></li>
+                                                    <li class="mt-2"><button type="submit" class="btn btn-primary filemanager-button-arrow-mr samp_confirmation" formmethod="POST" id="up_directory_button" name="up_directory" title="Up" value="up_directory"><i class="fas fa-long-arrow-alt-up"></i></button></li>
                                                     {% for p in paths %} {% if paths|length == 1 %}
                                                     <li class="breadcrumb-item active breadcrumb-disabled" aria-current="page">Home</li>
                                                     {% else %} {% if p == ""%}
@@ -349,9 +354,9 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                                         </div>
                                                                     </form>
                                                                     {% csrf_token %}
-                                                                    <button type="button" class="btn btn-warning samp_button" id="samp_button_{{ file }}" onclick="samp_send({{ file }},'{{ data.0 }}')" title="Send to SAMP {{ data.0 }}">
+                                                                    <!--<button type="button" class="btn btn-warning samp_button" id="samp_button_{{ file }}" onclick="samp_send({{ file }},'{{ data.0 }}')" title="Send to SAMP {{ data.0 }}">
                                                                         <i class="fas fa-paper-plane"></i>  
-                                                                    </button>
+                                                                    </button>-->
                                                                 </li>
                                                             </ul>
                                                         </div>

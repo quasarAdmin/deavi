@@ -218,6 +218,8 @@ class wh_names:
         JOB_GET_RESOURCES = "get_resources"
         ## Save SAMP data job name
         JOB_SAVE_SAMP_DATA = "save_samp_data"
+        ## Save User data job name
+        JOB_SAVE_USER_DATA = "save_user_data"
         ## Get results job name
         JOB_GET_RESULTS = "get_results"
         ## Get plot job name

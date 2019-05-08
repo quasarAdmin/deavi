@@ -22,27 +22,27 @@ var url = origin + "avi/api/samp_resource/";
 var src_url = "";
 var hub_connection = false;
 
-function get_cookie(cname){
+function get_cookie(cname) {
     var cname = cname + "=";
     var dcookie = decodeURIComponent(document.cookie);
     var ca = dcookie.split(';');
-    for (var i = 0; i < ca.length; i++){
+    for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0) == ' '){
+        while (c.charAt(0) == ' ') {
             c = c.substring(1);
         }
-        if (c.indexOf(cname) == 0){
+        if (c.indexOf(cname) == 0) {
             return c.substring(cname.length, c.length);
         }
     }
     return "";
 }
 
-var send_data = function(name, xml){
+var send_data = function(name, xml) {
     //escape(xml);
     div = $("#samp-status");
     div.html('');
-    div.append($("<p>Uploading file...</p>"));
+    div.append($("<p>Uploading file...</p><i class='fa fa-spinner fa-w-16 fa-spin fa-lg'></i>"));
     $.ajax({
         type: "POST",
         url: avi_url + "avi/ajax/send_samp_data",
@@ -53,18 +53,18 @@ var send_data = function(name, xml){
             'data': escape(xml),
             csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value
         },
-        success: function(data) { 
+        success: function(data) {
             var status = data["samp"]["status"];
             div = $("#samp-status");
             div.html('');
-            if (status == "success"){
-                div.append($("<p>Success</p>"));
+            if (status == "success") {
+                div.append($("<p>Success</p><i class='fas fa-check fa-w-16 fa-lg'></i>"));
             } else if (status == "error") {
-                div.append($("<p>Error</p>"));
+                div.append($("<p>Error</p><i class='fas fa-exclamation-triangle'></i>"));
             }
         },
         error: function(xhr, textStatus, throwError) {
-             console.log(textStatus); 
+            console.log(textStatus);
         },
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
     });
@@ -74,9 +74,9 @@ var cc = new samp.ClientTracker();
 var call_handler = cc.callHandler;
 
 // callers
-call_handler["samp.app.ping"] = function(sender_id, message, is_call){
-    if (is_call){
-        return { text: "ping to you, " + cc.getName(sender_id)};
+call_handler["samp.app.ping"] = function(sender_id, message, is_call) {
+    if (is_call) {
+        return { text: "ping to you, " + cc.getName(sender_id) };
     }
 };
 
@@ -86,11 +86,11 @@ call_handler["table.load.votable"] = function(sender_id, message, is_call) {
     var proxy_url = cc.connection.translateUrl(origin_url);
     var xhr = samp.XmlRpcClient.createXHR();
     xhr.open("GET", proxy_url);
-    xhr.onload = function(){
+    xhr.onload = function() {
         var data = xhr.responseText;
         var xml = xhr.responseXML;
-        var name = proxy_url.substring(proxy_url.lastIndexOf('/')+1);
-        if(xml){
+        var name = proxy_url.substring(proxy_url.lastIndexOf('/') + 1);
+        if (xml) {
             send_data(name, data);
         }
         /*
@@ -115,8 +115,8 @@ var meta = {
 var subs = cc.calculateSubscriptions();
 var connection_handler = new samp.Connector("Handler", meta, cc, subs);
 
-connection_handler.onreg = function(){
-    if (get_cookie("samp_handler_session") == "true"){
+connection_handler.onreg = function() {
+    if (get_cookie("samp_handler_session") == "true") {
         console.log("cookie");
         this.unregister();
         return;
@@ -125,7 +125,7 @@ connection_handler.onreg = function(){
     documet.cookie = "samp_handler_session=true";
 }
 
-connection_handler.onunreg = function(){
+connection_handler.onunreg = function() {
     hub_connection = false;
     document.cookie = "samp_handler_session=false";
 }
@@ -141,9 +141,8 @@ var send_fits = function(connection) {
     connection.notifyAll([msg]);
 };
 
-var is_samp_enabled = function(is_hub_running)
-{
-    $(".samp_button").each(function(){
+var is_samp_enabled = function(is_hub_running) {
+    $(".samp_button").each(function() {
         this.disabled = !is_hub_running;
         if (!is_hub_running) {
             this.title = 'The hub is not running';
@@ -153,22 +152,21 @@ var is_samp_enabled = function(is_hub_running)
     });
 }
 var connection = new samp.Connector("Sender");
-connection.onreg = function(){
-    if (get_cookie("samp_sender_session") == "true"){
+connection.onreg = function() {
+    if (get_cookie("samp_sender_session") == "true") {
         this.unregister();
         return;
     }
     documet.cookie = "samp_sender_session=true";
 }
 
-connection.onunreg = function(){
+connection.onunreg = function() {
     document.cookie = "samp_sender_session=false";
 }
 
-onload = function()
-{
+onload = function() {
     connection.unregister();
-    connection_handler.unregister(); 
+    connection_handler.unregister();
     connection.onHubAvailability(is_samp_enabled, 2000);
     document.getElementById("samp-test").
     appendChild(connection_handler.createRegButtons());
@@ -178,7 +176,7 @@ onunload = function() {
     connection_handler.unregister();
 }
 
-function samp_send(id, name){
+function samp_send(id, name) {
     var re = /(?:\.([^.]+))?$/;
     var ext = re.exec(name)[1];
     src_url = url + id;
@@ -194,8 +192,8 @@ $(document).ready(function() {
     url = origin + avi_url + "avi/api/samp_resource/";
 });
 
-$(window).on("unload", function(e){
-    if (hub_connection && !confirm('You are currently connected to a SAMP Hub. If you continue you will be disconnected. Are you sure?')){
+$(window).on("unload", function(e) {
+    if (hub_connection && !confirm('You are currently connected to a SAMP Hub. If you continue you will be disconnected. Are you sure?')) {
         e.preventDefault();
     } else {
         connection.unregister();
@@ -206,7 +204,7 @@ $(window).on("unload", function(e){
 $(document).ready(function() {
     els = $(".samp_confirmation");
     var confirmation_function = function(e) {
-        if (hub_connection){
+        if (hub_connection) {
             if (!confirm('You are currently connected to a SAMP Hub. If you continue you will be disconnected. Are you sure?')) {
                 e.preventDefault();
             } else {
@@ -215,7 +213,7 @@ $(document).ready(function() {
         }
     };
 
-    for (var i = 0; i < els.length; i++){
+    for (var i = 0; i < els.length; i++) {
         els[i].addEventListener('click', confirmation_function, false);
     }
 });

@@ -943,6 +943,15 @@ def resources_filemanager(request):
                 return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
             else:
                 log.debug("There is nothing")
+        if 'upload_file' in request.POST:
+            log.debug("There is a upload_file POST")
+            if request.FILES.get('input_file'):
+                log.info("There is a file %s", request.FILES['input_file'].name)
+                data = {}
+                data['file'] = request.FILES['input_file']
+                data['name'] = request.FILES['input_file'].name
+                response = risea().get().start_job(wh_names().get().JOB_SAVE_USER_DATA,data)
+                return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
 
         #  Delete file post
         if 'delete_file' in request.POST:
