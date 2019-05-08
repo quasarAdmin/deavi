@@ -2,7 +2,7 @@
 <sfm>
   <global>
     <container>deavi</container>
-    <version>0.0.9</version>
+    <version>0.0.9_01</version>
     <production>True</production>
     <!-- PATHS -->
     <!-- The resources_path will be set from gavip/django configuration -->
