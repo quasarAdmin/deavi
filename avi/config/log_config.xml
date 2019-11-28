@@ -36,6 +36,8 @@
     <!-- JOBS -->
     <get_queries_status>debug</get_queries_status>
     <get_pipeline_status>debug</get_pipeline_status>
+    <launch>debug</launch>
+    <relaunch>debug</relaunch>
     <!-- TASKS -->
     <task>info</task>
     <algorithm_task>info</algorithm_task>

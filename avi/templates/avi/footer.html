@@ -17,76 +17,136 @@ You should have received a copy of the GNU General Public License
 along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 -->
 {% load static %}
-<footer class="footer">
-    <div class="container-fluid f-back">
+<footer class="footer2">
+    <div class="container-fluid">
         <br>
         <div class="row">
-            <div class="col-sm-4 f-border f-column">
-                <h2>Partners</h2>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <a href="https://ec.europa.eu/" target="_blank"><img class="images-footer samp_confirmation" src="{% static 'avi/img/logo-ce-horizontal-en-pantone-lr.png' %}" alt="European Commission" /></a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <a href="http://quasarsr.com/" target="_blank"><img class="images-footer-quasar samp_confirmation" src="{% static 'avi/img/partners-quasar.gif' %}" alt="QuasarSR" /></a>
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="http://ipag.osug.fr/?lang=fr" target="_blank"><img class="images-footer samp_confirmation" src="{% static 'avi/img/IPAGlogoPosRGB-150x150.png' %}" alt="IPAG" /></a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <a href="https://www.cardiff.ac.uk/" target="_blank"><img class="images-footer samp_confirmation" src="{% static 'avi/img/partners-cardiff-university.gif' %}" alt="QuasarSR" /></a>
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="https://www.leeds.ac.uk/" target="_blank"><img class="images-footer-last samp_confirmation" src="{% static 'avi/img/partners-university-of-leeds.gif' %}" alt="European Commission" /></a>
-                    </div>
-                </div>
+            <div class="col-sm-6 f-column" style="text-align: center; margin-top: 0px !important"><!--10, 5, 3, 5, 3-->
+                    <a href="https://ec.europa.eu/" target="_blank"><img class="images-footer2" style="width: 22% !important" src="{% static 'avi/img/logos/ECH2020_white.png' %}" alt="European Commission" /></a>
+                    <a href="http://quasarsr.com/" target="_blank"><img class="images-footer2" src="{% static 'avi/img/logos/QUASAR_logo_negativo_transbkg.png' %}" alt="QuasarSR" /></a>
+                    <a href="http://ipag.osug.fr/?lang=fr" target="_blank"><img class="images-footer2" src="{% static 'avi/img/logos/IPAGlogoPosRGB_white.png' %}" alt="IPAG" /></a>
+                    <a href="https://www.cardiff.ac.uk/" target="_blank"><img class="images-footer2" style="width: 7% !important" src="{% static 'avi/img/logos/cardiff_20.png' %}" alt="Cardiff University" /></a>
+                    <a href="https://www.leeds.ac.uk/" target="_blank"><img class="images-footer2" src="{% static 'avi/img/logos/WR_Leeds_908x360_white.png' %}" alt="University of Leeds" /></a>
+                    <a href="https://www.universiteitleiden.nl/en/science/astronomy" target="_blank"><img class="images-footer2" style="width: 7% !important" src="{% static 'avi/img/logos/logo-lei-sterrewachtleiden-vertical_white.png' %}" alt="Leiden Observatory" /></a>
             </div>
-            <div class="col-sm-4 f-border f-column">
-                <h2>Pages</h2>
-                <div class="row" style="margin-top: 50px">
-                    <div class="col-sx-12" style="margin: 0 auto">
-                        <ul style="text-align: left">
-                            <!--665-->
-                            <li><i class="fas fa-angle-right">Start</i>
-                                <ul>
-                                    <li class="f-li"><a href="{{ avi_url }}avi/algorithms" class="a-footer samp_confirmation"><i class="fas fa-angle-double-right">Algorithms</i></a></li>
-                                    <li class="f-li"><a href="{{ avi_url }}avi/status" class="a-footer samp_confirmation"><i class="fas fa-angle-double-right">Pipeline</i></a></li>
-                                </ul>
-                            </li>
-                            <li><i class="fas fa-angle-right">Queries</i>
-                                <ul>
-                                    <li class="f-li"><a href="{{ avi_url }}avi/queries/gaia" class="a-footer samp_confirmation"><i class="fas fa-angle-double-right">Gaia</i></a></li>
-                                    <li class="f-li"><a href="{{ avi_url }}avi/queries/herschel" class="a-footer samp_confirmation"><i class="fas fa-angle-double-right">Herschel</i></a></li>
-                                    <li class="f-li"><a href="{{ avi_url }}avi/queries/status" class="a-footer samp_confirmation"><i class="fas fa-angle-double-right">Status</i></a></li>
-                                </ul>
-                            </li>
-                            <li><i class="fas fa-angle-right">Data</i>
-                                <ul>
-                                    <li class="f-li"><a href="{{ avi_url }}avi/resources/filemanager" class="a-footer samp_confirmation"><i class="fas fa-angle-double-right">Data</i></a></li>
-                                </ul>
-                            </li>
-                            <li><i class="fas fa-angle-right">Help</i>
-                                <ul>
-                                    <li class="f-li"><a href="{{ avi_url }}avi/help" class="a-footer samp_confirmation"><i class="fas fa-angle-double-right">About</i></a></li>
-                                    <li class="f-li"><a href="{{ avi_url }}avi/about" class="a-footer samp_confirmation"><i class="fas fa-angle-double-right">Help</i></a></li>
-                                </ul>
-                            </li>
-                        </ul>
+            <div class="col-sm-6 text-white text-center">
+                <div class="row">
+                    <div class="col-sm-9 f2-border">
+                        <div class="row">
+                            <div class="col f2title font-weight-bold" style="margin-top: -15px; margin-bottom: 5px">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col f2text">
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="font-weight-bold">Algorithms</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="a-link" href="{{ avi_url }}avi/algorithms">Start</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="a-link" href="{{ avi_url }}avi/status">Pipeline</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col f2text">
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="font-weight-bold">Queries</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="a-link" href="{{ avi_url }}avi/queries/gaia">Gaia</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="a-link" href="{{ avi_url }}avi/queries/herschel">Herschel</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="a-link" href="{{ avi_url }}avi/queries/simulations">Simulations</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="a-link" href="{{ avi_url }}avi/queries/status">Status</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col f2text">
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="font-weight-bold">Data</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="a-link" href="{{ avi_url }}avi/resources/filemanager">File Manager</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col f2text">
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="font-weight-bold">Guide</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="a-link" href="{{ avi_url }}avi/deavi_structure">DEAVI Structure</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="a-link" href="{{ avi_url }}avi/tutorial">Tutorial</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col f2text">
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="font-weight-bold">Help</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="a-link" href="{{ avi_url }}avi/help">Help</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="a-link" href="{{ avi_url }}avi/about">About</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="a-link" href="{{ avi_url }}avi/contact">Contact</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="row">
+                            <div class="col f2title font-weight-bold" style="margin-bottom: 5px">
+                                <a href="{{ avi_url }}avi/contact" class="text-white">Contact</a>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col f2title text-align: left" style="font-size: 0.65em">
+                                Copyright &copy; <a class="text-white" href="http://quasarsr.com/" target="_blank">Quasar Science Resources, S.L.</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-4">
-                <h2>Our Offices</h2>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3032.7930066247786!2d-3.887977684515725!3d40.52406605702818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd418326e9615e21%3A0xd3b5ebecaf6d9b54!2sQuasar+Science+Resources!5e0!3m2!1ses!2ses!4v1540290657981"
-                    width="100%" height="50%" frameborder="0" style="border:0" allowfullscreen></iframe>
-                <p style="font-size: 0.7em"><a href="https://www.google.com/maps?z=16&q=quasar+science+resources,+camino+de+las+ceudas+2,+28232+las+rozas+de+madrid,+madrid,+spain" target="_blank">Quasar Science Resources, Camino de las Ceudas 2, 28232 Las Rozas de Madrid, Madrid, Spain</a></p>
-                <p style="font-size: 0.7em">0034 91 1375371</p>
-                <p style="font-size: 0.7em"><a href="mailto:contact@quasarsr.com" target="_top">contact@quasarsr.com</a></p>
-                <p style="font-size: 0.7em">Monday to Friday 8am - 18pm</p>
             </div>
         </div>
     </div>

@@ -296,3 +296,51 @@ function breadcrumb(directoryname) {
         localStorage("bc_contruc", document.id);
     }
 }
+
+$(document).ready(
+    function() {
+
+        function position_background() {
+
+            //var child = $(".bck-tr");
+            /*child.css({
+                backgroundPosition : "-" + child.offset().left + "px -" + child.offset().top + "px"
+            });*/
+            $(".bck-tr").each(function(i){
+                $(this).css({backgroundPosition : "-" + $(this).offset().left + "px -" + $(this).offset().top + "px"});
+                $(this).css({backgroundSize :  $(window).width() + "px auto"}); //+ $(window).height() + "px"});
+            });
+        }
+
+    position_background();
+
+    $(window).resize(position_background);
+
+    }
+);
+
+$(document).ready($(function() {
+    $(window).scroll(function() {
+        function position_background() {
+
+            //var child = $(".bck-tr");
+            /*child.css({
+                backgroundPosition : "-" + child.offset().left + "px -" + child.offset().top + "px"
+            });*/
+            $(".bck-tr").each(function(i){
+                $(this).css({backgroundPosition : "-" + $(this).offset().left + "px -" + $(this).offset().top + "px"});
+                $(this).css({backgroundSize :  $(window).width() + "px auto"}); //+ $(window).height() + "px"});
+            });
+        }
+
+        position_background();
+
+        $(window).resize(position_background);
+        });
+    })
+  );
+
+  function scroll_to_top(){
+    // window.scrollTo(x-coord, y-coord);
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  }

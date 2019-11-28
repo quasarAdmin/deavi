@@ -58,6 +58,7 @@ class save_samp_data(parent):
         
         @see file_manager @link avi.utils.data.file_manager.file_manager
         """
+        # FIXME: 
         fm = file_manager()
         file_name = wh().get().USER_FMT%{"user":"user",
                                          "date":str(round(time.time())),

@@ -260,3 +260,9 @@ function set_titles(name_coord_titles, shape_titles, data_release_titles, positi
         document.querySelector("label[for='id_instrument_2']").setAttribute('title', array_instrument_titles[2]);
     }
 }
+
+$(document).ready(
+    $(function() {
+        var temp = "gaiadr2.gaia_source";
+        $("#id_table_dr2").val(temp);
+    }));

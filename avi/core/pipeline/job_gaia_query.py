@@ -75,16 +75,16 @@ class gaia_query(parent):
         @see avi.models.gaia_query_model
         @sa avi.task.gaia_query_task
         """
-        # TODO:
-        #m, created = TutorialModel.objects.get_or_create(fib_num = int(data))
-        #gaia_test.delay(data)
-        #self.job_data.data = data
-        #self.job_data.ok = True
-        #return self.job_data
+        # TODO: check errors
+
+        if not 'data_release' in data:
+            data['data_release'] = 'dr2'
+
         if data['data_release'] == 'dr1':
             data['table'] = data['table_dr1']
         elif data['data_release'] == 'dr2':
             data['table'] = data['table_dr2']
+
         m = gaia_query_model(name_coord = data['name_coord'],
                              name = data['name'],
                              input_file = data['input_file'],
@@ -100,7 +100,7 @@ class gaia_query(parent):
                              file_name = data['file_name'],
                              adql = data['adql'])
         m.save()
-        #TutorialModel.objects.get_or_create(fib_num = int(data))
+
         self.job_data.data = m
         self.job_data.ok = True
         return self.job_data

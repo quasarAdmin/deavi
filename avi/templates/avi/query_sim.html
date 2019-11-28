@@ -1,0 +1,141 @@
+<!--
+Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+
+This file is part of DEAVI.
+
+DEAVI is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+DEAVI is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include "avi/header.html" %}
+    <!--<script
+       src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>-->
+    {% load static %}
+    <!--<link rel="stylesheet"
+        type="text/css" href="{% static 'avi/queries.css' %}"/>-->
+    <script src="{% static 'avi/js/query_form.js' %}"></script>
+</head>
+
+<body>
+    <div id="navbar">
+        {% include "avi/navbar.html" %}
+    </div>
+    <div class="container-fluid">
+        <div id="" class="row content">
+            {% include "avi/sidebar-nav.html" with sidebar_menu="queries"%}
+            <div id="real-content" class="col cont">
+
+                <!-- ----------------------------------------------------------------- -->
+                <!-- ----------------------------------------------------------------- -->
+                <!-- ----------------------------------------------------------------- -->
+                <div id="card" class="card bg-light mb-3">
+                    <div class="card-header">
+                        <h1>Simulations</h1>
+                        <hr>
+                    </div>
+                    <div class="card-body body-page">
+                        <form id="sim_query_form" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-sm-10 offset-sm-1">
+                                    <div class="card border-primary mb-3 card-form">
+                                        <div class="card-body text-primary">
+                                            <div class="form-group row">
+                                                <div class="col-sm-2"></div>
+                                                <div class="col-sm-8 offset-1">
+                                                    <div id="div_id_solar_mass" style="margin:0 auto">
+                                                        <div class="form-group row">
+                                                            {{ form.total_mass.errors }}
+                                                            <label for="{{ form.total_mass.id_for_label }}" title="{{ form.total_mass.help_text }}" class="col-form-label">Total Mass: </label>
+                                                            <div class="col-sm-6" title="{{ form.total_mass.help_text }}">
+                                                                {{ form.total_mass }}
+                                                            </div>
+                                                            <div class="col-sm-2 mt-1 text-center" style="min-width: 80px !important" title="Solar Mass"><span>(Solar-Mass)</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="div_id_virial_ratio">
+                                                        <div class="form-group row">
+                                                            {{ form.virial_ratio.errors }}
+                                                            <label for="{{ form.virial_ratio.id_for_label }}" title="{{ form.virial_ratio.help_text }}" class="col-form-label">Virial Ratio: </label>
+                                                            <div class="col-sm-6" title="{{ form.virial_ratio.help_text }}">
+                                                                {{ form.virial_ratio }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="div_id_half_mass_radius" style="margin:0 auto">
+                                                        <div class="form-group row">
+                                                            {{ form.half_mass_radius.errors }}
+                                                            <label for="{{ form.half_mass_radius.id_for_label }}" title="{{ form.half_mass_radius.help_text }}" class="col-form-label">Half-Mass Radius: </label>
+                                                            <div class="col-sm-6" title="{{ form.half_mass_radius.help_text }}">
+                                                                {{ form.half_mass_radius }}
+                                                            </div>
+                                                            <div class="col-sm-2 mt-1 text-center" style="min-width: 80px !important" title="PC"><span>(PC)</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="div_id_fractal_dimension" style="margin:0 auto">
+                                                        <div class="form-group row">
+                                                            {{ form.fractal_dimension.errors }}
+                                                            <label for="{{ form.fractal_dimension.id_for_label }}" title="{{ form.fractal_dimension.help_text }}" class="col-form-label">Fractal Dimension: </label>
+                                                            <div class="col-sm-6" title="{{ form.fractal_dimension.help_text }}">
+                                                                {{ form.fractal_dimension }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="div_id_mass_segregation_degree" style="margin:0 auto">
+                                                        <div class="form-group row">
+                                                            {{ form.mass_segregation_degree.errors }}
+                                                            <label for="{{ form.mass_segregation_degree.id_for_label }}" title="{{ form.mass_segregation_degree.help_text }}" class="col-form-label">Mass Segregation Degree: </label>
+                                                            <div class="col-sm-6" title="{{ form.mass_segregation_degree.help_text }}">
+                                                                {{ form.mass_segregation_degree }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="div_id_binary_fraction" style="margin:0 auto">
+                                                        <div class="form-group row">
+                                                            {{ form.binary_fraction.errors }}
+                                                            <label for="{{ form.binary_fraction.id_for_label }}" title="{{ form.binary_fraction.help_text }}" class="col-form-label">Binary Fraction: </label>
+                                                            <div class="col-sm-6" title="{{ form.binary_fraction.help_text }}">
+                                                                {{ form.binary_fraction }}
+                                                            </div>
+                                                            <div class="col-sm-2 mt-1 text-center" style="min-width: 80px !important" title="Percentage"><span>(%)</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- data row -->
+                            <input type="submit" class="btn btn-outline-primary" value="Submit" />
+                        </form>
+                    </div>
+                </div>
+                <!-- ----------------------------------------------------------------- -->
+                <!-- ----------------------------------------------------------------- -->
+                <!-- ----------------------------------------------------------------- -->
+            </div>
+        </div>
+    </div>
+    {% include "avi/footer.html" %}
+    <script>
+        set_titles('{{ form.name_coord.help_text }}', '{{ form.shape.help_text }}', '{{ form.data_release.help_text }}', 0, 0);
+    </script>
+</body>
+
+</html>

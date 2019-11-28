@@ -35,6 +35,8 @@ from avi.warehouse import wh_frontend_config
 
 from avi.log import logger
 
+from .job_get_query_info import get_query_info
+
 class get_queries_status(parent):
     """@class get_pipeline_status
     The get_queries_status class retrieves the status of the queries.
@@ -144,7 +146,12 @@ class get_queries_status(parent):
                 date = h.request.pipeline_state.started_time
             #status = h.request.pipeline_state.state
             #date = h.request.pipeline_state.started_time
-            allqueries[k] = ("query %s"%(h.name), status, date, h.pk, h.archive)
+            name = "query %s"%(h.name)
+            if isinstance(h, gaia_query_model):
+                name = "Gaia %s"%(h.name)
+            elif isinstance(h, herschel_query_model):
+                name = "HSA %s"%(h.name)
+            allqueries[k] = (name, status, date, h.pk, h.archive)
             k += 1
         #------------------
         if page < 1:
@@ -159,6 +166,14 @@ class get_queries_status(parent):
             return self.job_data
 
         data = {}
+
+
+        #------query info -----
+        #query_id_mission = {}
+        #query_info = {}
+        #------query info -----
+
+
         i = 0
         for q in all_ms:
             try:
@@ -171,6 +186,17 @@ class get_queries_status(parent):
                 pos = error.rfind("Exception: ")
                 error = error[pos+11:]
 
+
+                #------query info -----
+                #query_id_mission['mission'] = q.archive
+                #query_id_mission['id'] = q.pk
+                #query_info = get_query_info.start(self,query_id_mission)
+                #log.info("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                #log.info(query_info.data)
+                #log.info("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+                #------query info -----
+
+
             if not error or error == "":
                 error = "OK"
             if q.is_aborted:
@@ -180,10 +206,20 @@ class get_queries_status(parent):
             if status == "STARTED":
                 count_started += 1
             #data[q.pk] = (q.name, status)
-            data[i] = ("query %s"%(q.name), status, date, error, q.pk, q.archive)
-            log.info(data[i])
-            i+=1
+            
 
+            #------query info -----
+            #data[i] = ("query %s"%(q.name), status, date, error, q.pk, q.archive, query_info.data)
+            #------query info -----
+
+            name = "query %s"%(q.name)
+            if isinstance(q, gaia_query_model):
+                name = "Gaia %s"%(q.name)
+            elif isinstance(q, herschel_query_model):
+                name = "HSA %s"%(q.name)
+            data[i] = (name, status, date, error, q.pk, q.archive)
+            
+            i+=1
         self.job_data.data[1] = data
 
         wh_common().get().queries_started = count_started

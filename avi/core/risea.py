@@ -49,7 +49,6 @@ class risea:
 
     class __risea:
         """Private class to feature the singleton pattern"""
-        # TODO move this constant to common file
         # FIXME: ? should we be using input dir for this?
         ## Deprecated
         str_log_config_file = 'avi/config/log_config.xml'

@@ -64,10 +64,17 @@ class algorithm(parent):
         """
         log = logger().get_log("algorithm_task")
         log.info("job %s", data)
-        # TODO: check errors
         if "algorithm_id" in data:
 
             mng = algorithm_manager()
+            
+            if not data.get('algorithm_id'):
+                self.job_data.ok = False
+                return self.job_data
+
+            if len(data['algorithm_id']) < 1:
+                self.job_data.ok = False
+                return self.job_data
 
             alg = algorithm_info_model.objects.get(pk=data['algorithm_id'][0])
 

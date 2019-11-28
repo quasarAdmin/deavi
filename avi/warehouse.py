@@ -210,6 +210,8 @@ class wh_names:
         JOB_GAIA_QUERY = "gaia_query"
         ## Herschel query job name
         JOB_HSA_QUERY = "herschel_query"
+        ## Simulation query job name
+        JOB_SIM_QUERY = "sim_query"
         ## Get queries status job name
         JOB_GET_QUERIES_STATUS = "get_queries_status"
         ## Get pipeline status job name
@@ -244,6 +246,8 @@ class wh_names:
         JOB_SORT_BY = "sort_by"
         ## Get files job name
         JOB_GET_FILES = "get_files"
+        ## Delete files
+        JOB_DELETE_FILE = "delete_file"
         ## Get algorithm job name
         JOB_GET_ALGORITHM = "get_algorithm"
         ## Get algorithm info job name

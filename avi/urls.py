@@ -34,7 +34,6 @@ from . import views
 from . import views_api
 
 # initial configuration
-# TODO
 from avi.core.risea import risea
 risea().get()
 
@@ -94,6 +93,8 @@ urlpatterns = patterns('',
                            views.query_gaia, name='query_gaia'),
                        url(r'^queries/herschel', views.query_herschel, 
                            name='query_herschel'),
+                       url(r'^queries/simulations', views.query_simulations, 
+                           name='query_simulations'),
                        url(r'^queries/status', views.query_status, 
                            name='query_status'),
                        url(r'^queries/saved', views.query_saved, 
@@ -103,6 +104,9 @@ urlpatterns = patterns('',
                            name='resources_filemanager'),
                        url(r'^about', views.about, name='about'),
                        url(r'^help', views.help, name='help'),
+                       url(r'^contact', views.contact, name='contact'),
+                       url(r'^deavi_structure', views.deavi_structure, name='deavi_structure'),
+                       url(r'^tutorial', views.tutorial, name='tutorial'),
                        url(r'^debug', views.debug, name='debug'),
                        url(r'^vr', views.vr, name='vr'),
                        url(r'^algorithm/(?P<alg_id>[-A-Za-z0-9_]+)/$', views.algorithm, name='algorithm'),

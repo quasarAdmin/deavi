@@ -44,6 +44,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                 <div id="card" class="card bg-light mb-3">
                     <div class="card-header">
                         <h1>Herschel</h1>
+                        <hr>
                     </div>
                     <div class="card-body body-page">
                         <form id="herschel_query_form" method="post" enctype="multipart/form-data">
@@ -129,16 +130,16 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                             <div class="form-group row" title="{{ form.height.help_text }}">
                                                                 {{ form.height.errors }}
                                                                 <label for="{{ from.height.id_for_label }}" class="col-form-label">Height: </label>
-                                                                <div class="col-sm-8">{{ form.height }}
-                                                                </div>
+                                                                <div class="col-sm-6">{{ form.height }}</div>
+                                                                <div class="col-sm-2 mt-2 text-center" style="min-width: 80px !important" title="Degrees">DEG</div>
                                                             </div>
                                                         </div>
                                                         <div id="div_id_width">
                                                             <div class="form-group row" title="{{ form.width.help_text }}">
                                                                 {{ form.width.errors }}
                                                                 <label for="{{ form.width.id_for_label }}" class="col-form-label">Width: </label>
-                                                                <div class="col-sm-8">{{ form.width }}
-                                                                </div>
+                                                                <div class="col-sm-6">{{ form.width }}</div>
+                                                                <div class="col-sm-2 mt-2 text-center" style="min-width: 80px !important" title="Degrees">DEG</div>
                                                             </div>
                                                         </div>
                                                         <div id="div_id_polygon">

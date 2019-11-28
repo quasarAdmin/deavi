@@ -178,7 +178,7 @@ class interface_manager:
         
     def archive_get_maps(self, ra, dec, radius, level = "All",
                          instrument = 'PACS', mission = 'herschel', table = None,
-                         id = None):
+                         id = None, name = "data"):
         """Does a conical query to an archive.
         
         This method does a conical query to the given archive and retrieves the 
@@ -201,7 +201,68 @@ class interface_manager:
         """
         self.log.info("Retrieving maps from the %s archive...", mission)
         if mission == 'herschel':
-            return self._archive_herschel_get_maps(ra,dec,radius,level,instrument, table, id)
+            return self._archive_herschel_get_maps(ra,dec,radius,level,instrument, table, id, name)
+        else:
+            self.log.error("Unknow mission %s", mission)
+            return None
+
+    def archive_get_maps_box(self, ra, dec, width, height, level = "All",
+                         instrument = 'PACS', mission = 'herschel', table = None,
+                         id = None, name = "data"):
+        """Does a box-shape query to an archive.
+        
+        This method does a box-shape query to the given archive and retrieves the 
+        maps in that area.
+
+        Args:
+        self: The object pointer
+        ra: The ra coordinate
+        dec: The dec coordinate
+        width: The width of the box
+        height: The height of the box
+        level: The processing level
+        instrument: The instrument
+        mission: The archive to be queried
+        table: The table to be queried
+        id: The id of the observation
+
+        Returns:
+        The data retrieved from the archive if the query was done correctly, 
+        None otherwise
+        """
+        self.log.info("Retrieving maps from the %s archive...", mission)
+        if mission == 'herschel':
+            return self._archive_herschel_get_maps_box(ra,dec,width,height,level,instrument, table, id, name)
+        else:
+            self.log.error("Unknow mission %s", mission)
+            return None
+
+    def archive_get_maps_polygon(self, ra, dec, vertexes, level = "All",
+                         instrument = 'PACS', mission = 'herschel', table = None,
+                         id = None, name = "data"):
+        """Does a polygonal query to an archive.
+        
+        This method does a polygonal query to the given archive and retrieves the 
+        maps in that area.
+
+        Args:
+        self: The object pointer
+        ra: The ra coordinate
+        dec: The dec coordinate
+        vertexes: An array of vertex forming the polygon
+        level: The processing level
+        instrument: The instrument
+        mission: The archive to be queried
+        table: The table to be queried
+        id: The id of the observation
+
+        Returns:
+        The data retrieved from the archive if the query was done correctly, 
+        None otherwise
+        """
+        self.log.info("Retrieving maps from the %s archive...", mission)
+        if mission == 'herschel':
+            return self._archive_herschel_get_maps_polygon(ra,dec,vertexes,level,instrument, table, id, name)
         else:
             self.log.error("Unknow mission %s", mission)
             return None
@@ -311,7 +372,7 @@ class interface_manager:
         return h.get_polygon(ra,dec,vertexes,table,params)
 
     def _archive_herschel_get_maps(self, ra, dec, radius, 
-                                   level, instrument, table, id):
+                                   level, instrument, table, id, name):
         if not self.herschel_config:
             self.log.error('There is no configuration loaded!')
             return None
@@ -320,7 +381,31 @@ class interface_manager:
             self.log.error('Failed to load the herschel interaface!')
             return None
         h.job_id = id
-        return h.get_images(ra,dec,radius,level,instrument,table=table)#, True)
+        return h.get_images(ra,dec,radius,level,instrument,table=table, name=name)#, True)
+
+    def _archive_herschel_get_maps_box(self, ra, dec, width, height, 
+                                   level, instrument, table, id, name):
+        if not self.herschel_config:
+            self.log.error('There is no configuration loaded!')
+            return None
+        h = herschel()
+        if not h.init(self.herschel_config):
+            self.log.error('Failed to load the herschel interaface!')
+            return None
+        h.job_id = id
+        return h.get_images_box(ra,dec,width,height,level,instrument,table=table, name=name)
+
+    def _archive_herschel_get_maps_polygon(self, ra, dec, vertexes, 
+                                   level, instrument, table, id, name):
+        if not self.herschel_config:
+            self.log.error('There is no configuration loaded!')
+            return None
+        h = herschel()
+        if not h.init(self.herschel_config):
+            self.log.error('Failed to load the herschel interaface!')
+            return None
+        h.job_id = id
+        return h.get_images_polygon(ra,dec,vertexes,level,instrument,table=table, name=name)
 
     def archive_get_maps_by_id(self, obsid, level="All", instrument = 'PACS',
                                mission = 'herschel'):

@@ -60,7 +60,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
     <div class="container-fluid">
         <div id="" class="row content">
             {% include "avi/sidebar-nav.html" with sidebar_menu="resources"%}
-            <div id="real-content" class="col-10 cont">
+            <div id="real-content" class="col cont">
                 <!-- -------------------------------------------------------------- -->
                 <!-- -------------------------------------------------------------- -->
                 <!-- -------------------------------------------------------------- -->
@@ -68,6 +68,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                 <div id="card" class="card bg-light mb-3">
                     <div class="card-header">
                         <h1>Local</h1>
+                        <hr>
                     </div>
                     <!--Card body start-->
                     <div class="card-body">
@@ -333,7 +334,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 
                                                                                         </div>
                                                                                         <div class="modal-footer">
-                                                                                            <button type="submit" formmethod="POST" type="button" name="delete_file" class="btn btn-default" value="{{ data.0 }}" title="Click to delete the file" id="modal_btn__delete_yes_file">Yes
+                                                                                            <button type="submit" formmethod="POST" type="button" name="delete_file" class="btn btn-default" value="{{ file }}" title="Click to delete the file" id="modal_btn__delete_yes_file">Yes
                                                                                 </button>
                                                                                             <button type="button" data-dismiss="modal" class="btn btn-primary" title="Click to close" id="modal_btn_no_file">No
                                                                                 </button>

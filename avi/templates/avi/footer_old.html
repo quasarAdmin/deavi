@@ -1,0 +1,98 @@
+<!--
+Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+
+This file is part of DEAVI.
+
+DEAVI is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+DEAVI is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+-->
+{% load static %}
+<footer class="footer">
+    <div class="container-fluid f-back">
+        <br>
+        <div class="row">
+            <div class="col-sm-4 f-border f-column">
+                <h2>Partners</h2>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a href="https://ec.europa.eu/" target="_blank"><img class="images-footer samp_confirmation" src="{% static 'avi/img/logo-ce-horizontal-en-pantone-lr.png' %}" alt="European Commission" /></a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <a href="http://quasarsr.com/" target="_blank"><img class="images-footer-quasar samp_confirmation" src="{% static 'avi/img/partners-quasar.gif' %}" alt="QuasarSR" /></a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="http://ipag.osug.fr/?lang=fr" target="_blank"><img class="images-footer samp_confirmation" src="{% static 'avi/img/IPAGlogoPosRGB-150x150.png' %}" alt="IPAG" /></a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <a href="https://www.cardiff.ac.uk/" target="_blank"><img class="images-footer samp_confirmation" src="{% static 'avi/img/partners-cardiff-university.gif' %}" alt="Cardiff University" /></a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="https://www.leeds.ac.uk/" target="_blank"><img class="images-footer-last samp_confirmation" src="{% static 'avi/img/partners-university-of-leeds.gif' %}" alt="University of Leeds" /></a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a href="https://www.universiteitleiden.nl/en/science/astronomy" target="_blank"><img class="images-footer-last samp_confirmation" style="width: 35% !important" src="{% static 'avi/img/leiden-300x338.png' %}" alt="Leiden Observatory" /></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 f-border f-column">
+                <h2>Pages</h2>
+                <div class="row" style="margin-top: 50px">
+                    <div class="col-sx-12" style="margin: 0 auto">
+                        <ul style="text-align: left">
+                            <!--665-->
+                            <li><i class="fas fa-angle-right"></i>Start
+                                <ul>
+                                    <li class="f-li"><a href="{{ avi_url }}avi/algorithms" class="a-footer samp_confirmation"><i class="fas fa-angle-double-right"></i>Algorithms</a></li>
+                                    <li class="f-li"><a href="{{ avi_url }}avi/status" class="a-footer samp_confirmation"><i class="fas fa-angle-double-right"></i>Pipeline</a></li>
+                                </ul>
+                            </li>
+                            <li><i class="fas fa-angle-right"></i>Queries
+                                <ul>
+                                    <li class="f-li"><a href="{{ avi_url }}avi/queries/gaia" class="a-footer samp_confirmation"><i class="fas fa-angle-double-right"></i>Gaia</a></li>
+                                    <li class="f-li"><a href="{{ avi_url }}avi/queries/herschel" class="a-footer samp_confirmation"><i class="fas fa-angle-double-right"></i>Herschel</a></li>
+                                    <li class="f-li"><a href="{{ avi_url }}avi/queries/status" class="a-footer samp_confirmation"><i class="fas fa-angle-double-right"></i>Status</a></li>
+                                </ul>
+                            </li>
+                            <li><i class="fas fa-angle-right"></i>Data
+                                <ul>
+                                    <li class="f-li"><a href="{{ avi_url }}avi/resources/filemanager" class="a-footer samp_confirmation"><i class="fas fa-angle-double-right"></i>Data</a></li>
+                                </ul>
+                            </li>
+                            <li><i class="fas fa-angle-right"></i>Help
+                                <ul>
+                                    <li class="f-li"><a href="{{ avi_url }}avi/help" class="a-footer samp_confirmation"><i class="fas fa-angle-double-right"></i>About</a></li>
+                                    <li class="f-li"><a href="{{ avi_url }}avi/about" class="a-footer samp_confirmation"><i class="fas fa-angle-double-right"></i>Help</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <h2>Our Offices</h2>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3032.7930066247786!2d-3.887977684515725!3d40.52406605702818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd418326e9615e21%3A0xd3b5ebecaf6d9b54!2sQuasar+Science+Resources!5e0!3m2!1ses!2ses!4v1540290657981"
+                    width="100%" height="50%" frameborder="0" style="border:0" allowfullscreen></iframe>
+                <p style="font-size: 0.7em"><a href="https://www.google.com/maps?z=16&q=quasar+science+resources,+camino+de+las+ceudas+2,+28232+las+rozas+de+madrid,+madrid,+spain" target="_blank">Quasar Science Resources, Camino de las Ceudas 2, 28232 Las Rozas de Madrid, Madrid, Spain</a></p>
+                <p style="font-size: 0.7em">0034 91 1375371</p>
+                <p style="font-size: 0.7em"><a href="mailto:contact@quasarsr.com" target="_top">contact@quasarsr.com</a></p>
+                <p style="font-size: 0.7em">Monday to Friday 8am - 20pm</p>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -51,6 +51,13 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
     }
 }
 
+@media(max-width: 575px) {
+    .f2-border {
+        border-right: 0px;
+        border-left: 0px;
+    }
+}
+
 @media(max-width: 1080px) {
     .thrash-icon {
         display: inline;

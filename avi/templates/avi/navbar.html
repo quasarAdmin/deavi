@@ -24,9 +24,17 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-    <nav class="navbar navbar-dark bg-dark nav-rounded">
-        <a class="nav-color samp_confirmation" href="{{ avi_url }}avi"><span class="navbar-brand mb-0 h1">DEAVI</span><small>v{{ version }}</small></a>
-        <a href="https://ec.europa.eu/" target="_blank"><img src="{% static 'avi/img/logo-ce-horizontal-en-quadri-lr.png' %}" width="150px" style="float: right" /></a>
+    <nav class="navbar navbar-dark bg-dark nav-rounded bck-tr">
+      <div style="float: left; display: flex">
+        <a href="https://starformmapper.org/" target="_blank"><img src="{% static 'avi/img/logos/SFM-logo-white-nobkg.png' %}" width="160px"/></a>
+        <!--<a class="text-white text-center new-font" href="https://starformmapper.org/" target="_blank"style="text-decoration: none">
+          <p style="font-size: 3.4em; margin-bottom: -20px; margin-top: -17px">SFM</p>
+          <p style="font-size: 1em; margin-bottom: 0px">S<span style="font-size: 0.8em">tar</span>F<span style="font-size: 0.8em">orm</span>M<span style="font-size: 0.8em">apper</span></p>
+        </a>-->
+        <a class="nav-color samp_confirmation new-font" href="{{ avi_url }}avi" style="margin-top: 10px; margin-left: 10px"><span class="navbar-brand mb-0 h1" style="font-size: 2.4em">DEAVI</span><small>v{{ version }}</small></a>
+      </div>
+        <!--<a href="https://ec.europa.eu/" target="_blank"><img src="{% static 'avi/img/logo-ce-horizontal-en-quadri-lr.png' %}" width="150px" style="float: right" /></a>-->
+        <a href="https://ec.europa.eu/" target="_blank"><img src="{% static 'avi/img/logos/ECH2020_white.png' %}" width="270px" style="float: right" /></a>
     </nav>
 
 </div>

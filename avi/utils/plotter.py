@@ -59,9 +59,9 @@ def save_plot(job_id, alg_name, plot):
         df = data_file(job_id)
         df.add_plot(model)
     except Exception:
-        # TODO handle the exception
         log.warning(traceback.format_exc())
-        pass
+        return False
+    return True
 
 def load_plot(job_id, alg_name, name):
     """Deprecated, Loads a plot
@@ -89,9 +89,9 @@ def load_plot(job_id, alg_name, name):
         
         return (sc , html)
     except Exception:
-        # TODO handle the exception
         log.warning(traceback.format_exc())
-        pass
+        return False
+    return True
 
 def remove_plot(job_id, alg_name, name):
     """Not implemented"""

@@ -24,11 +24,14 @@ This module provides the delete job.
 """
 from .job import job as parent
 
+import os
+
 from avi.models import algorithm_model
 from avi.models import gaia_query_model
 from avi.models import herschel_query_model
 from avi.models import plot_model
 from avi.models import results_model
+from avi.models import resource_model
 
 from avi.log import logger
 
@@ -70,6 +73,11 @@ class delete(parent):
         log.info("inside delete job")
         dtype = data['type']
         pk = data['pk']
+        #data['delete-data'] = 'asd'
+        if 'delete-data' in data:
+            del_data = data['delete-data']
+        else:
+            del_data = False
         if dtype == 'algorithm':
             m = algorithm_model.objects.get(pk=pk)
             
@@ -98,6 +106,18 @@ class delete(parent):
                 results = results_model.objects.filter(job_id=pk)
                 for r in results:
                     r.delete()
+                rs = resource_model.objects.filter(job_id=pk)
+                for r in rs:
+                    full_path = os.path.join(r.path, r.name)
+                    os.remove(full_path)
+                    rs.delete()
+            else:
+                if del_data != False:
+                    resources = resource_model.objects.filter(job_id=pk)
+                    for r in resources:
+                        full_path = os.path.join(r.path, r.name)
+                        os.remove(full_path)
+                        r.delete()
             m.request.pipeline_state.delete()
             m.request.delete()
             m.delete()

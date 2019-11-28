@@ -43,7 +43,21 @@ var send_data = function(name, xml) {
     div = $("#samp-status");
     div.html('');
     div.append($("<p>Uploading file...</p><i class='fa fa-spinner fa-w-16 fa-spin fa-lg'></i>"));
+    var f = new FormData();
+    //console.log(escape(xml).replace(/^\s+|\s+$/g, ''));
+    //console.log(xml);
+    console.log(escape(xml).trim());
+    f.append('name', name);
+    f.append('data', escape(xml).trim());
+    f.append('csrfmiddlewaretoken', document.getElementsByName('csrfmiddlewaretoken')[0].value);
     $.ajax({
+        type: 'POST',
+        url: avi_url + "avi/ajax/send_samp_data",
+        data: f,
+        contentType: false,
+        processData: false,
+        cache: false,
+        /*
         type: "POST",
         url: avi_url + "avi/ajax/send_samp_data",
         //contentType: 'application/json',
@@ -52,14 +66,18 @@ var send_data = function(name, xml) {
             'name': name,
             'data': escape(xml),
             csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value
-        },
+        },*/
         success: function(data) {
-            var status = data["samp"]["status"];
+            console.log(data);
+            var status = 'error';
+            var jsondata = JSON.parse(data);
+            console.log(jsondata["samp"]);
+            status = jsondata["samp"]["status"];
             div = $("#samp-status");
             div.html('');
-            if (status == "success") {
+            if (status === "success") {
                 div.append($("<p>Success</p><i class='fas fa-check fa-w-16 fa-lg'></i>"));
-            } else if (status == "error") {
+            } else if (status === "error") {
                 div.append($("<p>Error</p><i class='fas fa-exclamation-triangle'></i>"));
             }
         },

@@ -1,0 +1,79 @@
+<!--
+Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+
+This file is part of DEAVI.
+
+DEAVI is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+DEAVI is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include "avi/header.html" %}
+</head>
+
+<body>
+    <div>
+        {% include "avi/navbar.html" %}
+    </div>
+    <div class="container-fluid">
+        <div id="" class="row content">
+            {% include "avi/sidebar-nav.html" with sidebar_menu="help"%}
+            <div id="real-content" class="col cont">
+                <!-- ------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------- -->
+                <div id="card" class="card bg-light mb-3">
+                    <div class="card-header">
+                        {% load static %}
+                        <h1>Contact</h1>
+                        <hr>
+                    </div>
+                    <div class="card-body">
+                        <div class="row sfm-text-justify sfm-separator">
+                            <div class="col-sm-3"><img class="sfm-center images-about" style="width: 80%" src="{% static 'avi/img/logos/QUASAR_logo_positivo.png' %}" alt="image of quasar science resources"></div>
+                            <div class="col-sm-8 text-list">
+                                <p><a class="a-link" href="http://www.quasarsr.com/" target="_blank">Quasar Science Resources</a> is a newly formed private company that provides consulting Software and System Engineering services for Research and Development
+                                    projects. Quasar S.R. provides high quality tailored-made services targeted at Research Centres, Universities and Private Companies looking to expand their activity domain. Quasar S.R. activities cover many different
+                                    areas, including, scientific software development and data reduction techniques, handling and exploitation of scientific data bases, archive engineering and data mining, computer systems engineering, including virtual
+                                    machine infrastructure, network, data storage and backup. Quasar S.R. personnel has ample experience working in big international collaborations and entities including experience with ground and space-based scientific
+                                    astronomical observatories.</p>
+                            </div>
+                        </div>
+                        <div class="sfm-text-justify">
+                                <h2>Our Offices</h2>
+                                <div class="row">
+                                    <div class="col">
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3032.7930066247786!2d-3.887977684515725!3d40.52406605702818!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd418326e9615e21%3A0xd3b5ebecaf6d9b54!2sQuasar+Science+Resources!5e0!3m2!1ses!2ses!4v1540290657981"
+                                            width="65%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                        </div>
+                                </div>
+                                <p style="font-size: 1.5em"><a href="https://www.google.com/maps?z=16&q=quasar+science+resources,+camino+de+las+ceudas+2,+28232+las+rozas+de+madrid,+madrid,+spain" target="_blank">Quasar Science Resources, Camino de las Ceudas 2, 28232 Las Rozas de Madrid, Madrid, Spain</a></p>
+                                <p style="font-size: 1.5em">0034 91 1375371</p>
+                                <p style="font-size: 1.5em"><a href="mailto:contact@quasarsr.com" target="_top">contact@quasarsr.com</a></p>
+                                <p style="font-size: 1.5em">Monday to Friday 8am - 20pm</p>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- ------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------- -->
+            </div>
+        </div>
+    </div>
+    {% include "avi/footer.html" %}
+</body>
+
+</html>

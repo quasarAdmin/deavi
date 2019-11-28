@@ -184,11 +184,11 @@ var create_form = function(el, id, data, state) {
         //console.log(inp_id);
         if (v['type'] == "bool") {
             if ("info" in v) {
-                adiv.append('<label title="' + v["info"] + '">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + id + "_" + v['name'] + ' title="' + v["info"] + '">' + v['view_name'] + "</label>");
             } else {
-                div.append("<label>" + v['view_name'] + "</label>");
+                div.append('<label for="' + id + "_" + v['name'] + '>' + v['view_name'] + '</label>');
             }
-            div.append('<input name="' + id + "_" + v['name'] +
+            div.append('<input id="' + id + "_" + v['name'] + '" name="' + id + "_" + v['name'] +
                 '" type="checkbox" value="true">');
             form.append(div);
         } else if (v['type'] == "string" ||
@@ -198,11 +198,11 @@ var create_form = function(el, id, data, state) {
             v['type'] == "complex") {
             var adiv = $('<div class="row" style="width:100%; margin-top:5px"></div>');
             if ("info" in v) {
-                adiv.append('<label class = "col-sm-5 col-form-label" style="padding: 5px 0px 0px 0px" title="' + v["info"] + '">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + id + "_" + v['name'] + '" class = "col-sm-5 col-form-label" style="padding: 5px 0px 0px 0px" title="' + v["info"] + '">' + v['view_name'] + "</label>");
             } else {
-                adiv.append('<label class = "col-sm-5 col-form-label" style="padding: 5px 0px 0px 0px">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + id + "_" + v['name'] + '" class = "col-sm-5 col-form-label" style="padding: 5px 0px 0px 0px">' + v['view_name'] + "</label>");
             }
-            var ainput = $('<input name="' + id + "_" + v['name'] +
+            var ainput = $('<input id="' + id + "_" + v['name'] + '" name="' + id + "_" + v['name'] +
                 '" type="text" value="" class="col-sm-7 form-control">');
             adiv.append(ainput);
             div.append(adiv);
@@ -214,9 +214,9 @@ var create_form = function(el, id, data, state) {
         } else if (v['type'] == "gaia_table") {
             var adiv = $('<div class="autocomplete row" style="width:100%; margin-top:5px"></div>');
             if ("info" in v) {
-                adiv.append('<label class = "col-sm-5 col-form-label" title="' + v["info"] + '">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label" title="' + v["info"] + '">' + v['view_name'] + "</label>");
             } else {
-                adiv.append('<label class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
             }
             var ainput = $('<input name="' + id + "_" + v['name'] +
                 '" id="' + inp_id +
@@ -245,9 +245,9 @@ var create_form = function(el, id, data, state) {
         } else if (v['type'] == "hsa_table") {
             var adiv = $('<div class="autocomplete row" style="width:100%; margin-top:5px"></div>');
             if ("info" in v) {
-                adiv.append('<label class = "col-sm-5 col-form-label" title="' + v["info"] + '">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label" title="' + v["info"] + '">' + v['view_name'] + "</label>");
             } else {
-                adiv.append('<label class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
             }
             adiv.append('<input name="' + id + "_" + v['name'] +
                 '" id="' + inp_id +
@@ -271,9 +271,9 @@ var create_form = function(el, id, data, state) {
         } else if (v['type'] == "results_data") {
             var adiv = $('<div class="autocomplete row" style="width:100%; margin-top:5px"></div>');
             if ("info" in v) {
-                adiv.append('<label class = "col-sm-5 col-form-label" title="' + v["info"] + '">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label" title="' + v["info"] + '">' + v['view_name'] + "</label>");
             } else {
-                adiv.append('<label class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
             }
             adiv.append('<input name="' + id + "_" + v['name'] +
                 '" id="' + inp_id +
@@ -288,9 +288,9 @@ var create_form = function(el, id, data, state) {
         } else if (v['type'] == "user_data") {
             var adiv = $('<div class="autocomplete row" style="width:100%; margin-top:5px"></div>');
             if ("info" in v) {
-                adiv.append('<label class = "col-sm-5 col-form-label" title="' + v["info"] + '">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label" title="' + v["info"] + '">' + v['view_name'] + "</label>");
             } else {
-                adiv.append('<label class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
             }
             adiv.append('<input name="' + id + "_" + v['name'] +
                 '" id="' + inp_id +
@@ -308,6 +308,8 @@ var create_form = function(el, id, data, state) {
     form.append('<button name="algorithm_id" class="btn btn-outline-primary" style="margin-top:5px; margin-bottom: 5px" type="submit" value="' +
         id + '">Run</button>');
     el.append(form);
+    $("#alg_parameters").show();
+
 }
 
 var get_algorithm_info = function(el, id, state) { //, name){
@@ -585,6 +587,12 @@ function set_hsa_titles(name_coord_titles, shape_titles, positional_images_title
     document.querySelector("label[for='id_instrument_22']").setAttribute('title', array_instrument_titles[2]);
 
 }
+
+$(document).ready(
+    $(function() {
+        var temp = "gaiadr2.gaia_source";
+        $("#id_table_dr2").val(temp);
+    }));
 
 $(document).ready(
     function() {

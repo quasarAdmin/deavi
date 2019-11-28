@@ -68,7 +68,7 @@ class save_user_data(parent):
         full_name = os.path.join(wh().get().USER_PATH, file_name)
         filename = fs.save(full_name, f)
         fm = file_manager()
-        fm.save_file_info(full_name, -1, "user", timezone.now())
+        fm.save_file_info(f.name, full_name, -1, "user", timezone.now())
         self.job_data.ok = True
         self.job_data.data = {}
         self.job_data.data['status'] = 'success'

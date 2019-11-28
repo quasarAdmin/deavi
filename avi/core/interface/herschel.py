@@ -64,6 +64,7 @@ class herschel(archive_interface):
     _data_url = "/data"
     _download_path = "/data/output/"
     _tmp_path = "/data/output/"
+    _files_name = "data"
 
     ## The id of the job that started the query
     job_id = ""
@@ -189,7 +190,7 @@ class herschel(archive_interface):
 
     def get_images(self, ra, dec, radius, level = "All",
                    instrument = 'PACS',
-                   tap_server = False, table = None):
+                   tap_server = False, table = None, name = "data"):
         """Retrieves the herschel images.
 
         This method retrieves the herschel images found in the area specified 
@@ -215,6 +216,7 @@ class herschel(archive_interface):
         table: The table from which the method will extract the observarion ids.
         """
         self.log.info("Getting Herschel images ...")
+        self._files_name = name
         if not table:
             #table = "hsa.cat_hppsc_070"
             table = "hsa.v_active_observation"
@@ -230,6 +232,142 @@ class herschel(archive_interface):
         #fname = fp.name
         #shutil.copyfileobj(vot_data, fp)
         #fp.close()
+        outputFileName = self._tmp_path + "temp.vot"
+        data = vot_data.encode('utf-8')
+        outputFile = open(outputFileName, "wb")
+        outputFile.write(data)
+        outputFile.close()
+        path = os.path.abspath(outputFileName)
+        
+        self.log.info("Opening VOTable from temporary file...")
+        vot = astropy.io.votable.parse_single_table(path, pedantic=False)
+
+        ids = self._get_ids_from_votable(vot)
+
+        self.log.info("Removing temporary file...")
+        os.path.exists(path) and os.remove(path)
+
+        if ids == None or ids == []:
+            self.log.error("The table has no observation_id key, " \
+                           + "no obsids retrieved")
+            return
+
+        self.get_images_by_id(ids, level, instrument, tap_server)
+
+    def get_images_box(self, ra, dec, width, height, level = "All",
+                   instrument = 'PACS',
+                   tap_server = False, table = None, name = "data"):
+        """Retrieves the herschel images.
+
+        This method retrieves the herschel images found in the area specified 
+        by the given coordinates, width and height.
+
+        It also filters the retrieved images by the processing level specified 
+        and the instrument.
+
+        First it will query the positional sources archive to retrieve the 
+        observation ids using the get_box() method.
+
+        Then with the observation ids retrieved it will call get_images_by_id() 
+        to download the images.
+
+        Args:
+        self: The object pointer
+        ra: The ra coordinate
+        dec: The dec coordinate
+        width: The width of the box
+        height: The height of the box
+        level: The processing level
+        intrument: The instrument
+        tap_server: If we are using the new tap server access or not
+        table: The table from which the method will extract the observarion ids.
+        """
+        self.log.info("Getting Herschel images ...")
+        self._files_name = name
+        if not table:
+            #table = "hsa.cat_hppsc_070"
+            table = "hsa.v_active_observation"
+
+        vot_data = self.get_box(ra, dec, width, height,  table = table, \
+                                   params = {"observation_id" : "observation_id"})
+
+        if not vot_data:
+            vot_data = self.get_box(ra, dec, width, height, table = table, \
+                                       params = {"obsid" : "obsid"})
+
+        #fp=tempfile.NamedTemporaryFile(prefix="hsa_vot_" mode ='wb',delete=False)
+        #fname = fp.name
+        #shutil.copyfileobj(vot_data, fp)
+        #fp.close()
+        outputFileName = self._tmp_path + "temp.vot"
+        data = vot_data.encode('utf-8')
+        outputFile = open(outputFileName, "wb")
+        outputFile.write(data)
+        outputFile.close()
+        path = os.path.abspath(outputFileName)
+        
+        self.log.info("Opening VOTable from temporary file...")
+        vot = astropy.io.votable.parse_single_table(path, pedantic=False)
+
+        ids = self._get_ids_from_votable(vot)
+
+        self.log.info("Removing temporary file...")
+        os.path.exists(path) and os.remove(path)
+
+        if ids == None or ids == []:
+            self.log.error("The table has no observation_id key, " \
+                           + "no obsids retrieved")
+            return
+
+        self.get_images_by_id(ids, level, instrument, tap_server)
+
+    def get_images_polygon(self, ra, dec, vertexes, level = "All",
+                   instrument = 'PACS',
+                   tap_server = False, table = None, name = "data"):
+        """Retrieves the herschel images.
+
+        This method retrieves the herschel images found in the area specified 
+        by the given coordinates.
+
+        It also filters the retrieved images by the processing level specified 
+        and the instrument.
+
+        First it will query the positional sources archive to retrieve the 
+        observation ids using the get_polygon() method.
+
+        Then with the observation ids retrieved it will call get_images_by_id() 
+        to download the images.
+
+        Args:
+        self: The object pointer
+        ra: The ra coordinate
+        dec: The dec coordinate
+        vertexes: An array of vertex forming the polygon
+        level: The processing level
+        intrument: The instrument
+        tap_server: If we are using the new tap server access or not
+        table: The table from which the method will extract the observarion ids.
+        """
+        self.log.info("Getting Herschel images ...")
+        self._files_name = name
+        if not table:
+            #table = "hsa.cat_hppsc_070"
+            table = "hsa.v_active_observation"
+
+        vot_data = self.get_polygon(ra, dec, vertexes,  table = table, \
+                                   params = {"observation_id" : "observation_id"})
+
+        if not vot_data:
+            vot_data = self.get_polygon(ra, dec, vertexes, table = table, \
+                                       params = {"obsid" : "obsid"})
+
+        #fp=tempfile.NamedTemporaryFile(prefix="hsa_vot_" mode ='wb',delete=False)
+        #fname = fp.name
+        #shutil.copyfileobj(vot_data, fp)
+        #fp.close()
+        if not vot_data:
+            self.log.info("There are no observations in that area")
+            return
         outputFileName = self._tmp_path + "temp.vot"
         data = vot_data.encode('utf-8')
         outputFile = open(outputFileName, "wb")
@@ -295,9 +433,9 @@ class herschel(archive_interface):
             self.log.error("Error while retrieving data :%i", err.code)
             return None
         file_name = self._download_path \
-                    + "%s_%s_%s.tar.gz"%(obsid.decode('utf-8'),
+                    + "%s_%s_%s_%s.tar.gz"%(obsid.decode('utf-8'),
                                           instrument,
-                                          level)
+                                          level, self._files_name)
         fp = open(file_name, 'wb')
         shutil.copyfileobj(response,fp)
         self.log.info("File %s saved", fp.name)
@@ -365,9 +503,9 @@ class herschel(archive_interface):
                 # TODO: check path and create sub dirs, proper name, etc
                 #file_name = self._download_path + obsid.decode('utf-8')
                 #file_name = self._download_path \
-                name = "%s_%s_%s_%s.fits"%(obsid.decode('utf-8'),
+                name = "%s_%s_%s_%s_%s.fits"%(obsid.decode('utf-8'),
                                            instrument,
-                                           level, i)
+                                           level, i, self._files_name)
                 full_name = wh_global_config()\
                     .get().SOURCES_FMT%{"mission":"hsa",
                                         "date":str(round(time.time())),
@@ -472,7 +610,7 @@ class herschel(archive_interface):
         if fname:
             fp = open(fname, 'wb')
             fm = file_manager()
-            fm.save_file_info(fname,self.job_id,"hsa",timezone.now())
+            fm.save_file_info(fname,fname,self.job_id,"hsa",timezone.now())
         else:
             fp = tempfile.NamedTemporaryFile(prefix="hsa_fits_",
                                              mode='wb', delete = False)

@@ -1,0 +1,96 @@
+
+{"input":{
+    "source_1":{
+        "ra": "100.2417",
+        "dec": "9.895",
+        "shape": "cone",
+        "wavelength": "70",
+        "table": "pacs_point_source_070",
+        "cover_input": "True",
+        "positional_images": "False",
+        "output": "table",
+        "radius": "0.5"
+    },
+    "source_2":{
+        "output_file": "ngc2264_box",
+        "ra": "100.2417",
+        "dec": "9.895",
+        "shape": "box",
+        "wavelength": "70",
+        "table": "pacs_point_source_070",
+        "cover_input": "True",
+        "positional_images": "False",
+        "output": "table",
+        "width": "1",
+        "height": "0.6"
+    },
+    "source_3":{
+        "ra": "100.3468",
+        "dec": "9.943",
+        "shape": "polygon",
+        "wavelength": "350",
+        "table": "spire_point_source_350",
+        "cover_input": "True",
+        "positional_images": "False",
+        "output": "table",
+        "vertex_1":{ "ra": "100.2097", "dec": "10.031"},
+        "vertex_2":{ "ra": "100.0749", "dec": "9.895"},
+        "vertex_3":{ "ra": "99.7218", "dec": "10.593"},
+        "vertex_4":{ "ra": "100.4069", "dec": "9.827"}
+    },
+    "source_4":{
+        "ra": "10.0",
+        "dec": "-10.5",
+        "shape": "polygon",
+        "wavelength": "350",
+        "table": "spire_point_source_350",
+        "cover_input": "True",
+        "positional_images": "False",
+        "output": "table",
+        "vertex_1":{ "ra": "20.0", "dec": "20.5"},
+        "vertex_2":{ "ra": "30.0", "dec": "30.5"}
+    },
+    "source_5":{
+        "l": "202.9357",
+        "b": "2.1957",
+        "shape": "cone",
+        "wavelength": "70",
+        "table": "pacs_point_source_070",
+        "positional_images": "False",
+        "cover_input": "True",
+        "output": "table",
+        "radius": "0.5"
+    },
+    "source_6":{
+        "ra": "06 40 58.000",
+        "dec": "+09 53 42.00",
+        "shape": "cone",
+        "wavelength": "70",
+        "table": "pacs_point_source_070",
+        "positional_images": "False",
+        "cover_input": "True",
+        "output": "table",
+        "radius": "0.5"
+    },
+    "source_7":{
+        "ra": "06h40m58.000s",
+        "dec": "+09d53m42.00s",
+        "shape": "cone",
+        "wavelength": "70",
+        "table": "pacs_point_source_070",
+        "cover_input": "True",
+        "positional_images": "False",
+        "output": "table",
+        "radius": "0.5"
+    },
+    "source_8":{
+        "name": "ngc2264",
+        "shape": "cone",
+        "wavelength": "70",
+        "table": "pacs_point_source_070",
+        "cover_input": "True",
+        "positional_images": "False",
+        "output": "table",
+        "radius": "0.5"
+    }
+}}

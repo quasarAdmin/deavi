@@ -157,14 +157,14 @@ ul ul a {
 #sidebar {
     margin-top: 10px;
     margin-bottom: 15px;
-    overflow: hidden;
+    /* overflow: hidden; */
     z-index: 3;
     border-radius: 5px !important;
 }
 
 #sidebar .list-group {
     /*min-width: 400px;*/
-    background-color: #333;
+    background-color: #000;
     min-height: 75vh;
     height: 100%;
 }
@@ -175,27 +175,31 @@ ul ul a {
 
 #sidebar .list-group-item {
     border-radius: 0;
-    background-color: #333;
-    color: #ccc;
+    /* background-color: #333; */
+    color: #fff;
     border-left: 0;
     border-right: 0;
     border-color: #2c2c2c;
     white-space: nowrap;
+    background-color: rgba(34, 34, 34, 0.2);
 }
 
 #sidebar .list-group-item:hover {
-    background-color: #222;
+    /* background-color: #222; */
+    background-color: rgba(34, 34, 34, 0.1);
 }
 
 .submenu:hover {
-    background-color: #555 !important;
+    /* background-color: #555 !important; */
+    background-color: rgba(34, 34, 34, 0.1);
 }
 
 
 /* highlight active menu */
 
 #sidebar .list-group-item:not(.collapsed) {
-    background-color: #222;
+    /* background-color: #222; */
+    background-color: rgba(34, 34, 34, 0.2);
 }
 
 
@@ -217,7 +221,8 @@ ul ul a {
 /* open state */
 
 #sidebar .list-group .list-group-item[aria-expanded="true"] {
-    background-color: #222;
+    /* background-color: #222; */
+    background-color: rgba(34, 34, 34, 0.6);
 }
 
 #sidebar .list-group .list-group-item[aria-expanded="true"]::after {
@@ -254,6 +259,13 @@ ul ul a {
     padding-left: 40px;
 }
 
+/* #menuhover{
+
+    box-shadow: inset 0px 0px 20px 10px #000000;
+    -webkit-box-shadow: inset 0px 0px 20px 10px #000000;
+    -moz-box-shadow: inset 0px 0px 20px 10px #000000;
+    -o-box-shadow: inset 0px 0px 20px 10px #000000;
+} */
 
 /*@media (max-width:768px) {*/
 
@@ -270,6 +282,12 @@ ul ul a {
     }
     #sidebar.show {
         transform: translateX(0);
+    }
+    #sidebar:hover .list-group{
+        min-width: 190px;
+    }
+    #sidebar:hover{
+        background-color: rgba(34, 34, 34, 0) !important;
     }
     #sidebar::-webkit-scrollbar {
         width: 0px;
@@ -301,11 +319,14 @@ ul ul a {
     }
     #sidebar .list-group:hover {
         min-width: 190px;
-        background-color: #333;
+        background-color: #000;
         min-height: 75vh;
         border-radius: 0;
     }
     #sidebar .list-group:hover .d-none {
+        display: inline-block !important;
+    }
+    #sidebar:hover .d-none {
         display: inline-block !important;
     }
     #sidebar:hover .list-group>.list-group-item[aria-expanded="true"]::after {

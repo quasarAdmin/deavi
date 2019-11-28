@@ -97,3 +97,7 @@ class example:
                       plot_height=400, toolbar_location="right")
         plot.circle(dec_col, ra_col, fill_color="red", size=2)
         save_plot(id, "example gaia", plot)
+
+        my_file = data(id).file("my_results.txt")
+        my_file.write("test")
+        my_file.close()

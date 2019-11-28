@@ -1,0 +1,88 @@
+
+{"input":{
+    "source_1":{
+		"output_file": "s1",
+        "ra": "100.2417",
+        "dec": "9.895",
+        "shape": "cone",
+        "wavelength": "70",
+        "table": "pacs_point_source_070",
+        "cover_input": "True",
+        "positional_source": "True",
+        "output": "table",
+        "radius": "0.5"
+    },
+    "source_2":{
+        "output_file": "ngc2264_box",
+        "ra": "100.2417",
+        "dec": "9.895",
+        "shape": "box",
+        "wavelength": "70",
+        "table": "pacs_point_source_070",
+        "cover_input": "True",
+        "positional_source": "True",
+        "output": "table",
+        "width": "1",
+        "height": "0.6"
+    },
+    "source_3":{
+		"output_file": "s3",
+        "ra": "10.0",
+        "dec": "-10.5",
+        "shape": "polygon",
+        "wavelength": "350",
+        "table": "spire_point_source_350",
+        "cover_input": "True",
+        "positional_source": "True",
+        "output": "table",
+        "vertex_1":{ "ra": "20.0", "dec": "20.5"},
+        "vertex_2":{ "ra": "30.0", "dec": "30.5"}
+    },
+    "source_4":{
+		"output_file": "s4",
+        "l": "202.9357",
+        "b": "2.1957",
+        "shape": "cone",
+        "wavelength": "70",
+        "table": "pacs_point_source_070",
+        "positional_source": "True",
+        "cover_input": "True",
+        "output": "table",
+        "radius": "0.5"
+    },
+    "source_5":{
+		"output_file": "s5",
+        "ra": "06 40 58.000",
+        "dec": "+09 53 42.00",
+        "shape": "cone",
+        "wavelength": "70",
+        "table": "pacs_point_source_070",
+        "positional_source": "True",
+        "cover_input": "True",
+        "output": "table",
+        "radius": "0.5"
+    },
+    "source_6":{
+		"output_file": "s6",
+        "ra": "06h40m58.000s",
+        "dec": "+09d53m42.00s",
+        "shape": "cone",
+        "wavelength": "70",
+        "table": "pacs_point_source_070",
+        "cover_input": "True",
+        "positional_source": "True",
+        "output": "table",
+        "radius": "0.5"
+    },
+    "source_7":{
+		"output_file": "s7",
+        "name": "ngc2264",
+        "shape": "cone",
+        "wavelength": "70",
+        "table": "pacs_point_source_070",
+        "cover_input": "True",
+        "positional_source": "True",
+        "output": "table",
+        "radius": "0.5"
+    }
+}}

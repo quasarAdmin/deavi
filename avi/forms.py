@@ -29,6 +29,7 @@ This module provides the django views for the application.
 # Error control
 import os
 from django import forms
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 from enum import Enum
 
@@ -215,7 +216,7 @@ class query_herschel_form(forms.Form):
     ## height of the query
     height = forms.FloatField(label='height',help_text='Height',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
     ## array containing the vertexes of a polygon
-    polygon = forms.CharField(label='polygon',help_text='Polygon: A B,C D, ...', max_length=255,required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    polygon = forms.CharField(label='polygon',help_text='Polygon: RA DEC,RA DEC, ...', max_length=255,required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
     ## is it a positional source catalog query or images?
     positional_images = forms.ChoiceField(label='Positional Images',help_text="Positional Source,Instrument Image",
                                           widget=forms.RadioSelect,
@@ -280,7 +281,7 @@ class query_gaia_form(forms.Form):
     height = forms.FloatField(label='height',help_text='Height',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
     ##height = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number'}))
     ## array containing the vertexes of a polygon
-    polygon = forms.CharField(label='polygon',help_text='Polygon: A B,C D, ...', max_length=255,required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    polygon = forms.CharField(label='polygon',help_text='Polygon: RA DEC,RA DEC, ...', max_length=255,required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
     ##polygon = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number'}))
     data_release = forms.ChoiceField(label='Data Release',help_text="Data Release 1,Data Release 2",
                                      widget=forms.RadioSelect,
@@ -303,6 +304,29 @@ class query_gaia_form(forms.Form):
                            #max_length=255,
                            required=False,
                            widget=forms.Textarea(attrs={'class': 'form-control'}))
+
+class query_sim_form(forms.Form):
+    """@class query_sim_form
+    This class defines the form to query the simulations
+    """
+    ## Total mass (solar-mass)
+    total_mass = forms.FloatField(validators=[MinValueValidator(1000), MaxValueValidator(10000)],
+                                    help_text="Total Mass")
+    ## virial ratio
+    virial_ratio = forms.FloatField(validators=[MinValueValidator(0.3), MaxValueValidator(0.5)],
+                                    help_text="Virial Ratio")
+    ## Half-mass radius (pc) 0.1, 0.5, 1.0
+    half_mass_radius = forms.FloatField(validators=[MinValueValidator(0.1), MaxValueValidator(1.0)],
+                                    help_text="Half-Mass Radius")
+    ## Fractal dimension
+    fractal_dimension = forms.FloatField(validators=[MinValueValidator(2.0), MaxValueValidator(3.0)],
+                                    help_text="Fractal Dimension")
+    ## Degree of mass-segregation
+    mass_segregation_degree = forms.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(1.0)],
+                                    help_text="Degree of mass-segregation")
+    ## Binary fraction (%)
+    binary_fraction = forms.FloatField(validators=[MinValueValidator(0), MaxValueValidator(50)],
+                                    help_text="Binary Fraction")
 
 # deprecated
 class _query_gaia_form():

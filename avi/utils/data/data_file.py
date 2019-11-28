@@ -33,7 +33,6 @@ from avi.warehouse import wh_global_config as wh
 from avi.models import results_model
 from .file_manager import file_manager
 
-# TODO: add timestamp in the file name?
 class data_file:
     """@class data_file
     This class provides an interface to the files management
@@ -98,7 +97,7 @@ class data_file:
             ret = open(full_name, "wb")
         else:
             ret = open(full_name, "w")
-        model = fm.save_file_info(full_name, self.res.job_id, 
+        model = fm.save_file_info(file_name, full_name, self.res.job_id, 
                                   self.task_name, timezone.now())
         self.res.resources.add(model)
         return ret
@@ -133,9 +132,12 @@ class data_file:
         """
         fm = file_manager()
         path = wh().get().RESULTS_PATH
+        fname = wh().get().RESULTS_FMT%{"task":"res",
+                                        "date":str(round(time.time())),
+                                        "name": fname}
         full_name = os.path.join(path, fname)
         
-        model = fm.save_file_info(full_name, self.res.job_id,
+        model = fm.save_file_info(fname, full_name, self.res.job_id,
                                   self.task_name, timezone.now())
 
         self.res.resources.add(model)
@@ -157,9 +159,12 @@ class data_file:
         """
         fm = file_manager()
         path = wh().get().RESULTS_PATH
+        fname = wh().get().RESULTS_FMT%{"task":"res",
+                                        "date":str(round(time.time())),
+                                        "name": fname}
         full_name = os.path.join(path, fname)
         
-        model = fm.save_file_info(full_name, self.res.job_id,
+        model = fm.save_file_info(fname, full_name, self.res.job_id,
                                   self.task_name, timezone.now())
 
         self.res.resources.add(model)

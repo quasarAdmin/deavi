@@ -54,6 +54,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                         <h1>{{ update }}</h1>
                         {% endif %}
                         <h1>Queries Status</h1>
+                        <hr>
                     </div>
                     <div class="card-body">
                         {% for h in allqueries.items %}
@@ -175,7 +176,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                 </div>
                                 {% for q in queries.items %}
                                 <div class="row table-body-pipe data">
-                                    <div id="{{ q.1.5 }}_{{ q.1.4 }}" mission="{{ q.1.5 }}" qid="{{ q.1.4 }}" data="{{q.1.2}}_{{q.1.1}}" title="TODO" class="name_search col-md-3 table-body-pipe-element query-info
+                                    <div id="{{ q.1.5 }}_{{ q.1.4 }}" params="{{q.1.6}}" mission="{{ q.1.5 }}" qid="{{ q.1.4 }}" data="{{q.1.2}}_{{q.1.1}}" class="name_search col-md-3 table-body-pipe-element query-info
                                     hover-info">{# {{queries|get_item:q}} #} {{ q.1.0 }} - {{ q.1.4 }} <i class="fas fa-angle-down"></i></div>
                                     <div class="col-md-2 table-body-pipe-element">{{ q.1.2 }}</div>
                                     <div class="col-md-2 table-body-pipe-element">{{ q.1.1 }}</div>
@@ -183,7 +184,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                     <div class="col-md-2 table-body-pipe-element pipe-button">
                                         <form id="form_{{ q.1.4 }}" method="post">
                                             {% csrf_token %}
-                                            <button type="submit" class="btn btn-primary btn-block" formmethod="POST" id="form_launch_button_{{ q.1.4 }}" {% if q.1.1 in "SUCCESS" %} name="launch" title="Launch" value="{{ q.1.4 }}-{{q.1.5}}">
+                                            <button type="submit" class="btn btn-info btn-block" formmethod="POST" id="form_launch_button_{{ q.1.4 }}" {% if q.1.1 in "SUCCESS" %} name="launch" title="Launch" value="{{ q.1.4 }}-{{q.1.5}}">
                                                 <a class="thrash-icon"><i class="fas fa-play-circle"></i></a><a class="delete">Launch</a>
                     {% else %}
                     disabled>
@@ -195,7 +196,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                     <div class="col-md-2 table-head-pipe-element-last pipe-button">
                                         <form id="form_{{ q.1.4 }}" method="post">
                                             {% csrf_token %}
-                                            <button type="submit" class="btn btn-primary btn-block" formmethod="POST" id="form_button_{{ q.1.4 }}" {% if q.1.1 in "SUCCESS" or q.1.1 in "FAILURE" %} name="delete_{{ q.1.5 }}" title="Delete" value="{{ q.1.4 }}">
+                                            <button type="submit" class="btn btn-danger btn-block" formmethod="POST" id="form_button_{{ q.1.4 }}" {% if q.1.1 in "SUCCESS" or q.1.1 in "FAILURE" %} name="delete_{{ q.1.5 }}" title="Delete" value="{{ q.1.4 }}">
                                                 <a class="thrash-icon"><i class="fas fa-trash-alt"></i></a><a class="delete">Delete</a>
                     {% else %}
                     name="abort_{{ q.1.5 }}"
@@ -206,6 +207,9 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                   </button>
                                         </form>
                                     </div>
+                                    <script>
+                                        titles("{{ q.1.4 }}", "{{ q.1.5 }}");
+                                    </script>
                                 </div>
 
                                 <div id="div_qs-res_{{ q.1.5 }}_{{ q.1.4 }}" class="row table-body-pipe data qs-res" style="display: none;">

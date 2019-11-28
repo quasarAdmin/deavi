@@ -33,7 +33,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.template.defaulttags import register
 
-from .forms import query_gaia_form, query_herschel_form, resources_form
+from .forms import query_gaia_form, query_herschel_form, resources_form, query_sim_form
 
 import sys, os
 from .utils.resources_manager import resources_manager
@@ -355,6 +355,8 @@ def status(request):
             data = {}
             data['type'] = "algorithm"
             data['pk'] = request.POST['delete']
+            if request.POST.get('delete_data'):
+                data['delete-data'] = request.POST['delete_data']
             risea().get().start_job(wh_names().get().JOB_DELETE,data)
         if request.POST.get('relaunch'):
             log.info("Relaunch %s",str(request.POST['relaunch']))
@@ -429,11 +431,15 @@ def send_samp_data(request):
     context = {'version':wh_global_config().get().VERSION,
                'avi_url':wh_global_config().get().AVI_URL}
     if request.is_ajax():
+        log = logger().get_log("views")
+        log.info("ajaxxxxxxxxxxxxxx")
         response = risea().get().start_job(wh_names().get().JOB_SAVE_SAMP_DATA,
                                            {'name':request.POST['name'],
                                             'data':request.POST['data']})
         #log.info(request.POST['data'])
+        log.info(response.data)
         context["samp"] = response.data
+        log.info(context)
     return HttpResponse(json.dumps(context))
     return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
 
@@ -678,6 +684,59 @@ def query_herschel(request):
                'avi_url':wh_global_config().get().AVI_URL}
     return HttpResponse(template.render(context,request))
 
+def query_simulations(request):
+    """View for the simulations query page.
+
+    This function provides the view for the simulations query page.
+    If it recieves a POST request it will start a sim_query job with the given 
+    parameters from the POST after checking them.
+
+    Args:
+    request: HttpRequest object.
+
+    Returns:
+    A HttpResponse object of the query_simulations.html template. 
+    If recieves a POST request it will return a HttpResponseRedirect object to 
+    the avi/queries/status url.
+    
+    See:
+    HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+
+    See also:
+    HttpResponseRedirect: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+    
+    @see job_sim_query @link avi.core.pipeline.job_sim_query
+    """
+    if request.method == 'POST':
+        f = query_sim_form(request.POST)
+        log = logger().get_log("views")
+        log.debug("Post \n%s",str(request.POST))
+        if f.is_valid():
+            log.info("Valid form")
+            data = f.cleaned_data
+            log.debug("cleaned data %s", str(data))
+            risea().get().start_job(wh_names().get().JOB_SIM_QUERY,
+                                    data)
+            
+            return HttpResponseRedirect(wh_global_config().get().AVI_URL+'avi/queries/status')
+        else:
+            log.error("Invalid form")
+        
+    template = loader.get_template('avi/query_sim.html')
+    context = {'form': query_sim_form(initial={'total_mass':'1000',
+                                                    'virial_ratio':'0.3',
+                                                    'half_mass_radius':'0.1',
+                                                    'fractal_dimension':'3.0',
+                                                    'mass_segregation_degree':'0.0',
+                                                    'binary_fraction':'0'
+                                                    }),
+               'version':wh_global_config().get().VERSION,
+               'avi_url':wh_global_config().get().AVI_URL}
+    return HttpResponse(template.render(context,request))
+
 def query_status(request):
     """View for the query status page.
 
@@ -739,12 +798,16 @@ def query_status(request):
             data = {}
             data['type'] = "gaia"
             data['pk'] = request.POST['delete_gaia']
+            if request.POST.get('delete_data'):
+                data['delete-data'] = request.POST['delete_data']
             risea().get().start_job(wh_names().get().JOB_DELETE,data)
         if request.POST.get('delete_hsa'):
             log.info("Post %s",str(request.POST['delete_hsa']))
             data = {}
             data['type'] = "hsa"
             data['pk'] = request.POST['delete_hsa']
+            if request.POST.get('delete_data'):
+                data['delete-data'] = request.POST['delete_data']
             risea().get().start_job(wh_names().get().JOB_DELETE,data)
         if request.POST.get('launch'):
             log.info("Post %s",str(request.POST['launch']))
@@ -958,7 +1021,10 @@ def resources_filemanager(request):
             log.debug("There is a delete_file POST")
             log.debug(request.POST)
             log.info("hellooooooooooo: " + str(request.POST))
-            risea().get().delete_file(request.POST['delete_file'])
+            #risea().get().delete_file(request.POST['delete_file'])
+            data = {}
+            data['pk'] = request.POST['delete_file']
+            risea().get().start_job(wh_names().get().JOB_DELETE_FILE, data)
             log.debug("The file has been deleted")
             return HttpResponseRedirect(wh_global_config().get().AVI_URL+"avi/resources/filemanager")
         else:
@@ -1048,6 +1114,73 @@ def help(request):
     context = {'version':wh_global_config().get().VERSION,
                'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
     return HttpResponse(template.render(context,request))
+
+def contact(request):
+    """View for the contact page.
+
+    This function provides the view for the contact page.
+
+    Args:
+    request: HttpRequest object.
+    
+    Returns:
+    A HttpResponse object of the help.html template.
+
+    See:
+    HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+    
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+    """
+    template = loader.get_template('avi/contact.html')
+    context = {'version':wh_global_config().get().VERSION,
+               'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
+    return HttpResponse(template.render(context,request))
+
+def deavi_structure(request):
+    """View for the deavi structure page.
+
+    This function provides the view for the deavi structure page.
+
+    Args:
+    request: HttpRequest object.
+    
+    Returns:
+    A HttpResponse object of the deavi structure.html template.
+
+    See:
+    HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+    
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+    """
+    template = loader.get_template('avi/deavi_structure.html')
+    context = {'version':wh_global_config().get().VERSION,
+               'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
+    return HttpResponse(template.render(context,request))
+
+def tutorial(request):
+    """View for the tutorial page.
+
+    This function provides the view for the tutorial page.
+
+    Args:
+    request: HttpRequest object.
+    
+    Returns:
+    A HttpResponse object of the tutorial.html template.
+
+    See:
+    HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+    
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+    """
+    template = loader.get_template('avi/tutorial.html')
+    context = {'version':wh_global_config().get().VERSION,
+               'avi_url':wh_global_config().get().AVI_URL} #RequestContext(request)
+    return HttpResponse(template.render(context,request))
+
 
 def vr(request):
     """Deprecated function.

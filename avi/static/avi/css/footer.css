@@ -26,6 +26,15 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
     position: bottom;
 }
 
+.footer2 {
+    text-align: center;
+    background-color: rgb(0, 0, 0, 0.9);
+    color: white;
+    width: 100%;
+    height: 5%;
+    position: bottom;
+}
+
 .footer .col-sm-4 {
     margin-top: 50px;
 }
@@ -41,6 +50,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
 
 .f-li {
     color: rgb(0, 157, 219);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
 }
 
 .a-footer {
@@ -61,6 +71,11 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
     border-right: 1px solid black;
 }
 
+.f2-border {
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+}
+
 .f-back {
     /*background-color: rgb(231, 231, 231);*/
     background-color: rgb(241, 241, 241);
@@ -70,6 +85,24 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
     width: 80%;
     margin-top: 20px;
     border-radius: 10px;
+}
+
+.images-footer2 {
+    width: 11%;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+.f2title {
+    font-size: 0.8em;
+}
+
+.f2text {
+    font-size: 0.7em;
+}
+
+.images-footer2-last {
+    width: 20%;
 }
 
 .images-footer-quasar {

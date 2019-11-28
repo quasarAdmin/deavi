@@ -21,15 +21,17 @@ var hsa_array = [];
 var res_array = [];
 var user_array = [];
 var query_files;
+var hsa_view_name = "HSA";
+var gaia_view_name = "Gaia";
 var create_form = function(el, id, data, files) {
   eval('var algorithm='+files);
   var cont = 1;
   for (var key in algorithm.files){
   }
-  console.log(el);
-  console.log(id);
-  console.log(data);
-  console.log(files);
+//   console.log(el);
+//   console.log(id);
+//   console.log(data);
+//   console.log(files);
   var view_name = data['view_name'];
   var form = $('<form></form>', {
       method: 'post',
@@ -47,22 +49,33 @@ var create_form = function(el, id, data, files) {
       var div = $('<div class="col-sm-12"></div>');
       var inp_id = id + "_" + v['name'];
       if (v['type'] == "bool") {
-          div.append("<label>" + v['view_name'] + "</label>");
-          div.append('<input name="' + id + "_" + v['name'] +
+          if ("info" in v) {
+              adiv.append('<label for="' + id + "_" + v['name'] + ' title="' + v["info"] + '">' + v['view_name'] + "</label>");
+          } else {
+              div.append('<label for="' + id + "_" + v['name'] + '>' + v['view_name'] + '</label>');
+          }
+          div.append('<input id="' + id + "_" + v['name'] + '" name="' + id + "_" + v['name'] +
               '" type="checkbox" value="true">');
           form.append(div);
       } else if (v['type'] == "string" ||
-          v['type'] == "float" ||
-          v['type'] == "integer") {
+        v['type'] == "float" ||
+        v['type'] == "integer" ||
+        v['type'] == "long" ||
+        v['type'] == "complex") {
           var adiv = $('<div class="row" style="width:100%; margin-top:5px"></div>');
-          adiv.append('<label class = "col-sm-5 col-form-label" style="padding: 5px 0px 0px 0px">' + v['view_name'] + "</label>");
-          var ainput = $('<input name="' + id + "_" + v['name'] +
+          if ("info" in v) {
+            adiv.append('<label for="' + id + "_" + v['name'] + '" class = "col-sm-5 col-form-label" style="padding: 5px 0px 0px 0px" title="' + v["info"] + '">' + v['view_name'] + "</label>");
+          } else {
+            adiv.append('<label for="' + id + "_" + v['name'] + '" class = "col-sm-5 col-form-label" style="padding: 5px 0px 0px 0px">' + v['view_name'] + "</label>");
+          }
+          var ainput = $('<input id="' + id + "_" + v['name'] + '" name="' + id + "_" + v['name'] +
               '" type="text" value="" class="col-sm-7 form-control">');
           adiv.append(ainput);
           div.append(adiv);
           div2.append(div);
           form.append(div2);
       } else if (v['type'] == "gaia_table") {
+          gaia_view_name = v['view_name'];
           var adiv = $('<div class="autocomplete row" style="width:100%; margin-top:5px"></div>');
           if(algorithm.mission === 'gaia'){
 
@@ -104,70 +117,105 @@ var create_form = function(el, id, data, files) {
                 ' type="text" placeholder="Gaia Table">');*/
           }
           var adiv = $('<div class="autocomplete row" style="width:100%; margin-top:5px"></div>');
-            adiv.append('<label class = "col-sm-5 col-form-label" for="' + inp_id +'">' + v['view_name'] + "</label>");
-            var ainput = $('<input name="' + id + "_" + v['name'] +
-                '" id="' + inp_id +
-                '" class="gaia_table col-sm-7 form-control"' +
-                ' type="text" placeholder="Gaia Table">');
+          if ("info" in v) {
+            adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label" title="' + v["info"] + '">' + v['view_name'] + "</label>");
+          } else {
+            adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
+          }
+          var ainput = $('<input name="' + id + "_" + v['name'] +
+            '" id="' + inp_id +
+            '" class="gaia_table col-sm-7 form-control"' +
+            ' type="text" placeholder="Gaia Table">');
           adiv.append(ainput);
           div.append(swt);
           div.append(adiv);
           div2.append(div);
           form.append(div2);
       } else if (v['type'] == "hsa_table") {
+        hsa_view_name = v['view_name'];
           if(algorithm.mission === 'hsa'){
 
-            var swt= $('<div class="custom-control custom-switch"></div>');
-            swt.append('<input type="checkbox" class="custom-control-input switch_1" id="customSwitch'+ cont +'" for_select="'+ id + "__" + v['name'] +'" for_no_select="' + inp_id +'" onchange="changeForm(this.value, '+ cont +')" value="off">');
-            var swtinput = $('<label class="custom-control-label" for="customSwitch'+ cont +'">Use query files</label>');
-            swt.append(swtinput);
+        var swt= $('<div class="custom-control custom-switch"></div>');
+        swt.append('<input type="checkbox" class="custom-control-input switch_1" id="customSwitch'+ cont +'" for_select="'+ id + "__" + v['name'] +'" for_no_select="' + inp_id +'" onchange="changeForm(this.value, '+ cont +')" value="off">');
+        var swtinput = $('<label class="custom-control-label" for="customSwitch'+ cont +'">Use query files</label>');
+        swt.append(swtinput);
 
-            /*var adiv = $('<div class="autocomplete" style="width:100%; margin-top:5px"></div>');
-            var aux = "";
-            aux = '<div id="' + id + "__" + v['name']+'" class="form-group row mt-3" style="width: 100%"><label class="col-sm-5 col-form-label" for="from_table">Hsa</label>'+
-            '<div class="col-sm-7" style="padding: 0px"><select class="form-control" id="from_table" name="' + id + "_" + v['name'] +
-            '" id="' + inp_id +'"><option selected>Choose HSA Table</option>';
-            for (var key in algorithm.files){
-                aux +='<option value="'+ algorithm.files[key] +'">'+ algorithm.files[key] +'</option>';
-            }
-            aux +='</select></div></div>';
-            adiv.append(aux);*/
-          }else{
-            /*var adiv = $('<div class="autocomplete row mb-3" style="width:100%; margin-top:5px"></div>');
-            adiv.append('<label class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
-            adiv.append('<input name="' + id + "_" + v['name'] +
-                '" id="' + inp_id +
-                '" class="hsa_table col-sm-7 form-control"' +
-                ' type="text" placeholder="HSA Table">');*/
-          }
-          var adiv = $('<div class="autocomplete row" style="width:100%; margin-top:5px"></div>');
-            adiv.append('<label class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
-            adiv.append('<input name="' + id + "_" + v['name'] +
-                '" id="' + inp_id +
-                '" class="hsa_table col-sm-7 form-control"' +
-                ' type="text" placeholder="HSA Table">');
-          div.append(swt);
-          div.append(adiv);
-          div2.append(div);
-          form.append(div2);
+        /*var adiv = $('<div class="autocomplete" style="width:100%; margin-top:5px"></div>');
+        var aux = "";
+        aux = '<div id="' + id + "__" + v['name']+'" class="form-group row mt-3" style="width: 100%"><label class="col-sm-5 col-form-label" for="from_table">Hsa</label>'+
+        '<div class="col-sm-7" style="padding: 0px"><select class="form-control" id="from_table" name="' + id + "_" + v['name'] +
+        '" id="' + inp_id +'"><option selected>Choose HSA Table</option>';
+        for (var key in algorithm.files){
+            aux +='<option value="'+ algorithm.files[key] +'">'+ algorithm.files[key] +'</option>';
+        }
+        aux +='</select></div></div>';
+        adiv.append(aux);*/
+        }else{
+        /*var adiv = $('<div class="autocomplete row mb-3" style="width:100%; margin-top:5px"></div>');
+        adiv.append('<label class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
+        adiv.append('<input name="' + id + "_" + v['name'] +
+            '" id="' + inp_id +
+            '" class="hsa_table col-sm-7 form-control"' +
+            ' type="text" placeholder="HSA Table">');*/
+        }
+        var adiv = $('<div class="autocomplete row" style="width:100%; margin-top:5px"></div>');
+        if ("info" in v) {
+            adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label" title="' + v["info"] + '">' + v['view_name'] + "</label>");
+        } else {
+            adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
+        }
+        adiv.append('<input name="' + id + "_" + v['name'] +
+            '" id="' + inp_id +
+            '" class="hsa_table col-sm-7 form-control"' +
+            ' type="text" placeholder="HSA Table">');
+        div.append(swt);
+        div.append(adiv);
+        div2.append(div);
+        form.append(div2);
       } else if (v['type'] == "results_data") {
-          var adiv = $('<div class="autocomplete" style="width:300px;"></div>');
-          adiv.append("<label>" + v['view_name'] + "</label>");
-          adiv.append('<input name="' + id + "_" + v['name'] +
-              '" id="' + inp_id +
-              '" class="results_data"' +
-              ' type="text" placeholder="Results Data">');
-          div.append(adiv);
-          form.append(div);
+        var adiv = $('<div class="autocomplete row" style="width:100%; margin-top:5px"></div>');
+        if ("info" in v) {
+            adiv.append('<label for="' + inp_id + '" class = "col-sm-5 col-form-label" title="' + v["info"] + '">' + v['view_name'] + "</label>");
+        } else {
+            adiv.append('<label for="' + inp_id + '" class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
+        }
+        adiv.append('<input name="' + id + "_" + v['name'] +
+            '" id="' + inp_id +
+            '" class="results_data col-sm-7 form-control"' +
+            ' type="text" placeholder="Results Data">');
+        div.append(adiv);
+        div2.append(div);
+        form.append(div2);
+        //   var adiv = $('<div class="autocomplete" style="width:300px;"></div>');
+        //   adiv.append("<label>" + v['view_name'] + "</label>");
+        //   adiv.append('<input name="' + id + "_" + v['name'] +
+        //       '" id="' + inp_id +
+        //       '" class="results_data"' +
+        //       ' type="text" placeholder="Results Data">');
+        //   div.append(adiv);
+        //   form.append(div);
       } else if (v['type'] == "user_data") {
-          var adiv = $('<div class="autocomplete" style="width:300px;"></div>');
-          adiv.append("<label>" + v['view_name'] + "</label>");
-          adiv.append('<input name="' + id + "_" + v['name'] +
-              '" id="' + inp_id +
-              '" class="user_data"' +
-              ' type="text" placeholder="User Data">');
-          div.append(adiv);
-          form.append(div);
+        var adiv = $('<div class="autocomplete row" style="width:100%; margin-top:5px"></div>');
+        if ("info" in v) {
+            adiv.append('<label for="' + inp_id + '" class = "col-sm-5 col-form-label" title="' + v["info"] + '">' + v['view_name'] + "</label>");
+        } else {
+            adiv.append('<label for="' + inp_id + '" class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
+        }
+        adiv.append('<input name="' + id + "_" + v['name'] +
+            '" id="' + inp_id +
+            '" class="user_data col-sm-7 form-control"' +
+            ' type="text" placeholder="User Data">');
+        div.append(adiv);
+        div2.append(div);
+        form.append(div2);
+        //   var adiv = $('<div class="autocomplete" style="width:300px;"></div>');
+        //   adiv.append("<label>" + v['view_name'] + "</label>");
+        //   adiv.append('<input name="' + id + "_" + v['name'] +
+            //   '" id="' + inp_id +
+            //   '" class="user_data"' +
+            //   ' type="text" placeholder="User Data">');
+        //   div.append(adiv);
+        //   form.append(div);
       }
       cont++;
   });
@@ -239,10 +287,10 @@ function changeForm(val, num){
     if(val === "off"){
         if(document.getElementById('customSwitch'+ num ).getAttribute('for_select').includes("gaia")){
             var table_name = "gaia";
-            var name_view = "Gaia";
+            var name_view = gaia_view_name;
         }else if(document.getElementById('customSwitch'+ num ).getAttribute('for_select').includes("hsa")){
             var table_name = "hsa";
-            var name_view = "HSA";
+            var name_view = hsa_view_name;
         }
         document.getElementById('customSwitch'+ num ).setAttribute('value', 'on');
         var parent = $('#'+document.getElementById('customSwitch'+ num ).getAttribute('for_no_select')).parents()[0];
@@ -265,10 +313,10 @@ function changeForm(val, num){
     }else{
         if(document.getElementById('customSwitch'+ num ).getAttribute('for_select').includes("gaia")){
             var table_name = "gaia";
-            var name_view = "Gaia";
+            var name_view = gaia_view_name;
         }else if(document.getElementById('customSwitch'+ num ).getAttribute('for_select').includes("hsa")){
             var table_name = "hsa";
-            var name_view = "HSA";
+            var name_view = hsa_view_name;
         }
         document.getElementById('customSwitch'+ num ).setAttribute('value', 'off');
         var parent = $('#'+document.getElementById('customSwitch'+ num ).getAttribute('for_select')).parents()[0];

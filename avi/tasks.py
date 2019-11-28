@@ -54,6 +54,7 @@ from avi.log import logger
 from avi.task.algorithm_task import algorithm_task
 from avi.task.gaia_query_task import gaia_query_task
 from avi.task.herschel_query_task import herschel_query_task
+from avi.task.sim_query_task import sim_query_task
 from avi.task.task import task_exception
 
 class algorithm(parent):
@@ -248,7 +249,53 @@ class herschel_query(parent):
                 'adql':self.adql}
         t.task_data.data = data
         t.run()
-            
+
+class sim_query(parent):
+    """@class herschel_query
+    The herschel_query class is the interface to the herschel_query_task
+    
+    See:
+    herschel_query_task: avi.task.herschel_query_task.herschel_query_task
+    """
+    ## Information of the task request
+    request = AviParameter()
+    ## Total mass (solar-mass)
+    total_mass = AviParameter()
+    ## virial ratio
+    virial_ratio = AviParameter()
+    ## Half-mass radius (pc) 0.1, 0.5, 1.0
+    half_mass_radius = AviParameter()
+    ## Fractal dimension
+    fractal_dimension = AviParameter()
+    ## Degree of mass-segregation
+    mass_segregation_degree = AviParameter()
+    ## Binary fraction (%)
+    binary_fraction = AviParameter()
+    
+    def output(self):
+        """Deprecated"""
+        sim_query_task().output()
+        return AviLocalTarget("/data/output/test.txt")
+    def run(self):
+        """Runs the task
+        Args:
+        self: The object pointer
+
+        Raises:
+        Exception
+        """
+        log = logger().get_log('risea')
+        log.info('deavi_task run...')
+        t = sim_query_task()
+        t.task_id = self.request.sim_query_model_model.pk
+        data = {'total_mass':self.total_mass,
+                'virial_ratio':self.virial_ratio,
+                'input_file':self.half_mass_radius,
+                'fractal_dimension':self.fractal_dimension,
+                'mass_segregation_degree':self.mass_segregation_degree,
+                'binary_fraction':self.binary_fraction}
+        t.task_data.data = data
+        t.run()            
             
 #except ImportError:
     # ############################################################################

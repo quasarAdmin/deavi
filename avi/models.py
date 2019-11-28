@@ -27,7 +27,6 @@ This module provides the models for the application.
 from django.db import models
 
 # Create your models here.
-# TODO: import this just while running in gavip
 try:
     # ############################################################################
     # ################################## AVI #####################################
@@ -130,11 +129,11 @@ class gaia_query_model(parent):
         return self.pk < other.pk
 
 class herschel_query_model(parent):
-    """@class gaia_query_model
-    The gaia_query_model defines the data base model for the gaia query 
+    """@class herschel_query_model
+    The herschel_query_model defines the data base model for the herschel query 
     execution
     
-    The gaia_query_model defines the data base model for the gaia query 
+    The herschel_query_model defines the data base model for the herschel query 
     execution
 
     It inherits from the AviJob class or the avi_job class, depending on which 
@@ -184,6 +183,37 @@ class herschel_query_model(parent):
     def __lt__(self, other):
         return self.pk < other.pk
 
+class sim_query_model(parent):
+    """@class sim_query_model
+    The sim_query_model defines the data base model for the simulations query 
+    execution
+    
+    The sim_query_model defines the data base model for the simulations query 
+    execution
+
+    It inherits from the AviJob class or the avi_job class, depending on which 
+    platform is the application running on.
+    """
+    ## Total mass (solar-mass)
+    total_mass = models.FloatField()
+    ## virial ratio
+    virial_ratio = models.FloatField()
+    ## Half-mass radius (pc) 0.1, 0.5, 1.0
+    half_mass_radius = models.FloatField()
+    ## Fractal dimension
+    fractal_dimension = models.FloatField()
+    ## Degree of mass-segregation
+    mass_segregation_degree = models.FloatField()
+    ## Binary fraction (%)
+    binary_fraction = models.FloatField()
+    ## Is aborted?
+    is_aborted = models.BooleanField(default=False)
+    ## pipeline name used to get the pipeline task and start it
+    pipeline_task = "sim_query"
+    
+    def __lt__(self, other):
+        return self.pk < other.pk
+
 class resource_model(models.Model):
     """@class resource_model
     The resource_model defines the data base model for the resources.
@@ -192,8 +222,10 @@ class resource_model(models.Model):
     store the information of those resources.
     """
     ## name of the resource
+    sort_name = models.CharField(max_length=255)
+    ## full name of the resource
     name = models.CharField(max_length=255)
-    ## path of thre resource
+    ## path of the resource
     path = models.CharField(max_length=255)
     ## type of retource
     file_type = models.CharField(max_length=255)

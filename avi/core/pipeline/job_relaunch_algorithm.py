@@ -46,44 +46,44 @@ class relaunch_algorithm(parent):
     @see job_data @link avi.core.pipeline.job_data
     """
     def start(self, data):
-        """This method runs the delete job.
+        """This method runs the relaunch_algorithm job.
 
-        This method will delete the asynchronous job provided in the data 
+        This method will relaunch_algorithm the asynchronous job provided in the data 
         parameter.
 
-        The data parameter must have the key 'pk' containing the primary key of 
-        the job to be aborted and the key 'type' containing the type of 
-        asynchronous job to be aborted.
+        The data parameter must have the key 'algorithm' containing all the data of 
+        the algorithm to be relaunched.
 
-        It will first check if the job of the given type and with the given pk 
-        exists and if so, it will delete it if the job is aborted or its state 
-        is 'SUCCESS' or 'FAILURE'.
+        It will first parse the data parameter to a dictionary and
+        save it into 'qparams' variable, then get the algorithm model
+        by the name in the 'qparams' variable and save the 'pk' of the
+        algorithm into 'qparams.
 
-        If the type is 'algorithm' it will also delete all the results and 
-        plots associated with it.
+        If the algorithm input parameters contains 'Gaia' then
+        will set the gaia file, if contains 'HSA' then will
+        set the hsa file.
 
         Args:
         self: The object pointer.
         data: A dictorianry containing the input data for the job.
 
         Returns:
-        The job_data attribute. The ok attribute will be True if the job has 
-        been deleted, False otherwise.
+        The algorithm parameters to be relaunched.
         """
         wh = wh_frontend_config().get()
         gwh = wh_global_config().get()
 
-        log = logger().get_log("views")
+        log = logger().get_log("relaunch")
         log.info("inside relaunch_algorithm job")
-        #data llega como string, transformar en dictionary
+        # data is a string type, transform to dictionary
         qparams = literal_eval(data['pk'])
-        #se recoge el modelo del algorithm a partir del nombre en m
+        # get the model of the algorithm by the name in qparams
         m = algorithm_info_model.objects.get(name=qparams['algorithm']['name'])
-        #se añade la pk del algorithm a los parametros del algorithm
+        # add the pk of the algorithm
         qparams['algorithm']['pk'] = m.pk
-        #recogemos las keys de los parametros del algorithm
+        # get the keys of the algorithm parameters
         keys = qparams['algorithm']['params'].keys()
-        #comprobamos si entre los paraetros estan gaia o hsa para eliminar los path
+        # check if Gaia or HSA is one of the parameters to delete de path of the files
         if "Gaia" in keys:
             path_to_eliminate = gwh.SOURCES_PATH
             path_to_eliminate = str(path_to_eliminate) + "/gaia/"

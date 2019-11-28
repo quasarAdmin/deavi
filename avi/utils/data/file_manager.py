@@ -89,14 +89,15 @@ class file_manager:
         self.log.debug(resources[0].id)
         return resources[0].pk
 
-    def save_file_info(self, file_name, id, task_name, date):
+    def save_file_info(self, name, file_name, id, task_name, date):
         """Saves the information of a given file
 
         Uses the resource_model to saves the given file information
 
         Args:
         self: The object pointer
-        file_name: The name of the file
+        name: The name of the file
+        file_name: The full name of the file
         id: The job id associated with the task that created this file
         task_name: Name of the task that created this file
         date: The date of creation
@@ -107,11 +108,12 @@ class file_manager:
         See:
         resource_model: avi.models.resource_model
         """
-        name = os.path.basename(file_name)
+        full_name = os.path.basename(file_name)
         path = os.path.dirname(file_name)
         try:
             from avi.models import resource_model
-            model = resource_model(name = name,
+            model = resource_model(sort_name = name,
+                                   name = full_name,
                                    path = path,
                                    file_type = task_name,
                                    job_id = id,
@@ -187,7 +189,8 @@ class file_manager:
 
         try:
             from avi.models import resource_model
-            model = resource_model(name = name,
+            model = resource_model(sort_name = name,
+                                   name = name,
                                    path = path,
                                    file_type = task_name,
                                    job_id = id,
@@ -217,8 +220,8 @@ class file_manager:
         self.log.info("Data saved in: %s", outputFileName)
         return path
     
-    def save_file_binary_data(self, data,name):
-        """Saves a binary data file
+    def save_file_binary_data(self, data, name):
+        """Saves a binary data file (Deprecated)
 
         Saves the given data into a file with the given name and creates a 
         resource_model with the file information.
@@ -238,7 +241,38 @@ class file_manager:
         See:
         resource_model: avi.models.resource_model
         """
-        # TODO: save the resource_model
+        if not path:
+            self.log.info("Using default RESULTS_PATH")
+            path = wh_global_config().get().RESULTS_PATH
+
+        output_file_name = os.path.join(path, name)
+        output_file = open(output_file_name, "wb")
+        output_file.write(data)
+        output_file.close()
+        res = os.path.abspath(output_file_name)
+        self.log.info("Data saved in: %s", output_file_name)
+
+        try:
+            from avi.models import resource_model
+            model = resource_model(sort_name = name,
+                                   name = name,
+                                   path = path,
+                                   file_type = task_name,
+                                   job_id = id,
+                                   date = date)
+            model.save()
+        except Exception:
+            self.log.warning("Something went wrong while updating the db"
+                             " saving tmp file to update the db later")
+            tmp_path = wh_global_config().get().TMP_PATH
+            full_tmp_path = os.path.join(tmp_path, str(id))
+            with open(full_tmp_path, "a") as tmp:
+                tmp.write("%s;%s;%s;%s;%s"%(name, path, task_name, 
+                                               str(id), str(date)))
+
+        return res
+
+        # OLD
         self.resources_path = wh_global_config().get().RESOURCES_PATH
         self.log.info("Saving file in %s", self.resources_path)
         outputFileName = os.path.join(self.resources_path, name)

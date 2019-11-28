@@ -237,57 +237,75 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
         </ul>
     </li>
 </ul>-->
-<div class="col-2 sidebar float-left pl-0 pr-0 width show" id="sidebar">
-    <div class="list-group border-0 card text-center text-md-left" id="menuhover">
+<div class="col-2 sidebar float-left pl-0 pr-0 width show bck-tr" id="sidebar">
+  <div  style="position: sticky !important; top: 0 !important;">
+
+    <div class="list-group border-0 card text-center text-md-left bck-tr" id="menuhover">
 
         {% if sidebar_menu == "pipeline"%}
-        <a id="menuStart" href="#menu1" class="list-group-item d-inline-block" data-toggle="collapse" data-target="#menu1" aria-expanded="true" aria-controls="menu1"><i class="fas fa-list"></i> <span class="d-none d-md-inline">Algorithms</span> </a>
+        <a id="menuStart" href="#menu1" class="list-group-item d-inline-block bck-opacity" data-toggle="collapse" data-target="#menu1" aria-expanded="true" aria-controls="menu1"><i class="fas fa-list"></i> <span class="d-none d-md-inline">Algorithms</span> </a>
         <div class="collapse display_att show" id="menu1" aria-labelledby="menuStart" data-parent="#menuhover">
             {% else %}
-            <a id="menuStart" href="#menu1" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-target="#menu1" aria-expanded="false" aria-controls="menu1"><i class="fas fa-list"></i> <span class="d-none d-md-inline">Algorithms</span> </a>
+            <a id="menuStart" href="#menu1" class="list-group-item d-inline-block collapsed bck-opacity" data-toggle="collapse" data-target="#menu1" aria-expanded="false" aria-controls="menu1"><i class="fas fa-list"></i> <span class="d-none d-md-inline">Algorithms</span> </a>
             <div class="collapse display_att" id="menu1" aria-labelledby="menuStart" data-parent="#menuhover">
                 {% endif %}
-                <a href="{{ avi_url }}avi/algorithms" class="list-group-item submenu samp_confirmation">Start</a>
-                <a href="{{ avi_url }}avi/status" class="list-group-item submenu samp_confirmation">Pipeline</a>
+                <a href="{{ avi_url }}avi/algorithms" class="list-group-item submenu samp_confirmation bck-opacity">Start</a>
+                <a href="{{ avi_url }}avi/status" class="list-group-item submenu samp_confirmation bck-opacity">Pipeline</a>
             </div>
 
 
             {% if sidebar_menu == "queries"%}
-            <a id="menuQuery" href="#menu2" class="list-group-item d-inline-block" data-toggle="collapse" data-target="#menu2" aria-expanded="true" aria-controls="menu2"><i class="fab fa-envira fa-flip-horizontal"></i> <span class="d-none d-md-inline">Queries</span> </a>
+            <a id="menuQuery" href="#menu2" class="list-group-item d-inline-block bck-opacity" data-toggle="collapse" data-target="#menu2" aria-expanded="true" aria-controls="menu2"><i class="fab fa-envira fa-flip-horizontal"></i> <span class="d-none d-md-inline">Queries</span> </a>
             <div class="collapse display_att show" id="menu2" aria-labelledby="menuQuery" data-parent="#menuhover">
                 {% else %}
-                <a id="menuQuery" href="#menu2" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-target="#menu2" aria-expanded="false" aria-controls="menu2"><i class="fab fa-envira fa-flip-horizontal"></i> <span class="d-none d-md-inline">Queries</span> </a>
+                <a id="menuQuery" href="#menu2" class="list-group-item d-inline-block collapsed bck-opacity" data-toggle="collapse" data-target="#menu2" aria-expanded="false" aria-controls="menu2"><i class="fab fa-envira fa-flip-horizontal"></i> <span class="d-none d-md-inline">Queries</span> </a>
                 <div class="collapse display_att" id="menu2" aria-labelledby="menuQuery" data-parent="#menuhover">
                     {% endif %}
 
-                    <a href="{{ avi_url }}avi/queries/gaia" class="list-group-item submenu samp_confirmation">Gaia</a>
-                    <a href="{{ avi_url }}avi/queries/herschel" class="list-group-item submenu samp_confirmation">Herschel</a>
-                    <a href="{{ avi_url }}avi/queries/status" class="list-group-item submenu samp_confirmation">Status</a>
+                    <a href="{{ avi_url }}avi/queries/gaia" class="list-group-item submenu samp_confirmation bck-opacity">Gaia</a>
+                    <a href="{{ avi_url }}avi/queries/herschel" class="list-group-item submenu samp_confirmation bck-opacity">Herschel</a>
+                    <a href="{{ avi_url }}avi/queries/simulations" class="list-group-item submenu samp_confirmation bck-opacity">Simulations</a>
+                    <a href="{{ avi_url }}avi/queries/status" class="list-group-item submenu samp_confirmation bck-opacity">Status</a>
                 </div>
 
 
                 {% if sidebar_menu == "resources"%}
-                <a id="menuData" href="#menu3" class="list-group-item d-inline-block" data-toggle="collapse" data-target="#menu3" aria-expanded="true" aria-controls="menu3"><i class="fas fa-hdd"></i> <span class="d-none d-md-inline">Data</span> </a>
+                <a id="menuData" href="#menu3" class="list-group-item d-inline-block bck-opacity" data-toggle="collapse" data-target="#menu3" aria-expanded="true" aria-controls="menu3"><i class="fas fa-hdd"></i> <span class="d-none d-md-inline">Data</span> </a>
                 <div class="collapse display_att show" id="menu3" aria-labelledby="menuData" data-parent="#menuhover">
                     {% else %}
-                    <a id="menuData" href="#menu3" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-target="#menu3" aria-expanded="false" aria-controls="menu3"><i class="fas fa-hdd"></i> <span class="d-none d-md-inline">Data</span> </a>
+                    <a id="menuData" href="#menu3" class="list-group-item d-inline-block collapsed bck-opacity" data-toggle="collapse" data-target="#menu3" aria-expanded="false" aria-controls="menu3"><i class="fas fa-hdd"></i> <span class="d-none d-md-inline">Data</span> </a>
                     <div class="collapse display_att" id="menu3" aria-labelledby="menuData" data-parent="#menuhover">
                         {% endif %}
 
-                        <a href="{{ avi_url }}avi/resources/filemanager" class="list-group-item submenu samp_confirmation">File Manager</a>
+                        <a href="{{ avi_url }}avi/resources/filemanager" class="list-group-item submenu samp_confirmation bck-opacity">File Manager</a>
                     </div>
+
+
+                    {% if sidebar_menu == "guide"%}
+                    <a id="menuHelp" href="#menu5" class="list-group-item d-inline-block bck-opacity" data-toggle="collapse" data-target="#menu5" aria-expanded="true" aria-controls="menu5"><i class="ml-1 fas fa-info"></i> <span class="ml-2 d-none d-md-inline">Guide</span> </a>
+                    <div class="collapse display_att show" id="menu5" aria-labelledby="menuHelp" data-parent="#menuhover">
+                        {% else %}
+                        <a id="menuHelp" href="#menu5" class="list-group-item d-inline-block collapsed bck-opacity" data-toggle="collapse" data-target="#menu5" aria-expanded="false" aria-controls="menu5"><i class=" ml-1 fas fa-info"></i> <span class="ml-2 d-none d-md-inline">Guide</span> </a>
+                        <div class="collapse display_att" id="menu5" aria-labelledby="menuHelp" data-parent="#menuhover">
+                            {% endif %}
+
+                            <a href="{{ avi_url }}avi/deavi_structure" class="list-group-item submenu samp_confirmation bck-opacity">DEAVI Structure</a>
+                            <a href="{{ avi_url }}avi/tutorial" class="list-group-item submenu samp_confirmation bck-opacity">Tutorials</a>
+                        </div>
 
 
                     {% if sidebar_menu == "help"%}
-                    <a id="menuHelp" href="#menu4" class="list-group-item d-inline-block" data-toggle="collapse" data-target="#menu4" aria-expanded="true" aria-controls="menu4"><i class="fas fa-question-circle"></i> <span class="d-none d-md-inline">Help</span> </a>
+                    <a id="menuHelp" href="#menu4" class="list-group-item d-inline-block bck-opacity" data-toggle="collapse" data-target="#menu4" aria-expanded="true" aria-controls="menu4"><i class="fas fa-question-circle"></i> <span class="d-none d-md-inline">Help</span> </a>
                     <div class="collapse display_att show" id="menu4" aria-labelledby="menuHelp" data-parent="#menuhover">
                         {% else %}
-                        <a id="menuHelp" href="#menu4" class="list-group-item d-inline-block collapsed" data-toggle="collapse" data-target="#menu4" aria-expanded="false" aria-controls="menu4"><i class="fas fa-question-circle"></i> <span class="d-none d-md-inline">Help</span> </a>
+                        <a id="menuHelp" href="#menu4" class="list-group-item d-inline-block collapsed bck-opacity" data-toggle="collapse" data-target="#menu4" aria-expanded="false" aria-controls="menu4"><i class="fas fa-question-circle"></i> <span class="d-none d-md-inline">Help</span> </a>
                         <div class="collapse display_att" id="menu4" aria-labelledby="menuHelp" data-parent="#menuhover">
                             {% endif %}
 
-                            <a href="{{ avi_url }}avi/help" class="list-group-item submenu samp_confirmation">Help</a>
-                            <a href="{{ avi_url }}avi/about" class="list-group-item submenu samp_confirmation">About</a>
+                            <a href="{{ avi_url }}avi/help" class="list-group-item submenu samp_confirmation bck-opacity">Help</a>
+                            <a href="{{ avi_url }}avi/about" class="list-group-item submenu samp_confirmation bck-opacity">About</a>
+                            <a href="{{ avi_url }}avi/contact" class="list-group-item submenu samp_confirmation bck-opacity">Contact</a>
                         </div>
                     </div>
                 </div>
+              </div>

@@ -54,7 +54,6 @@ class job_factory:
         Returns:
         The job object if it does exist, None otherwise.
         """
-        #TODO: return None if it does not exist
         # package_str = "avi.core.pipeline." + container + "_job_" + name
         package_str = "avi.core.pipeline.job_" + name
         # module_str = container + "_job_" + name
@@ -70,5 +69,6 @@ class job_factory:
         #fromlist=['avi_job_gaia_query'])
         if not mod:
             logger().get_log('risea').info("module not loaded")
+            return None
         #return None
         return getattr(mod, name)()

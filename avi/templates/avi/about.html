@@ -35,13 +35,33 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                 <div id="card" class="card bg-light mb-3">
                     <div class="card-header">
                         {% load static %}
-                        <h1>PARTNERS</h1>
+                        <h1>StarFormMapper</h1>
+                        <hr>
                     </div>
                     <div class="card-body">
+                        <div class="row">
+                                <div class="col-sm-12 text-list">
+                                    <div class="row" style="margin-left: 5%; margin-right: 7%">
+                                        <div class="col-sm-12">
+                                            <p><a class="font-weight-bold" href="https://starformmapper.org/" target="_blank">StarFormMapper</a> is a <a clas="a-link" href="https://ec.europa.eu/" target="_blank">European H2020 RIA project</a>. The key aim of the project is to combine data from two of ESA’s major space missions, Gaia and Herschel, together with ground based facilities, to constrain the mechanisms that underlie massive star and star cluster formation. Collectively, these facilities represent a considerable fraction of the total investment by Europe in astronomy. Taken separately, however, these missions give an incomplete picture but their combination will cover all stages from the formation of molecular cores, through the formation of stars, to the dispersal of the gas in young clusters. We will require new techniques in order to extract the full scientific value from this combination. We will develop new automated statistical techniques and common user tools that will provide wide benefits to the community. Our scientific results will underpin the study of how all galaxies evolve.</p>
+                                        </div>
+    
+                                    </div>
+                                    <div class="row" style="margin-left: 5%; margin-right: 7%">
+                                        <div class="col-sm-1">
+                                            <img class="sfm-center" style="width: 100%" src="{% static 'avi/img/logos/EU.png' %}" alt="EU">
+                                        </div>
+                                        <div class="col-sm-11">
+                                            <p>This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 687528.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
                         <div class="row sfm-text-justify sfm-separator">
-                            <div class="col-sm-3"><img class="sfm-center images-about" src="{% static 'avi/img/partners-university-of-leeds.gif' %}" alt="image of leeds university"></div>
+                            <div class="col-sm-3"><img class="sfm-center images-about" src="{% static 'avi/img/logos/WR_Leeds_908x360.png' %}" alt="image of leeds university"></div>
                             <div class="col-sm-8 text-list">
-                                <p><a class="a-link" href="http://www.physics.leeds.ac.uk/research/groups/astrophysics-group.html">Leeds astrophysicists</a> investigate star formation by:</p>
+                                <p><a class="a-link" href="http://www.physics.leeds.ac.uk/research/groups/astrophysics-group.html" target="_blank">Leeds astrophysicists</a> investigate star formation by:</p>
                                 <ul>
                                     <li class="about-li">Leading international teams in conducting and exploiting infrared and radio surveys, one of which will result in the identification of nearly all of the young massive stars in the Milky Way</li>
                                     <li class="about-li">Performing focused follow-up observations of individual sources utilising cutting-edge velocity-resolved spectroscopic, infrared interferometric and spectropolarimetric techniques</li>
@@ -57,37 +77,65 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                         </div>
                         <hr>
                         <div class="row sfm-text-justify sfm-separator ">
-                            <div class="col-sm-3"><img class="sfm-center images-about" src="{% static 'avi/img/partners-cardiff-university.gif' %}" alt="image of cardiff university"></div>
+                            <div class="col-sm-3"><img class="sfm-center images-about" src="{% static 'avi/img/logos/cardiff_20.png' %}" alt="image of cardiff university"></div>
                             <div class="col-sm-8 text-list">
-                                <p><a class="a-link" href="http://www.astro.cardiff.ac.uk/">The Astronomy Group at Cardiff University</a> contains an unique mix of theoretical, observational and instrumentation expertise, covering the research topics of
-                                    Star and Planet Formation, Galaxy Evolution and Astronomical Instrumentation. The synergy between these groups played a central role in the development of the SPIRE camera on the Herschel Satellite, and continues to
-                                    shape the way in which astronomical research is conducted, for example through its influence over the James Clerk Maxwell Telescope in Hawaii, and via its contributions to a new camera on the IMRAM 30m telescope in
-                                    Spain. The Star Formation Group is also heavily involved in the development of numerical techniques, such as fluid dynamics and radiative transfer, and the production of codes that are used throughout the astronomical
+                                <p><a class="a-link" href="http://www.astro.cardiff.ac.uk/" target="_blank">The Astronomy Group at Cardiff University</a> contains an unique mix of theoretical, observational and instrumentation expertise, covering the research
+                                    topics of Star and Planet Formation, Galaxy Evolution and Astronomical Instrumentation. The synergy between these groups played a central role in the development of the SPIRE camera on the Herschel Satellite, and continues
+                                    to shape the way in which astronomical research is conducted, for example through its influence over the James Clerk Maxwell Telescope in Hawaii, and via its contributions to a new camera on the IMRAM 30m telescope
+                                    in Spain. The Star Formation Group is also heavily involved in the development of numerical techniques, such as fluid dynamics and radiative transfer, and the production of codes that are used throughout the astronomical
                                     community.
                                 </p>
                             </div>
                         </div>
                         <hr>
                         <div class="row sfm-text-justify sfm-separator">
-                            <div class="col-sm-3"><img class="sfm-center images-about" src="{% static 'avi/img/partners-quasar.gif' %}" alt="image of quasar science resources"></div>
+                            <div class="col-sm-3"><img class="sfm-center images-about" src="{% static 'avi/img/logos/QUASAR_logo_positivo.png' %}" alt="image of quasar science resources"></div>
                             <div class="col-sm-8 text-list">
-                                <p><a class="a-link" href="http://www.quasarsr.com/">Quasar Science Resources</a> is a newly formed private company that provides consulting Software and System Engineering services for Research and Development projects. Quasar
-                                    S.R. provides high quality tailored-made services targeted at Research Centres, Universities and Private Companies looking to expand their activity domain. Quasar S.R. activities cover many different areas, including,
-                                    scientific software development and data reduction techniques, handling and exploitation of scientific data bases, archive engineering and data mining, computer systems engineering, including virtual machine infrastructure,
-                                    network, data storage and backup. Quasar S.R. personnel has ample experience working in big international collaborations and entities including experience with ground and space-based scientific astronomical observatories.</p>
+                                <p><a class="a-link" href="http://www.quasarsr.com/" target="_blank">Quasar Science Resources</a> is a newly formed private company that provides consulting Software and System Engineering services for Research and Development
+                                    projects. Quasar S.R. provides high quality tailored-made services targeted at Research Centres, Universities and Private Companies looking to expand their activity domain. Quasar S.R. activities cover many different
+                                    areas, including, scientific software development and data reduction techniques, handling and exploitation of scientific data bases, archive engineering and data mining, computer systems engineering, including virtual
+                                    machine infrastructure, network, data storage and backup. Quasar S.R. personnel has ample experience working in big international collaborations and entities including experience with ground and space-based scientific
+                                    astronomical observatories.</p>
                             </div>
                         </div>
                         <hr>
                         <div class="row sfm-text-justify sfm-separator">
                             <div class="col-sm-3">
-                                <img class="sfm-center images-about" src="{% static 'avi/img/IPAGlogoPosRGB-150x150.png' %}" alt="image of planetary sciences and astrophysics of grenoble"></div>
+                                <img class="sfm-center images-about" src="{% static 'avi/img/logos/IPAGlogoPosRGB.png' %}" alt="image of planetary sciences and astrophysics of grenoble"></div>
                             <div class=" col-sm-8 text-list">
-                                <p><a class="a-link" href="http://ipag.osug.fr/ ">The Institute for Planetary sciences and Astrophysics of Grenoble (IPAG)</a> is a laboratory under the authority of CNRS and Unversity Grenoble Alpes and was born in 2011 from
-                                    the merger of two laboratories (LPG and LAOG). With almost 100 permanent staff in 2015, IPAG is one of the largest laboratories of the Observatory of Sciences of the Universe of Grenoble (OSUG).</p>
+                                <p><a class="a-link" href="http://ipag.osug.fr/ " target="_blank">The Institute for Planetary sciences and Astrophysics of Grenoble (IPAG)</a> is a laboratory under the authority of CNRS and Unversity Grenoble Alpes and was
+                                    born in 2011 from the merger of two laboratories (LPG and LAOG). With almost 100 permanent staff in 2015, IPAG is one of the largest laboratories of the Observatory of Sciences of the Universe of Grenoble (OSUG).</p>
                                 <p>Research areas at IPAG range from the planetary sub-surfaces to the outer reaches of the Universe, with a strong involvement in the study of stellar and planetary formation. A major part of these activities includes the
                                     design, the building and the scientific use of several instruments dedicated to the most powerful telescopes on Earth, as well as space missions.</p>
                                 <p>Most of the astrophysics research being conducted at the University of Grenoble is done at IPAG, from laboratory experiments to theoretical calculations, including R&amp;D, the building of instruments, data processing,
                                     modelling and interpretation. Thanks to its international collaborations, foreign students and post-doctoral scientists, IPAG has emerged as a leading international institute on the Grenoble campus.</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row sfm-text-justify sfm-separator">
+                            <div class="col-sm-3">
+                                <img class="sfm-center images-about" src="{% static 'avi/img/logos/logo-lei-sterrewachtleiden-vertical.png' %}" alt="image of planetary sciences and astrophysics of grenoble"></div>
+                            <div class=" col-sm-8 text-list">
+                                <p><a class="a-link" href="https://www.universiteitleiden.nl/en/science/astronomy" target="_blank">Leiden Observatory</a> 
+                                    is the astronomical institute of the Faculty of Science of Leiden University. 
+                                    Established in 1633, it is the oldest university observatory in operation today, 
+                                    with a very rich tradition. Leiden Observatory carries out world class research participating in the construction 
+                                    of state-of-the-art instrumentation and leading the scientific exploitation of top astronomical facilities. 
+                                    The institute consists of about 35 faculty and adjunct faculty, 50 postdoctoral researchers, 
+                                    50 MSc and 80 PhD students, and 30 support staff.</p>
+                                <p>Research at Leiden Observatory spans the full width of modern astrophysical enquiry. It is based on observation,
+                                     theory, simulation, and experiment. Two broad clusters characterize the ongoing research. Within each theme,
+                                      researchers carry out their personal and specialized research programme. The two clusters are: Galaxies and 
+                                      the structures in which they are embedded and Exoplanets, and the formation of stars and planets.</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row sfm-text-justify sfm-separator">
+                            <div class="col-sm-3">
+                                <img class="sfm-center images-about" src="{% static 'avi/img/logos/SFM-logo-nobkg.png' %}" alt="image of StarFormMapper"></div>
+                            <div class=" col-sm-8 text-list">
+                                <p>For more information visit <a class="a-link" href="https://starformmapper.org/" target="_blank">Star Form Mapper project</a> page.</p>
+                                <p>Spanish version <a class="a-link" href="https://www.starformmapper.es/wordpress/" target="_blank">Star Form Mapper project</a> page.</p>
                             </div>
                         </div>
                     </div>
