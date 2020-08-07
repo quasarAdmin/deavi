@@ -1,0 +1,17 @@
+{"groups":{
+    "group_1":{
+        "name": "scientific",
+        "position": 1,
+        "view_name": "Scientific"
+    },
+    "group_2":{
+        "name": "examples",
+        "position": 2,
+        "view_name": "Examples"
+    },
+    "group_3":{
+        "name": "examples-2",
+        "position": 3,
+        "view_name": "Examplesss"
+    }
+}}

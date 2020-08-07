@@ -1,0 +1,17 @@
+
+{"input":{
+    "source_1":{
+		"output_file": "s1",
+        "ra": "100.2417",
+        "dec": "9.895",
+        "shape": "cone",
+        "wavelength": "70",
+        "table": "pacs_point_source_070",
+        "cover_input": "True",
+        "positional_source": "False",
+        "level": "level1",
+        "instrument": "PACS",
+        "output": "table",
+        "radius": "0.5"
+    }
+}}
