@@ -545,7 +545,26 @@ def get_query_info(request):
                                             'mission': request.POST['mission']})
         return HttpResponse(json.dumps(response.data))
 def get_query_status(request):
-    # TODO: doc
+    """View for the retrievement of the status of a query.
+
+    This function is used by an ajax script to retrieve 
+    the status of an query execution. If the request is an ajax request,
+    it will start a get_query_statsus job.
+
+    Args:
+    request: HttpRequest object.
+    
+    Returns:
+    A HttpResponse object with a json containing all the results information.
+
+    See:
+    django http HttpRequest: https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpRequest
+
+    See also:
+    HttpResponse: https://docs.djangoproject.com/en/2.0/ref/request-response/#httpresponse-objects
+
+    @see job_get_query_status @link avi.core.pipeline.job_get_query_status
+    """
     log = logger().get_log("views")
     if request.is_ajax():
         response = risea().get().start_job(wh_names().get().JOB_GET_QUERY_STATUS,

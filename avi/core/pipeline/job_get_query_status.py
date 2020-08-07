@@ -35,9 +35,32 @@ from avi.models import resource_model
 from avi.log import logger
 
 class get_query_status(parent):
-    # TODO: doc
+    """@class get_query_info
+    The get_query_status class retrieves the status of a specific query execution.
+
+    It implementes the job interface and inherits the job_data attribute.
+
+    @see job @link avi.core.pipeline.job
+    @see job_data @link avi.core.pipeline.job_data
+    """
     def start(self, data):
-        # TODO: doc
+        """This method runs the get_query_status job.
+
+        The data parameter must be a tupla of the primary key of the query 
+        execution and an identifier of the mission.
+
+        The method will retrieve the status of the given query.
+
+        Args:
+        self: The object pointer.
+        data: A dictionary containing the input data for the job.
+
+        Returns:
+        The job_data attribute. The ok attribute will be True if the 
+        information was retrieved correctly, False otherwise.
+
+        @see results_model @link avi.models.results_model
+        """
         log = logger().get_log("views")
         if data.get('mission') == 'gaia':
             #m = gaia_query_model.objects.all.filter(pk=data['id'])
