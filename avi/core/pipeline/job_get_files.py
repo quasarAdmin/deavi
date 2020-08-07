@@ -1,20 +1,24 @@
 """
-Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+Copyright (C) 2016-2020 Quasar Science Resources, S.L.
 
-This file is part of DEAVI.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-DEAVI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-DEAVI is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
 
 @package avi.core.pipeline.job_get_files
 
@@ -46,7 +50,7 @@ class get_files(parent):
     @see job_data @link avi.core.pipeline.job_data
     """
     ## The directories that must not be discarted.
-    valid_directories = {'results', 'sources', 'hsa', 'gaia', 'user'}
+    valid_directories = {'results', 'sources', 'hsa', 'gaia', 'sim', 'user'}
 
     def discard_files(self, files):
         """This methods discards or the files and directories that must not be 
@@ -120,6 +124,11 @@ class get_files(parent):
         hsa = resources_manager().get_info(hsa_files,"/data/output/sources/hsa")
         #log.info("hsa data: " + str(hsa))
 
+        sim_files = self.discard_files(resources_manager().get_list("/data/output/sources/sim"))
+        #log.info("hsa filess: " + str(hsa_files))
+        sim = resources_manager().get_info(sim_files,"/data/output/sources/sim")
+        #log.info("hsa data: " + str(hsa))
+
         results_files = self.discard_files(resources_manager().get_list("/data/output/results"))
         #log.info("results filess: " + str(results_files))
         results_data = resources_manager().get_info(results_files,"/data/output/results")
@@ -165,7 +174,7 @@ class get_files(parent):
         p = p.split("/")
 
 
-        self.job_data.data = [f, d, p, gaia, hsa, results_data, user_data]
+        self.job_data.data = [f, d, p, gaia, hsa, sim, results_data, user_data]
         self.job_data.ok = (pg.num_pages, wh.CURRENT_RESOURCES_PAGE, \
                             wh.CURRENT_RESOURCES_PAGE + 1, wh.CURRENT_RESOURCES_PAGE - 1)
         return self.job_data

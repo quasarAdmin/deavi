@@ -1,20 +1,24 @@
 <!--
-Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+Copyright (C) 2016-2020 Quasar Science Resources, S.L.
 
-This file is part of DEAVI.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-DEAVI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-DEAVI is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -62,6 +66,8 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                     </div>
                     <div class="card-body">
                         <div class="row">
+                            <div class="col-sm-10 offset-sm-1">
+                        <div class="row">
                             <div class="col">
                                 <nav style="position: sticky !important; top: 0 !important; background-color: #F8F9FA">
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -75,20 +81,15 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                 <div class="tab-content" id="nav-tabContent">
                                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                                             <h3 class="text-left mt-3"><b>1 - Home</b></h3>
-                                            <p class="text">The home page is the most important element of DEAVI since it is the starting point of the user’s activity. 
-                                                    It consists of a header, a side menu, a main container and a footer. Because this structure is maintained in the other pages of the application, 
-                                                    we will explain these components in detail in this section.</p>
+                                            <p class="text">The home page is the most important element of DEAVI since it is the starting point of the user’s activity. It consists of a header, a side menu, a main container and a footer. Because this structure is maintained in the other pages of the application, we will explain these components in detail in this section.</p>
                                                 <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/deavi_structure.png' %}" alt="image of DEAVI Structure"><br><br>
                                                 <h5 class="text-left">1.1 - Header</h5>
-                                                <p class="text">It has three interactive elements. The first one is located to the left where the acronym of the application, 
-                                                    DEAVI (Dynamic Evolution Added Value Interface) and the current version are shown. When the user clicks on this item, the home page is loaded. 
-                                                    The other element is located on the right. It is the logo of the EU commission which is linked to the EU official website.</p>
+                                                <p class="text">The header has three interactive elements. The first two are located to the left where the Quasar logo and the acronym of the application, DEAVI (Dynamic Evolution Added Value Interface) and the current version are shown. When the user clicks on these items, they take you to the home page of the respective web sites. The other element is located on the right, the logo of the European Commission which is linked to the EU official website.</p>
                                                 <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/header.png' %}" alt="image of Header"><br><br>
                                                 <h5 class="text-left">1.2 - Side Menu</h5>
-                                                <p class="text">The side menu is an element used in graphical interfaces to access the information contained in the application in an orderly manner. 
-                                                    The DEAVI side menu has four components: Algorithms, Queries, Data and Help. In the following sections, each of them will be explained in detail.</p>
+                                                <p class="text">The side menu is an element used in graphical interfaces to access the information contained in the application in an orderly manner. The DEAVI side menu has five components: Algorithms, Queries, Data, Guide and Help. In the following sections, each of them will be explained in detail.</p>
                                                 <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/main_menu.png' %}" style="width: 30%" alt="image of Main Menu"><br><br>
-                                                <p class="text">When the user clicks on one of the elements, a new drop-down menu with the available options is displayed</p>
+                                                <p class="text">When the user clicks on one of the elements, a new drop-down menu with the available options is displayed.</p>
                                                 <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/sub_menus.png' %}" alt="image of All Menus"><br><br>
                                                 <h5 class="text-left">1.3 - Footer</h5>
                                                 <p class="text">The footer is the area that occupies the bottom of the web application.</p>
@@ -97,171 +98,279 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                 <ul>
                                                     <li class="li_guide text-left"><p class="text"><b>Partners:</b> In this section, the logos of the members of the projects and the EU Commission are shown. 
                                                         Each logo is linked to the official site of each member.</p></li>
-                                                        <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/partners.png' %}" alt="image of Partners"><br><br>
+                                                        <!-- <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/partners.png' %}" alt="image of Partners"><br><br> -->
                                                     <li class="li_guide"><p class="text"><b>Pages:</b> The central section is a sitemap, that is, displays the structure of the links 
                                                         contained in the website that define the navigation within the application. This allows the user to visualize and access 
                                                         all the content of the site in a direct way.</p></li>
-                                                        <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/pages.png' %}" style="width: 30%" alt="image of Pages"><br><br>
+                                                        <!-- <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/pages.png' %}" style="width: 30%" alt="image of Pages"><br><br>-->
                                                     <li class="li_guide"><p class="text"><b>Our offices:</b> The right section collects the contact information about Quasar Science Resources S.L., 
                                                         Spanish SME that has developed DEAVI. DEAVI users can contact QSR to report problems or issues they may have with the application.</p></li> 
-                                                    <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/offices.png' %}" style="width: 30%" alt="image of Offices"><br><br>
+                                                    <!-- <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/offices.png' %}" style="width: 30%" alt="image of Offices"><br><br> -->
                                                 </ul>
                                                 <h5 class="text-left">1.4 - Main Container</h5>
                                                 <p class="text">The last section in DEAVI is the main container. This component is common to all sections, so the information shown depends on the 
                                                     section visited using the side menu. In the case of the home page, a brief description of DEAVI and the SFM project within which the application 
                                                     has been developed are shown. In addition, the user can visit the project website, 
-                                                    <a class="a-link" href="https://starformmapper.org/" target="_blank">https://starformmapper.org/ </a>, by clicking on the central image.</p>
+                                                    <a class="a-link" href="https://starformmapper.org/" target="_blank">https://starformmapper.org/ </a>, by clicking on the link provided.</p>
                                                 <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/main_container.png' %}" alt="image of Main"><br><br>
                                     </div>
                                     <div class="tab-pane fade" id="nav-algorithms" role="tabpanel" aria-labelledby="nav-algorithms-tab">
                                             <h3 class="text-left mt-3"><b>2 - Algorithms</b></h3>
-                                            <p class="text">The “Algorithms” section in the side menu collects the set of algorithms developed by the scientists and the QSR team as well 
-                                                as the status of their execution. This section has two subsections: “Start” and “Pipeline”</p>
+                                            <p class="text">This section of DEAVI contains the set of scientific algorithms developed in the context of the
+                                                StarFormMapper project. Each provided algorithm within DEAVI has been developed with one
+                                                scientific goal in mind. A few simple examples have been included for the purpose of showing
+                                                some of the functionalities implemented in DEAVI. This section includes two subsections: <a style="font-style: italic;">Start</a>
+                                                and <a style="font-style: italic;">Pipeline Status</a>.</p>
+                                                <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/algorithms_menu.png' %}" style="width: 25%;" alt="image of algorithms side menu"><br><br>
                                             <h5 class="text-left">2.1 - Start</h5>
-                                            <p class="text">In this subsection the user can select the algorithm to execute. DEAVI currently contains simple algorithms developed to test 
-                                                the application. When the user clicks on an algorithm, its input and information fields are displayed. For example,</p>
+                                            <p class="text">From the <a style="font-style: italic;">Start</a> subsection the user can select the algorithm to execute. Two categories are available, <a style="font-style: italic;">Scientific</a> and <a style="font-style: italic;">Examples</a>.</p>
                                             <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/available_algorithms.png' %}" alt="image of Algorithms"><br><br>
-                                            <p class="text">For more information on the available algorithms and how to use them, see Section Tutorials.</p>
+                                            <p class="text">When the user clicks on one of these two categories, the list of available algorithms is
+                                                displayed. Clicking on the desired algorithm brings up the list of input parameters and
+                                                information fields. The figure below illustrates the case of the scientific algorithm INDICATE.</p>
+                                                <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/algorithms_types.png' %}" alt="image of INDICATE"><br><br>
+                                            <p class="text">DEAVI implements a help system where by hovering (example below), and in some cases
+                                                clicking on parameter names, specific help is displayed.</p>
+                                                <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/algorithms_data.png' %}" style="width: 30%;" alt="image of INDICATE parameters"><br><br>
+                                            <p class="text">DEAVI also contains tutorials to guide you through each one of the algorithms with an
+                                                example. A link is provided under each algorithm’s description to the right of the input
+                                                parameter area. Scientific publications, where available, explain the details behind each
+                                                algorithm and should be read for the correct interpretation of the results.</p>
+                                            <p class="text">For more information on the available algorithms and how to use each one of them, see the
+                                                <a style="font-style: italic;">Tutorials</a> section.</p>
+
                                             <h5 class="text-left">2.2 - Pipeline Status</h5>
-                                            <p class="text">When an algorithm has been launched, the user can monitor the status of the execution on this page as well as the obtained results</p>
-                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/pipelin_status_algorithms.png' %}" alt="image of Pipeline"><br><br>
-                                            <p class="text">At the very top, the first element of this section consists of a search engine where a certain execution can be located,</p>
+                                            <p class="text">When an algorithm has been launched, the user can monitor the status of the execution on
+                                                this page as well as to explore the results of the execution. This section also allows to interact
+                                                with all the processing jobs and their results.</p>
+                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/pipeline_status_algorithms.png' %}" alt="image of Pipeline"><br><br>
+                                            <p class="text">At the very top, the first element of this section consists of a search engine where a certain
+                                                execution can be located. Just by typing, options will appear. Otherwise, the navigation
+                                                buttons at the bottom of the table (<a style="font-style: italic;">First</a>, <a style="font-style: italic;">Prev</a>, <a style="font-style: italic;">Next</a> and <a style="font-style: italic;">Last</a>) can be used to search for specific
+                                                executions.</p>
                                             <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/search_engine_algorithms.png' %}" alt="image of Pipeline Search"><br><br>
-                                            <p class="text">The second element displayed is a table where the available executions are shown. The columns are:</p>
+                                            <p class="text">The second element displayed in this section is a table where the available executions are
+                                                shown. The different columns indicate:</p>
                                             <ul>
                                                 <li class="li_guide text-left"><p class="text"><b>Name:</b> Name of the execution.</p></li>
                                                 <li class="li_guide"><p class="text"><b>Date:</b> Date of the execution.</p></li>
-                                                <li class="li_guide"><p class="text"><b>Status:</b> Status of the execution (STARTED, SUCCESS or FAILURE).</p></li>
+                                                <li class="li_guide"><p class="text"><b>Status:</b> Status of the execution (<a style="font-style: italic;">PENDING</a>, <a style="font-style: italic;">STARTED</a>, <a style="font-style: italic;">SUCCESS</a> or <a style="font-style: italic;">FAILURE</a>).</p></li>
                                                 <li class="li_guide"><p class="text"><b>Info:</b> this parameter gives information on whether the algorithm 
                                                     has errors in the syntax (Script has issues) or not (ok).</p></li>
-                                                <li class="li_guide"><p class="text"><b>Relaunch:</b> It allows to launch the execution again with the same 
-                                                    configuration, where some parameters can be changed.</p></li>
-                                                <li class="li_guide"><p class="text"><b>Abort:</b> Delete the execution.</p></li>
+                                                <li class="li_guide"><p class="text"><b>Relaunch:</b> It allows to launch the execution again with the same configuration, or it
+                                                    also allows to redefine some parameters.</p></li>
+                                                <li class="li_guide"><p class="text"><b>Abort:</b> Stop or delete the execution.</p></li>
                                             </ul>
+                                            <p class="text">Note that the user can sort out the executions by <a style="font-style: italic;">Name</a>, <a style="font-style: italic;">Date</a> and <a style="font-style: italic;">Status</a> by clicking on each
+                                                label in the table. This feature is maintained throughout all the tables of the same style
+                                                present in the application.</p>
+                                            <p class="text">When an execution of an algorithm has finished correctly (<a style="font-style: italic;">SUCCESS</a>), the user can visualize the
+                                                output of the algorithm by clicking on the arrow right next to the name of the execution. Each
+                                                algorithm shows specific results or will include different output products, but all share three
+                                                common sections: an area with a table showing the input parameters (<a style="font-style: italic;">Parameters</a>) used for a
+                                                particular execution, a table showing any output results (<a style="font-style: italic;">Output</a>) and an area that will display
+                                                any figures or plots.</p>
+                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/algorithim_parameters.png' %}" alt="image of Pipeline Algorithm Parameters"><br><br>
+                                            <p class="text">To the right of each execution there are two further buttons. A <a style="font-style: italic;">Relaunch</a> and <a style="font-style: italic;">Delete</a> button.
+                                                Pressing the <a style="font-style: italic;">Relaunch</a> button will open an interface to the input parameters of that specific
+                                                algorithm.</p>
                                             <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/relaunch_algorithm.png' %}" alt="image of Pipeline Relaunch"><br><br>
-                                            <p class="text">Note that the user can sort the executions by Name, Date and Status by clicking on each label in the table. This feature is maintained 
-                                                in any of the tables of the same style present in the application. When the execution of the algorithm has been correct, the user can visualize the 
-                                                parameters used as well as the results of running the algorithm by clicking on the Name of the algorithm.</p>
-                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/algorithm_parameters.png' %}" alt="image of Pipeline Algorithm Parameters"><br><br>
-                                            <p class="text">The last element of this section is the pagination where, depending on the number of executions, the user can change page by clicking on the different buttons.</p>            
+                                            
+                                            <p class="text">This allows to change any of the parameters before launching again another execution by
+                                                pressing the <a style="font-style: italic;">Run</a> button.</p>
+                                            <p class="text">The <a style="font-style: italic;">Delete</a> button will delete the corresponding execution. Pressing this button will also delete
+                                                any output files generated by the algorithm.</p>
                                     </div>
                                     <div class="tab-pane fade" id="nav-queries" role="tabpanel" aria-labelledby="nav-queries-tab">
                                             <h3 class="text-left mt-3"><b>3 - Queries</b></h3>
-                                            <p class="text">DEAVI allows to make queries to the archives of the space missions GAIA and Herschel. Although these queries can be made through the official ESA web interfaces, 
-                                                in this case, they will be faster because the data is not downloaded to the user’s computer, that is, there will be no movement of data through the network.</p>
+                                            <p class="text">DEAVI allows to make queries to the archives of the ESA space missions Gaia and Herschel as
+                                                well as the simulations created by the SFM project team. The queries to the Gaia and Herschel
+                                                archives can be made through the official ESA web interfaces and the results of these queries
+                                                downloaded to the user’s computer. These can be later uploaded to DEAVI since the results of
+                                                these queries will be used as input to the algorithms. Using the provided interfaces in DEAVI to these two ESA mission archives has the advantage that the results of the queries are not downloaded 
+                                                to the user&#39;s computer, but are stored in DEAVI for future uses, avoiding also the movement of data through the network. The <a style="font-style: italic;">Queries</a> section also contains an interface to a set
+                                                of simulations produced within the SFM project. Last, a <a style="font-style: italic;">Status</a> section is available to check the
+                                                status of the queries and interact with them.</p>
+                                            <p class="text">Specific tutorials are provided in the <a style="font-style: italic;">Tutorials</a> section of DEAVI on the use of the different
+                                                archive queries implemented in DEAVI. Here we provide a quick overview.</p>
                                             <h5 class="text-left">3.1 - Gaia</h5>
-                                            <p class="text">The user can make queries to Gaia by clicking on “Gaia”. The application has four different ways of making queries:</p>
+                                            <p class="text">The user can make queries to the Gaia ESA archive by clicking on <a style="font-style: italic;">Gaia</a>.</p>
+                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/gaia_query.png' %}" alt="image of Gaia Query"><br><br>
+                                            <p class="text">DEAVI implements a help system where by hovering, and in some cases clicking on parameter
+                                                names, specific help is displayed.</p>
+                                            <p class="text">The application provides four different ways of making queries.</p>
                                             <ul>
                                                 <li class="li_guide text-left"><b>Name</b></li>
                                             </ul>
-                                            <p class="text">The application allows you to make queries to the Gaia archive by name using the SIMBAD/NED identifier . For example, if we enter M45, 
-                                                the query to star cluster Messier 45 will be made.</p>
-                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/gaia_query.png' %}" alt="image of Gaia Query"><br><br>
-                                            <p class="text"><b>Query by Name:</b> At the bottom of the form, the user must choose the shape of the query (cone, box or polygon), 
-                                                the version of the Gaia data (data release 1 or 2), the Gaia archive table to be used in the search and the name of the output file. 
-                                                When the shape of the query is a cone, the user must enter the value of the radius in degrees. If the option chosen is a box, 
-                                                the user must enter the height and width in degrees.</p>
-                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/equatorial_cone.png' %}" alt="image of Gaia Query By Name"><br><br>
-                                            <p class="text">Finally, if the choice is a polygon, the user must fill in the value of the vertices separated by commas,</p>
-                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/equatorial_polygon.png' %}" alt="image of Gaia Query By Name"><br><br>
+                                            <p class="text">The application allows you to make queries to the Gaia archive by name using the
+                                                SIMBAD/NED name resolver. For example, if we enter M45, the query to star cluster Messier
+                                                45 will be made.</p>
                                             <ul>
-                                                <li class="li_guide text-left"><b>Equatorial Coordinates</b></li>
+                                                <li class="li_guide text-left"><b>Equatorial</b></li>
                                             </ul>
-                                            <p class="text">The default option is by equatorial coordinates. In this case the user must fill in the parameters of the coordinates 
-                                                Right ascension (RA) and Declination (DEC). The rest of the options are common to the Name case.</p>
-                                                <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/query_equatorial.png' %}" alt="image of Gaia Query By Name"><br><br>
+                                            <p class="text">The default option is search by equatorial coordinates. In this case the user must fill in the
+                                                parameters of the coordinates Right Ascension (RA) and Declination (Dec). Different
+                                                coordinate formats are allowed.
+                                            </p>
+                                            <p class="text">When using query by Name or Equatorial, at the bottom of the form, the user must choose the
+                                                shape of the query (<a style="font-style: italic;">Cone</a>, <a style="font-style: italic;">Box</a> or <a style="font-style: italic;">Polygon</a>),</p>
+                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/equatorial_cone.png' %}" alt="image of Gaia Query By Name"><br><br>
+                                            <p class="text">When the shape of the query is a <a style="font-style: italic;">Cone</a>, the user must enter the value of the radius in degrees.
+                                                If the option chosen is a <a style="font-style: italic;">Box</a>, the user must enter the height and width in degrees. In the case
+                                                of a <a style="font-style: italic;">Polygon</a> search, the user must fill in the value of the vertices separated by commas,</p>
+                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/equatorial_polygon.png' %}" alt="image of Gaia Query By Name"><br><br>
+                                            <p class="text">Next, the version of the Gaia data (<a style="font-style: italic;">Data Release 1</a> or <a style="font-style: italic;">Data Release 2</a>) and the Gaia <a style="font-style: italic;">Table</a> to be
+                                                used in the query search must be selected. Last, a string can be given to be appended to the
+                                                name of the output file.</p>
                                             <ul>
                                                 <li class="li_guide text-left"><b>File</b></li>
                                             </ul>
-                                            <p class="text">Another interesting option is to make the query through a file. To do this, the user must choose the “File” 
-                                                option and upload the file using the “Browse…” button (depending on the browser this button can have a different caption).</p>
-                                                <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/query_file.png' %}" alt="image of Gaia Query By Name"><br><br>
+                                            <p class="text">DEAVI also provides an option to make queries by uploading a file. To do this, the user must
+                                                choose the <a style="font-style: italic;">File</a> option and upload the file using the <a style="font-style: italic;">Choose File</a> button that becomes available
+                                                (depending on the browser this button can have a different caption).</p>
+                                                <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/query_file.png' %}" alt="image of Gaia Query With File"><br><br>
+                                                <p class="text">The syntax that needs to be used inside the uploaded file is explained in a tutorial in the
+                                                    <a style="font-style: italic;">Tutorials</a> section of DEAVI.</p>
                                             <ul>
                                                 <li class="li_guide text-left"><b>ADQL</b></li>
                                             </ul>
-                                            <p class="text">The last available option is through the use of the ADQL language. By default, choosing this option displays an example of a query.</p>
-                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/query_adql.png' %}" alt="image of Gaia Query By Name"><br><br>
+                                            <p class="text">The last available option to make queries is through the use of the ADQL language. By default,
+                                                choosing this option displays an example query.</p>
+                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/query_adql.png' %}" alt="image of Gaia Query By ADQL"><br><br>
+                                            <p class="text">When all the parameters of the query form have been filled in, clicking the <a style="font-style: italic;">Submit</a> button at
+                                                the bottom of the form will launch the query. By clicking on the <a style="font-style: italic;">Submit</a> button, the application
+                                                will automatically redirect and load the <a style="font-style: italic;">Status</a> table of the <a style="font-style: italic;">Queries</a> section. The results of the
+                                                query are accessible through the <a style="font-style: italic;">Status</a> table and will also be available through the <a style="font-style: italic;">File
+                                                Manager</a> in the <a style="font-style: italic;">Data</a> section in the directory <a style="font-style: italic;">/Home/sources/gaia</a>.</p>
+                                            <p class="text">For more information on the use of ADQL to make queries, the archive or its products please
+                                                visit the official <a href="https://gea.esac.esa.int/archive/" target="_blank">ESA Gaia archive</a>.</p>
                                             <h5 class="text-left">3.2 - Herschel</h5>
-                                            <p class="text">The method to make queries to this archive is similar to that described in the previous section. 
-                                                The main difference lies in the choice of device (PACS, SPIRE or HIFI) in the case of queries by Name and Equatorial coordinates.</p>
+                                            <p class="text">The user can make queries to the Herschel ESA archive by clicking on <a style="font-style: italic;">Herschel</a>.</p>
                                             <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/herschel_query.png' %}" alt="image of Herschel Query"><br><br>
-            
-                                            <h5 class="text-left">3.3 - Queries Status</h5>
-                                            <p class="text">Once any of the queries are launched by clicking on the “Submit” button, the application will automatically load the “Queries Status” page,</p>
+                                            <p class="text">The method to make queries to the Herschel archive is similar to that described in the previous
+                                                section for Gaia. The main difference lies in the choice <a style="font-style: italic;">Catalogue</a>; <a style="font-style: italic;">Point Sources</a> or <a style="font-style: italic;">Images</a>. If
+                                                <a style="font-style: italic;">Point Sources</a> is selected a drop-down menu allows to search in a specific catalogue. If <a style="font-style: italic;">Images</a>
+                                                is selected, an instrument needs to be selected (<a style="font-style: italic;">PACS</a>, <a style="font-style: italic;">SPIRE</a> or <a style="font-style: italic;">HIFI</a>) and a drop-down menu
+                                                allows to select the product level.</p>
+                                            <p class="text">When all the parameters of the query form have been filled in, clicking the <a style="font-style: italic;">Submit</a> button at
+                                                the bottom of the form will launch the query. By clicking on the <a style="font-style: italic;">Submit</a> button, the application
+                                                will automatically redirect and load the <a style="font-style: italic;">Status</a> table of the <a style="font-style: italic;">Queries</a> section. The results of the
+                                                query are accessible through the <a style="font-style: italic;">Status</a> table and will also be available through the <a style="font-style: italic;">File
+                                                Manager</a> in the <a style="font-style: italic;">Data</a> section in the directory <a style="font-style: italic;">/Home/sources/hsa</a>.</p>
+                                            <p class="text">For more information on the use of the Herschel archive and its products, please visit the
+                                                official <a href="http://archives.esac.esa.int/hsa/whsa/" target="_blank">Herschel ESA archive</a>.</p>
+
+                                            <h5 class="text-left">3.3 - Simulations</h5>
+                                            <p class="text">DEAVI allows to query on a set of simulations which have been produced with the code
+                                                MYOSOTIS (Make Your Own Synthetic ObservaTIonS) which is designed to produce synthetic
+                                                observations from simulated clusters. MYOSOTIS can synthesize observations from both
+                                                ground- and spaced-based observatories, for a range of different filters, observational
+                                                conditions and angular/spectral resolution.</p>
+                                            <p class="text">The query form below allows access to this set of simulations. A tutorial explains in detail the
+                                                contents of these simulations and how to access them using the parameters listed below.</p>
+                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/herschel_simulations.png' %}" alt="image of Simulations Query"><br><br>
+                                            <p class="text">When all the parameters of the query form have been filled in, clicking the <a style="font-style: italic;">Submit</a> button at
+                                                the bottom of the form will launch the query. By clicking on the <a style="font-style: italic;">Submit</a> button, the application
+                                                will automatically redirect and load the <a style="font-style: italic;">Status</a> table of the <a style="font-style: italic;">Queries</a> section. The results of the
+                                                query are accessible through the <a style="font-style: italic;">Status</a> table and will also be available through the <a style="font-style: italic;">File
+                                                Manager</a> in the Data section in the directory <a style="font-style: italic;">/Home/sources/sim</a>.</p>
+
+                                            <h5 class="text-left">3.4 - Status</h5>
+                                            <p class="text">Once any of the queries are launched by clicking on the <a style="font-style: italic;">Submit</a> button, the application will
+                                                automatically load the <a style="font-style: italic;">Status</a> table of the <a style="font-style: italic;">Queries</a> section,</p>
                                             <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/queries_status.png' %}" alt="image of Queries Status"><br><br>
-                                            <p class="text">The operation and options are similar to those explained in 2.2 Pineline Status with some differences:</p>
+                                            <p class="text">The operations and options available in this panel are self-explanatory and similar to those
+                                                explained in the overview of the <a style="font-style: italic;">Pipeline Status</a> in the <a style="font-style: italic;">Algorithm</a> tab with some differences:</p>
                                             <ul>
-                                                <li class="li_guide text-left">The status column has four possible status: Pending, Started, Error and Success.</li>
-                                                <li class="li_guide text-left">In this case, the “Launch” button opens a further drop-down field to choose an 
-                                                    available algorithm that will run over the results of the selected query Name,</li>
+                                                <li class="li_guide text-left">The <a style="font-style: italic;">Status</a> column has four possible status: <a style="font-style: italic;">PENDING</a>, <a style="font-style: italic;">STARTED</a>, <a style="font-style: italic;">ERROR</a> and <a style="font-style: italic;">SUCCESS</a>.</li>
+                                                <li class="li_guide text-left">The <a style="font-style: italic;">Launch</a> button on the right of the panel opens up a further <a style="font-style: italic;">Select Algorithm</a> field
+                                                    at the top of the queries with a drop-down menu where it is possible to choose an
+                                                    algorithm that will run over the results of that particular query.</li>
                                             </ul>
                                             <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/algorithm_selection_query.png' %}" alt="image of Algorithm Selection Query"><br><br>
-                                            <p class="text">Algorithm selection to run over the selected results of a query.</p>
-                                            <p class="text">When an algorithm is selected, the configuration panel of the chosen algorithm is shown. 
-                                                It is also possible to configure the algorithm parameters from here and launch the algorithm,</p>
-                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/algorithm_query_chosen.png' %}" alt="image of Algorithm Query Chosen"><br><br>
-                                            <p class="text">It is possible to launch algorithms directly from the “Queries Status” page.</p>
+                                            <p class="text">When an algorithm is selected from the drop-down menu, the configuration panel of the
+                                                chosen algorithm is shown. It is then also possible to configure the algorithm parameters from
+                                                here and launch the algorithm by clicking <a style="font-style: italic;">Run</a>. In the example shown below the <a style="font-style: italic;">HRD Algorithm</a>
+                                                is selected and its parameters become available.</p>
+                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/query_status_HDR.png' %}" alt="image of Algorithm Query HRD"><br><br>
+                                            <p class="text">So, it is possible to launch algorithms directly from the <a style="font-style: italic;">Queries Status</a> section.</p>
+                                            <p class="text">Pressing <a style="font-style: italic;">Delete</a>, will delete the entry from this table. A pop-up window will ask if also the files
+                                                associated with this query are to be deleted.</p>
+                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/queries_delete.png' %}" style="width: 25%;" alt="image of Delete Query"><br><br>
                                     </div>
                                     <div class="tab-pane fade" id="nav-data" role="tabpanel" aria-labelledby="nav-data-tab">
                                             <h3 class="text-left mt-3"><b>4 - Data</b></h3>
                                             <h5 class="text-left">4.1 - Content</h5>
-                                            <p class="text">Within the “Data” section of the side menu, the user can navigate and interact 
-                                                with the downloaded or generated files. For this, the user must click on “Data” and then on “File Manager”.</p>
+                                            <p class="text">Within the <a style="font-style: italic;">Data</a> section of the side menu, the user can navigate and interact with the
+                                                downloaded (query results) or generated (by algorithms) files. For this, the user must click on
+                                                <a style="font-style: italic;">Data</a> and then on <a style="font-style: italic;">File Manager</a>.</p>
                                             <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/file_manager.png' %}" alt="image of File Manager"><br><br>
                                             <p class="text">Every user has three folders:</p>
                                             <ul>
-                                                <li class="li_guide text-left"><b>Sources:</b> This folder in turn contains the files obtained from Gaia and Herschel (hsa) queries.</li>
-                                                <li class="li_guide text-left"><b>Results:</b> It contains all the files generated by the algorithms as results.</li>
-                                                <li class="li_guide text-left"><b>User:</b> It contains any files uploaded by the user.</li>
+                                                <li class="li_guide text-left"><b>results:</b> This folder contains all the files generated by the algorithms.</li>
+                                                <li class="li_guide text-left"><b>sources:</b> This folder contains in turn three separate folders to hold the files obtained
+                                                    from the Gaia (<a style="font-style: italic;">gaia</a> folder) and Herschel (<a style="font-style: italic;">hsa</a> folder) queries as well as those for the
+                                                    simulations (<a style="font-style: italic;">sim</a> folder).</li>
+                                                <li class="li_guide text-left"><b>user:</b> This folder contains any files uploaded by the user which are needed by the
+                                                    algorithms.</li>
                                             </ul>
                                             <h5 class="text-left">4.2 - Browsing</h5>
-                                            <p class="text">This section at the top of this panel has several useful features for location and browsing of files within all the folders:</p>
-                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/elements_browsing.png' %}" alt="image of File Manager"><br><br>
+                                            <p class="text">The section at the top of the folders panel has several useful features for location and
+                                                browsing files within all the folders:</p>
+                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/elements_browsing.png' %}" style="width: 45%;" alt="image of File Manager"><br><br>
                                             <h5 class="text-left">4.3 - Upload and download and delete files</h5>
                                             <ul>
                                                 <li class="li_guide text-left"><b>Upload files</b></li>
                                             </ul>
                                             <p class="text">DEAVI allows the user to upload files in two different ways:</p>
                                             <ol>
-                                                <li class="li_guide text-left">Through the web interface of the application: The user has to select the file by clicking on the button</li>
+                                                <li class="li_guide">
+                                                    <p class="text">Through the web interface of the application. The user has to select the file by
+                                                    clicking on the button,</p>
+                                                    <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/file_select_button.png' %}" style="width: 100px" alt="image of File Manager"><br><br>
+                                                    <p class="text">Then, the user must click on the <a style="font-style: italic;">upload file</a> button,</p>
+                                                    <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/up_button.png' %}" style="width: 50px" alt="image of File Manager"><br><br>
+                                                    <p class="text">and the file will be uploaded.</p>
+                                                </li>
+                                                <li class="li_guide">
+                                                    <p class="text">Through the SAMP protocol. In this case, the user must first register the hub by
+                                                        clicking on the <a style="font-style: italic;">Register</a> button,</p>
+                                                    <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/hub_no_registered.png' %}" style="width: 350px" alt="image of File Manager"><br><br>
+                                                    <p class="text">Then, the status will change to <a style="font-style: italic;">Yes</a> and the <a style="font-style: italic;">Unregister</a> button will be activated if
+                                                        the hub is active. Otherwise, the application will inform the user that it has not
+                                                        located the hub,</p>
+                                                    <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/hub_registered.png' %}" style="width: 350px" alt="image of File Manager"><br><br>
+                                                    <p class="text">Note that the user must deactivate the mixed content of the web browser used.</p>
+                                                </li>
                                             </ol>
-                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/file_select_button.png' %}" style="width: 100px" alt="image of File Manager"><br><br>
-                                            <p class="text">Then, the user must click on the “upload file” button,</p>
-                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/up_button.png' %}" style="width: 50px" alt="image of File Manager"><br><br>
-                                            <p class="text">and the file will be uploaded.</p>
-                                            <ol>
-                                                <li class="li_guide text-left">Through the SAMP protocol. In this case, the user must first register the hub by clicking on the “Register” button,</li>
-                                            </ol>
-                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/hub_no_registered.png' %}" style="width: 300px" alt="image of File Manager"><br><br>
-                                            <p class="text">Then, the status will change to “Yes” and the “Unregister” button will be activated if the hub is active. Otherwise, 
-                                                the application will inform the user that it has not located the hub.</p>
-                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/hub_registered.png' %}" style="width: 300px" alt="image of File Manager"><br><br>
-                                            <p class="text">Note that the user must deactivate the mixed content of the web browser used.</p>
                                             <ul>
-                                                <li class="li_guide text-left"><b>Delete files</b></li>
+                                                <li class="li_guide text-left"><b>Download and Delete files</b></li>
                                             </ul>
-                                            <p class="text">When the user views a certain file, its name, its size and the possibility of showing the content, 
-                                                downloading or deleting it are displayed.</p>
-                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/files_dowloads.png' %}" alt="image of File Manager"><br><br>
+                                            <p class="text">When the user views a certain file, its name, its size and the possibility of showing the
+                                                content, downloading or deleting it are displayed. Below is an example of possible files
+                                                contained under <a style="font-style: italic;">/Home/sources/gaia</a>,</p>
+                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/files_downloads.png' %}" alt="image of File Manager"><br><br>
                                             <ul>
-                                                <li class="li_guide text-left"><b>Show content:</b> When the user clicks on the file name, a new browser window is opened showing its contents.</li>
-                                                <li class="li_guide text-left"><b>Delete File:</b> If the user clicks on the “Delete” button,</li>
+                                                <li class="li_guide text-left"><b>Show content:</b> When the user clicks on the file name, a new browser window is
+                                                    opened showing its contents.</li>
+                                                <li class="li_guide"><p class="text"><b>Delete File:</b> If the user clicks on the <a style="font-style: italic;">Delete</a> button,</p>
+                                                    <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/delete_button.png' %}" style="width: 50px" alt="image of File Manager"><br><br>
+                                                    <p class="text">a pop up will appear reporting that the file will be deleted if the user clicks on <a style="font-style: italic;">Yes</a>. If
+                                                        the user clicks on <a style="font-style: italic;">No</a>, the pop-up window will be closed without deleting the file.</p>
+                                                    <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/delete.png' %}" style="width: 50%" alt="image of File Manager"><br><br>
+                                                </li>
+                                                <li class="li_guide"><p class="text"><b>Download files</b> Last, if the user clicks on the <a style="font-style: italic;">Download</a> button,</p>
+                                                    <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/download_button.png' %}" style="width: 50px" alt="image of File Manager"><br><br>
+                                                    <p class="text">the file will be downloaded to a local folder.</p>
+                                                </li>
                                             </ul>
-                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/delete_button.png' %}" style="width: 50px" alt="image of File Manager"><br><br>
-                                            <p class="text">a pop up will appear where it is reported that the file will be deleted if the user clicks on “Yes”. If the user clicks on “No”, 
-                                                the pop up will be closed without deleting the file.</p>
-                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/delete.png' %}" style="width: 50%" alt="image of File Manager"><br><br>
-                                            <ul>
-                                                <li class="li_guide text-left"><b>Download files</b></li>
-                                            </ul>
-                                            <p class="text">Finally, if the user clicks on the “Download” button,</p>
-                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/donwload_button.png' %}" style="width: 50px" alt="image of File Manager"><br><br>
-                                            <p class="text">the file will be downloaded to a local folder.</p>
                                     </div>
                                     <div class="tab-pane fade" id="nav-help" role="tabpanel" aria-labelledby="nav-help-tab">
                                             <h3 class="text-left mt-3"><b>5 - Help</b></h3>
-                                            <p class="text">The last section of DEAVI is the “Help” section. In this section the user can find information on how to use DEAVI, “Help” as well as the information 
-                                                of the consortium members of the SFM project, “About”.</p>
+                                            <p class="text">The last section of DEAVI is the <a style="font-style: italic;">Help</a> section. In this section the user can find a <a style="font-style: italic;">Frequently
+                                                Asked Questions</a> (FAQ) section, an <a style="font-style: italic;">About</a> section, and <a style="font-style: italic;">Contact</a> information section.</p>
+                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/help_menu.png' %}" style="width: 300px" alt="image of File Manager"><br><br>
+                                            <img class="sfm-center index-img" src="{% static 'avi/img/deavi_structure/FAQ.png' %}" alt="image of File Manager"><br><br>
                                     </div>
                                 </div>
                                 <!-- <h3 class="text-left"><b>1 - Home</b></h3>
@@ -446,6 +555,8 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                 <p class="text">The last section of DEAVI is the “Help” section. In this section the user can find information on how to use DEAVI, “Help” as well as the information 
                                     of the consortium members of the SFM project, “About”.</p> -->
                             </div>
+                        </div>
+                        </div>
                         </div>
                     </div>
                 </div>

@@ -1,62 +1,74 @@
 {"algorithm":{
     "name": "example",
     "view_name": "Example",
+    "group": "examples",
+    "position": 1,
     "description": "<h3>An example to test the interface</h3><p>This is just a simple example to test the input parameters and charts on the application</p>",
     "input":{
         "input_1":{
+            "position": 10,
             "name": "gaia_table",
-            "view_name": "gaia table",
+            "view_name": "Gaia Table",
             "type": "gaia_table",
             "info": "A gaia table"
         },
         "input_2":{
+            "position": 1,
             "name": "hsa_table",
-            "view_name": "hsa table",
+            "view_name": "HSA Table",
             "type": "hsa_table",
             "info": "A hsa table"
         },
         "input_3":{
+            "position": 2,
             "name": "gaia_table2",
             "view_name": "gaia table 2",
             "type": "gaia_table"
         },
         "input_4":{
+            "position": 3,
             "name": "param_float",
             "view_name": "float param",
             "type": "float",
             "info": "A float parameter"
         },
         "input_5":{
+            "position": 4,
             "name": "param_string",
             "view_name": "string param",
             "type": "string",
             "info": "A string parameter"
         },
         "input_6":{
+            "position": 5,
             "name": "param_integer",
             "view_name": "int param",
             "type": "integer",
             "info": "An integer parameter"
         },
         "input_7":{
+            "position": 6,
             "name": "param_long",
             "view_name": "long param",
             "type": "long",
             "info": "A long parameter"
         },
         "input_8":{
+            "position": 7,
             "name": "param_complex",
             "view_name": "complex param",
             "type": "complex",
             "info": "A complex parameter"
         },
         "input_9":{
+            "position": 8,
             "name": "param_user",
             "view_name": "User param",
             "type": "user_data",
             "info": "User data parameter"
         },
         "input_10":{
+            "position": 9,
             "name": "param_res",
             "view_name": "Results param",
             "type": "results_data",

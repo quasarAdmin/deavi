@@ -1,20 +1,24 @@
 """
-Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+Copyright (C) 2016-2020 Quasar Science Resources, S.L.
 
-This file is part of DEAVI.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-DEAVI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-DEAVI is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
 
 @package avi.core.pipeline.job_get_queries_status
 
@@ -28,7 +32,7 @@ from django.core.paginator import Paginator
 from itertools import chain
 from operator import attrgetter
 
-from avi.models import gaia_query_model, herschel_query_model
+from avi.models import gaia_query_model, herschel_query_model, sim_query_model
 
 from avi.warehouse import wh_common
 from avi.warehouse import wh_frontend_config
@@ -75,26 +79,37 @@ class get_queries_status(parent):
         wh = wh_frontend_config().get()
         sorting_wh = wh.SORTING_QUERY_BY
         order_by = 'request__pipeline_state__started_time'
-        order_lambda = lambda query: (query.request.pipeline_state.started_time is None, query)
+        order_lambda = lambda query: (query.request.pipeline_state.started_time, query)
         if sorting_wh == 'name':
             order_by = 'name'
-            order_lambda = lambda query: (query.name is None, query)
+            order_lambda = lambda query: ("%s %s %s"%(query.archive, query.name, query.pk), query)
         elif sorting_wh == '-name':
             order_by = '-name'
-            order_lambda = lambda query: (query.name is None, query)
+            order_lambda = lambda query: ("%s %s %s"%(query.archive, query.name, query.pk), query)
         elif sorting_wh == '-date':
             order_by = '-request__pipeline_state__started_time'
+            order_lambda = lambda  query: (query.request.pipeline_state.started_time, query)
         elif sorting_wh == 'status':
             order_by = 'request__pipeline_state__state'
-            order_lambda = lambda query: (query.request.pipeline_state.state is None, query)
+            order_lambda = lambda query: (query.request.pipeline_state.state, query)
         elif sorting_wh == '-status':
             order_by = '-request__pipeline_state__state'
-            order_lambda = lambda query: (query.request.pipeline_state.state is None, query)
+            order_lambda = lambda query: (query.request.pipeline_state.state, query)
 
         all_gaia = gaia_query_model.objects.all().order_by(order_by,'pk')
         all_hsa = herschel_query_model.objects.all().order_by(order_by,'pk')
+        all_sim = sim_query_model.objects.all().order_by(order_by, 'pk')
 
-        self.job_data.data = {}
+        len_all = len(str(len(all_gaia) + len(all_hsa) + len(all_sim)))
+        order_lambda = lambda query: (query.request.pipeline_state.started_time, query)
+        if sorting_wh == 'name':
+            order_lambda = lambda query: ("%s %s %s"%(query.archive, query.name, str(query.pk).zfill(len_all)), query)
+        elif sorting_wh == '-name':
+            order_lambda = lambda query: ("%s %s %s"%(query.archive, query.name, str(query.pk).zfill(len_all)), query)
+
+        log.info("models retrieved")
+
+        self.job_data.data = dict([(0, False), (1, {})])
         self.job_data.ok = False
 
         #pgg = Paginator(all_gaia, wh.MAX_QUERY_PER_PAGE)
@@ -117,18 +132,30 @@ class get_queries_status(parent):
         if order_by[0] == '-':
             reverse = True
             order_by.replace('-','',1)
-        call = chain(all_gaia, all_hsa)
+        call = chain(all_gaia, all_hsa, all_sim)
+        #for call_ in call:
+        #    call_.name = "query %s"%(call_.name)
+        #    if isinstance(call_, gaia_query_model):
+        #        call_.name = "Gaia %s"%(call_.name)
+        #    elif isinstance(call_, herschel_query_model):
+        #        call_.name = "HSA %s"%(call_.name)
+        #    elif isinstance(call_, sim_query_model):
+        #        call_.name = "SIM %s"%(call_.name)
         #try:
         all_ms = sorted(call , 
                         #key=attrgetter("name"), 
                         key = order_lambda,
                         reverse=reverse)
+        #for am in all_ms:
+        #    log.info("%s %s %s", am.name, am.request.pipeline_state.started_time, am.request.pipeline_state.state)
         #except TypeError:
         #    log.info("whaaat")
         #    all_ms = sorted(call , 
                             #key=attrgetter("name"), 
         #                    key = lambda query: (query.name is None, query),
         #                    reverse=True)
+
+        log.info("models chained and sorted")
 
         pg = Paginator(all_ms, wh.MAX_QUERY_PER_PAGE)
         page = wh.CURRENT_QUERY_PAGE
@@ -151,9 +178,12 @@ class get_queries_status(parent):
                 name = "Gaia %s"%(h.name)
             elif isinstance(h, herschel_query_model):
                 name = "HSA %s"%(h.name)
+            elif isinstance(h, sim_query_model):
+                name = "SIM %s"%(h.name)
             allqueries[k] = (name, status, date, h.pk, h.archive)
             k += 1
         #------------------
+        log.info("paginator done")
         if page < 1:
             wh.CURRENT_QUERY_PAGE = 1
         elif page > pg.num_pages:
@@ -217,17 +247,38 @@ class get_queries_status(parent):
                 name = "Gaia %s"%(q.name)
             elif isinstance(q, herschel_query_model):
                 name = "HSA %s"%(q.name)
+            elif isinstance(q, sim_query_model):
+                name = "SIM %s"%(q.name)
             data[i] = (name, status, date, error, q.pk, q.archive)
+            log.info("loop")
             
             i+=1
-        self.job_data.data[1] = data
+
+        log.info("looping through the paginator")
 
         wh_common().get().queries_started = count_started
         #if current_started != 0:
+        log.info("asdasd")
+        log.info(self.job_data.data)
         self.job_data.data[0] = count_started < current_started
+        #self.job_data.data.append(count_started < current_started)
         self.job_data.ok = [pg.num_pages, wh.CURRENT_QUERY_PAGE, \
                             wh.CURRENT_QUERY_PAGE + 1, wh.CURRENT_QUERY_PAGE - 1, allqueries, wh.SORTING_QUERY_BY]
-
+        try:
+            log.info(self.job_data.data)
+            #log.info(self.job_data.data[1])
+            log.info(data)
+            aux = data
+            log.info(type(aux))
+            if isinstance(self.job_data.data, dict):
+            #log.info(type(self.job_data.data[1]))
+                self.job_data.data[1] = aux#{0:('sim','success'),1:('sim20','success')}
+            else:
+                self.job_data.data.append(data)
+            #self.job_data.data.append(data)
+        except Exception as e:
+            log.info(e)
+        log.info("job_get_queries_status end")
         return self.job_data
         # OLD
 

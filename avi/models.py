@@ -1,20 +1,24 @@
 """
-Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+Copyright (C) 2016-2020 Quasar Science Resources, S.L.
 
-This file is part of DEAVI.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-DEAVI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-DEAVI is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
 
 @package avi.models
 
@@ -194,6 +198,8 @@ class sim_query_model(parent):
     It inherits from the AviJob class or the avi_job class, depending on which 
     platform is the application running on.
     """
+    ## name of the object to be queried
+    name = models.CharField(max_length=255)#,null=True)
     ## Total mass (solar-mass)
     total_mass = models.FloatField()
     ## virial ratio
@@ -208,6 +214,8 @@ class sim_query_model(parent):
     binary_fraction = models.FloatField()
     ## Is aborted?
     is_aborted = models.BooleanField(default=False)
+    ## deprecated
+    archive = models.CharField(max_length=255, default='sim')
     ## pipeline name used to get the pipeline task and start it
     pipeline_task = "sim_query"
     
@@ -289,6 +297,24 @@ class algorithm_info_model(models.Model):
     definition_file = models.CharField(max_length=255)
     ## the algorithm type -> installed, temporal, uploaded
     algorithm_type = models.CharField(max_length=255)
+    ## the algorithm group
+    algorithm_group = models.CharField(max_length=255)
+    ## the algorithm position
+    position = models.IntegerField()
 
     def __lt__(self, other):
         return self.pk < other.pk
+
+class algorithm_group_model(models.Model):
+    """@class algorithm_group_model
+    The algorithm_group_model defines the data base model for the algorithms groups
+
+    The algorithm_group_model defines the data base model for the algorithms groups.
+    It will store all the needed information of an algorithm's group to be defined.
+    """
+    ## name of the group
+    name = models.CharField(max_length=255)
+    ## name that must be shown in the user interface
+    name_view = models.CharField(max_length=255)
+    ## the position of the group in the view
+    position = models.IntegerField()

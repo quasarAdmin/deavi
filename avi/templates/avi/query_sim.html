@@ -1,20 +1,24 @@
 <!--
-Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+Copyright (C) 2016-2020 Quasar Science Resources, S.L.
 
-This file is part of DEAVI.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-DEAVI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-DEAVI is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -49,28 +53,70 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                     </div>
                     <div class="card-body body-page">
                         <form id="sim_query_form" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <script>
+                                    function more(){
+                                        $(".sfm_more").each(function(){
+                                            if (!$(this).is(':visible')) {
+                                                $('#more').text('less');
+                                                $(this).show();
+                                                $(this).children().show();
+                                            } else {
+                                                $('#more').text('more');
+                                                $(this).hide();
+                                                $(this).children().hide();
+                                            }
+                                        });
+                                    }
+                                </script>
+                                <div class="col-sm-10 offset-sm-1 sfm-text-justify">
+                                    <p>Series of Nbody6 simulation of star clusters done within the StarFormMapper (SFM) project <a id="more" href="#" onclick="more()">more</a>.</p>
+                                    <p class="sfm_more" style="display: none;">The simulations have been produced with the code MYOSOTIS (Make Your Own Synthetic ObservaTIonS) which is designed to produce synthetic observations from simulated clusters.</p>
+                                    <p class="sfm_more" style="display: none;">MYOSOTIS can synthesize observations from both ground- and spaced-based observatories, for a range of different filters, observational conditions and angular/spectral resolution.</p>
+                                    <p class="sfm_more" style="display: none;">The Query form below allows access to this set of simulations. A tutorial explains the contents of these simulations and how to access them using the parameters listed below.</p>
+                                    <p class="sfm_more" style="display: none;">Papers:</p>
+                                    <ul>
+                                        <li class="sfm_bullet sfm_more" style="display: none;"><a style="display: none;" target="_blank" href="https://academic.oup.com/mnras/article-abstract/485/3/3124/5322183">Khorrami, Z. et al., 2019, A code to Make Your Own Synthetic ObservaTIonS (MYOSOTIS). Monthly Notices of the Royal Astronomical Society, 485(3), 3124-3133.</a></li>
+                                    </ul>
+                                    <p class="sfm_more" style="display: none;">A tutorial for this can be found <a href="{{ avi_url }}avi/tutorials">here</a>.</p>
+                                </div>
+                            </div>
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-sm-10 offset-sm-1">
                                     <div class="card border-primary mb-3 card-form">
                                         <div class="card-body text-primary">
-                                            <div class="form-group row">
-                                                <div class="col-sm-2"></div>
+                                            <div class="row">
+                                                <div class="col-sm-1"></div>
                                                 <div class="col-sm-8 offset-1">
                                                     <div id="div_id_solar_mass" style="margin:0 auto">
                                                         <div class="form-group row">
                                                             {{ form.total_mass.errors }}
-                                                            <label for="{{ form.total_mass.id_for_label }}" title="{{ form.total_mass.help_text }}" class="col-form-label">Total Mass: </label>
+                                                            <div class="col-sm-4" style="text-align: left">
+                                                                <label for="{{ form.total_mass.id_for_label }}"
+                                                                data-html="true" data-toggle="sim_totalmass_popover"
+                                                                data-content='Total mass of the star cluster (Solar-Mass).'
+                                                                class="col-form-label">
+                                                                <a class="sfm_popover_cursor sfm_link" title="{{ form.total_mass.help_text }}">Total Mass: </a>
+                                                                </label>
+                                                            </div>
                                                             <div class="col-sm-6" title="{{ form.total_mass.help_text }}">
                                                                 {{ form.total_mass }}
                                                             </div>
-                                                            <div class="col-sm-2 mt-1 text-center" style="min-width: 80px !important" title="Solar Mass"><span>(Solar-Mass)</span></div>
+                                                            <div class="col-sm-2 mt-1" style="min-width: 80px !important; text-align: left" title="Solar Mass"><span>(Solar-Mass)</span></div>
                                                         </div>
                                                     </div>
                                                     <div id="div_id_virial_ratio">
                                                         <div class="form-group row">
                                                             {{ form.virial_ratio.errors }}
-                                                            <label for="{{ form.virial_ratio.id_for_label }}" title="{{ form.virial_ratio.help_text }}" class="col-form-label">Virial Ratio: </label>
+                                                            <div class="col-sm-4" style="text-align: left">
+                                                                <label for="{{ form.virial_ratio.id_for_label }}"
+                                                                data-html="true" data-toggle="sim_viralratio_popover"
+                                                                data-content='This is the radius within which the virial theorem applies.'
+                                                                class="col-form-label">
+                                                                <a class="sfm_popover_cursor sfm_link" title="{{ form.virial_ratio.help_text }}" >Virial Ratio: </a>
+                                                                </label>
+                                                            </div>
                                                             <div class="col-sm-6" title="{{ form.virial_ratio.help_text }}">
                                                                 {{ form.virial_ratio }}
                                                             </div>
@@ -79,17 +125,31 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                     <div id="div_id_half_mass_radius" style="margin:0 auto">
                                                         <div class="form-group row">
                                                             {{ form.half_mass_radius.errors }}
-                                                            <label for="{{ form.half_mass_radius.id_for_label }}" title="{{ form.half_mass_radius.help_text }}" class="col-form-label">Half-Mass Radius: </label>
+                                                            <div class="col-sm-4" style="text-align: left">
+                                                                <label for="{{ form.half_mass_radius.id_for_label }}" 
+                                                                data-html="true" data-toggle="sim_halfmassradius_popover"
+                                                                data-content='Half-mass radius of a cluster (PC).' 
+                                                                class="col-form-label">
+                                                                <a class="sfm_popover_cursor sfm_link" title="{{ form.half_mass_radius.help_text }}">Half-Mass Radius: </a>
+                                                                </label>
+                                                            </div>
                                                             <div class="col-sm-6" title="{{ form.half_mass_radius.help_text }}">
                                                                 {{ form.half_mass_radius }}
                                                             </div>
-                                                            <div class="col-sm-2 mt-1 text-center" style="min-width: 80px !important" title="PC"><span>(PC)</span></div>
+                                                            <div class="col-sm-2 mt-1" style="min-width: 80px !important; text-align: left" title="PC"><span>(PC)</span></div>
                                                         </div>
                                                     </div>
                                                     <div id="div_id_fractal_dimension" style="margin:0 auto">
                                                         <div class="form-group row">
                                                             {{ form.fractal_dimension.errors }}
-                                                            <label for="{{ form.fractal_dimension.id_for_label }}" title="{{ form.fractal_dimension.help_text }}" class="col-form-label">Fractal Dimension: </label>
+                                                            <div class="col-sm-4" style="text-align: left">
+                                                                <label for="{{ form.fractal_dimension.id_for_label }}" 
+                                                                data-html="true" data-toggle="sim_fractaldimension_popover"
+                                                                data-content='Fractal dimension of the data.' 
+                                                                class="col-form-label">
+                                                                <a class="sfm_popover_cursor sfm_link" title="{{ form.fractal_dimension.help_text }}">Fractal Dimension: </a>
+                                                                </label>
+                                                            </div>
                                                             <div class="col-sm-6" title="{{ form.fractal_dimension.help_text }}">
                                                                 {{ form.fractal_dimension }}
                                                             </div>
@@ -98,7 +158,14 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                     <div id="div_id_mass_segregation_degree" style="margin:0 auto">
                                                         <div class="form-group row">
                                                             {{ form.mass_segregation_degree.errors }}
-                                                            <label for="{{ form.mass_segregation_degree.id_for_label }}" title="{{ form.mass_segregation_degree.help_text }}" class="col-form-label">Mass Segregation Degree: </label>
+                                                            <div class="col-sm-4" style="text-align: left">
+                                                                <label for="{{ form.mass_segregation_degree.id_for_label }}" 
+                                                                data-html="true" data-toggle="sim_masssegregationdegree_popover"
+                                                                data-content='Degree of mass segregation.' 
+                                                                class="col-form-label">
+                                                                <a class="sfm_popover_cursor sfm_link" title="{{ form.mass_segregation_degree.help_text }}">Mass Segregation Degree: </a>
+                                                                </label>
+                                                            </div>
                                                             <div class="col-sm-6" title="{{ form.mass_segregation_degree.help_text }}">
                                                                 {{ form.mass_segregation_degree }}
                                                             </div>
@@ -107,15 +174,22 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                     <div id="div_id_binary_fraction" style="margin:0 auto">
                                                         <div class="form-group row">
                                                             {{ form.binary_fraction.errors }}
-                                                            <label for="{{ form.binary_fraction.id_for_label }}" title="{{ form.binary_fraction.help_text }}" class="col-form-label">Binary Fraction: </label>
+                                                            <div class="col-sm-4" style="text-align: left">
+                                                                <label for="{{ form.binary_fraction.id_for_label }}"
+                                                                data-html="true" data-toggle="sim_binaryfraction_popover"
+                                                                data-content='Binary content of a globular cluster (%).'  
+                                                                class="col-form-label">
+                                                                <a class="sfm_popover_cursor sfm_link" title="{{ form.binary_fraction.help_text }}">Binary Fraction: </a>
+                                                                </label>
+                                                            </div>
                                                             <div class="col-sm-6" title="{{ form.binary_fraction.help_text }}">
                                                                 {{ form.binary_fraction }}
                                                             </div>
-                                                            <div class="col-sm-2 mt-1 text-center" style="min-width: 80px !important" title="Percentage"><span>(%)</span></div>
+                                                            <div class="col-sm-2 mt-1" style="min-width: 80px !important; text-align: left" title="Percentage"><span>(%)</span></div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-2"></div>
+                                                <div class="col-sm-1"></div>
                                             </div>
                                         </div>
                                     </div>

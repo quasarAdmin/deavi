@@ -1,20 +1,24 @@
 <!--
-Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+Copyright (C) 2016-2020 Quasar Science Resources, S.L.
 
-This file is part of DEAVI.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-DEAVI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-DEAVI is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -36,55 +40,274 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                 <!-- ------------------------------------------------------------- -->
                 <div id="card" class="card bg-light mb-3">
                     <div class="card-header">
-                        <h1>Help</h1>
+                        <h1>FAQ</h1>
                         <hr>
                     </div>
                     <div class="card-body">
                         <div class="smf-text-justify sfm-separator">
-                            <h3>How to start an algorithm</h3>
                             <div class="row">
-                                <div class="col-sm-8 offset-sm-2">
-                                    <ul class="text-list">
-                                        <li>
-                                            <p>To start an algorithm click on the Algorithms option in the side menu and select <a class="a-link" href="{{ avi_url }}avi/algorithms">Start</a></p>
-                                        </li>
-                                        <li>
-                                            <p>You can always check the status of the execution by going to the <a class="a-link" href="{{ avi_url }}avi/status">Pipeline</a> page. Here you can also see the results of such execution once it is finished.
-                                                <p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="smf-text-justify sfm-separator">
-                            <h3>How to query the mission archives</h3>
-                            <div class="row">
-                                <div class="col-sm-8 offset-sm-2">
-                                    <ul class="text-list">
-                                        <li>
-                                            <p>To query the <a class="a-link" target="_blank" href="https://gea.esac.esa.int/archive/">Gaia archive</a> click on the Queries option in the side menu and select <a class="a-link" href="{{ avi_url }}avi/queries/gaia">Gaia</a>                                                Here you will find all the options to select a region of the sky and retrieve the data from that region.</p>
-                                        </li>
-                                        <li>
-                                            <p>To query the <a class="a-link" target="_blank" href="http://archives.esac.esa.int/hsa/whsa/">Herschel science archive</a> click on the Queries option in the side menu and select <a class="a-link" href="{{ avi_url }}avi/queries/herschel">Herschel</a>                                                Here you will find all the options to select a region of the sky and retrieve the data from that region.</p>
-                                        </li>
-                                        <li>
-                                            <p>You can always check the status of the query by going to the <a class="a-link" href="{{ avi_url }}avi/queries/status">Status</a> page. Here you can also see the results of such query once it is finished.
-                                                <p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="smf-text-justify sfm-separator">
-                            <h3>How to manage your Data</h3>
-                            <div class="row">
-                                <div class="col-sm-8 offset-sm-2">
-                                    <ul class="text-list">
-                                        <li>
-                                            <p>To manage your files go to Data on the side menu and select <a class="a-link" href="{{ avi_url }}avi/resources/filemanager">Data</a></p>
-                                        </li>
-                                    </ul>
+                                <div class="col-sm-10 offset-sm-1">
+                                    <div class="mt-3" id="accordion">
+                                        <div class="card m1-4 mr-4">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-question-1" aria-expanded="false" aria-controls="collapse-question-1">
+                                                        What is the StarFormMapper project?
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapse-question-1" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body sfm-text-justify">
+                                                    The StarFormMapper (SFM) is a <a target="_blank" href="https://starformmapper.org/the-project/">European H2020 RIA project</a> under grant agreement No 687528. The key aim of the project is to combine data from two of ESA’s major space missions, Gaia and Herschel, together with ground based facilities, to constrain the mechanisms that underlie massive star and star cluster formation. The full title of the project is: A Gaia and Herschel Study of the Density Distribution and Evolution of Young Massive Star Clusters. The project has run between June 2016 and May 2020.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card m1-4 mr-4">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-question-2" aria-expanded="false" aria-controls="collapse-question-2">
+                                                        Who is in the StarFormMapper project?
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapse-question-2" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body sfm-text-justify">
+                                                    StarFormMapper is a Consortium led by Leeds University (UK) and participation from <a target="_blank" href="https://quasarsr.com/">Quasar Science Resources S.L.</a>, Cardiff University (UK), Université Grenoble Alpes (France) and Leiden Observatorty (Netherlands).
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card m1-4 mr-4">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-question-3" aria-expanded="false" aria-controls="collapse-question-3">
+                                                        What is DEAVI?
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapse-question-3" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body sfm-text-justify">
+                                                    The Dynamic Evolution Added Value Interface (DEAVI) is the software developed by <a target="_blank" href="https://quasarsr.com/">Quasar Science Resources S.L.</a> for the <a target="_blank" href="https://starformmapper.org/">SFM project.</a> DEAVI runs the scientific algorithms developed and provided by the scientific team within the Consortium during the duration of the project. DEAVI presents the results of the algorithm to the user and allows downloading any results of the analysis. DEAVI incorporates access to the Gaia and Herschell archives and other auxiliary data. The algorithms can be executed against the results of queries to these archives. 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card m1-4 mr-4">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-question-4" aria-expanded="false" aria-controls="collapse-question-4">
+                                                        What scientific algorithms can I run in DEAVI?
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapse-question-4" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body sfm-text-justify">
+                                                    <p>DEAVI incorporates several algorithms. The main ones are:</p>
+                                                    <ul>
+                                                        <li class="sfm_bullet">
+                                                            <p>INDICATE (INdex to Define Inherent Clustering And TEndencies ) is a novel statistical clustering tool to assess and quantify the degree of spatial association of an object in a dataset. Highly versatile, INDICATE has many applications, including characterising morphological stellar features and tracing spatial evolution in star forming regions.</p>
+                                                            <p>Papers:</p>
+                                                            <ul>
+                                                                <li class="sfm_bullet">
+                                                                    <a target="_blank" href="https://www.aanda.org/articles/aa/abs/2019/02/aa32936-18/aa32936-18.html">Buckner, A. M. et al., 2019, The spatial evolution of young massive clusters-I. A new tool to quantitatively trace stellar clustering. Astronomy & Astrophysics, 622, A184.</a>
+                                                                </li>
+                                                                <li class="sfm_bullet">
+                                                                    <a target="_blank" href="https://arxiv.org/abs/2002.12673">Buckner, A. M. et al., 2020, The Spatial Evolution of Young Massive Clusters II. Looking for Imprints of Star Formation in NGC 2264 with Gai DR2. Astronomy & Astrophisics, 636, A80.</a> <a target="_blank" href="https://www.aanda.org/articles/aa/abs/2020/04/aa36935-19/aa36935-19.html">Astronomy & Astrophysics, 636, A80.</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <br/>
+                                                        <li class="sfm_bullet">
+                                                            <p>S2D2 is an algorithm that uses the Density-Based Spatial Clustering of Applications with Noise (DBSCAN) to detect the smallest significant structure in a spatial/spatial-kinematic space. The procedure proposes, in structured regions, the calculation of the epsilon scale and Nmin parameters for DBSCAN to retrieve the smallest structures in the region with a 3-sigma level significance. If the region is not structured, or the user wants it, epsilon scale and Nmin can be supplied, and DBSCAN will be run with the user defined parameters, however, without guaranteeing any level of significance.</p>
+                                                            <p> Papers:</p>
+                                                            <ul>
+                                                                <li class="sfm_bullet">
+                                                                    Gonzalez, M. et al., 2020, S2D2: Small-scale significant Structure DBSCAN Detection. I. NEST detection in 2D regions, In preparation. (Submitted).
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card m1-4 mr-4">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-question-5" aria-expanded="false" aria-controls="collapse-question-5">
+                                                        How do I run an algorithm in DEAVI?
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapse-question-5" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body sfm-text-justify">
+                                                    The Algorithms panel is accessible on the left hand side menu. Click the Algorithms tab in the left panel, click Start and from there one can select the algorithm to run. Each algorithm has a designated panel where different parameters can be set. Each algorithm has an accompaning Tutorial to help users navigate their way.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card m1-4 mr-4">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-question-6" aria-expanded="false" aria-controls="collapse-question-6">
+                                                        Where can I find Tutorials to help me run algorithms in DEAVI?
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapse-question-6" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body sfm-text-justify">
+                                                    The Tutorials panel is accessible on the left hand side menu. Click o Guide and the Tutorials. Tutorials also include how to use different aspects of DEAVI.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card m1-4 mr-4">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-question-7" aria-expanded="false" aria-controls="collapse-question-7">
+                                                        Where can I find my results, downloaded data and user files?
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapse-question-7" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body sfm-text-justify">
+                                                    DEAVI incorporates a "File Manager" that can be found in the Data section of the left hand side menu. The manager allows to navigate and interact with the downloaded (Gaia and Herschel queries) or generated files by the algorithms. The manager also allows to upload files if necessary. Each single user of DEAVI has its own space.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card m1-4 mr-4">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-question-8" aria-expanded="false" aria-controls="collapse-question-8">
+                                                        What is Gaia?
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapse-question-8" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body sfm-text-justify">
+                                                    <a target="_blank" href="https://sci.esa.int/web/gaia">Gaia</a> is an ambitious ESA mission dedicated to chart a three-dimensional map of our Galaxy, the Milky Way, in the process revealing the composition, formation and evolution of the Galaxy.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card m1-4 mr-4">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-question-9" aria-expanded="false" aria-controls="collapse-question-9">
+                                                        How do I download data from Gaia in DEAVI?
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapse-question-9" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body sfm-text-justify">
+                                                    DEAVI allows access to the Gaia archive. This interface includes only basic funcionality, although ADQL queries are implemented, and basic access to the Gaia archive and its is meant to be used in conjunction with the algorithms embeded in DEAVI. To access the Gaia Queries panel in DEAVI, just go to the left hand side menu and click on Queries and then Gaia. The following link contains the location of the oficial <a target="_blank" href="https://gea.esac.esa.int/archive/">ESA Gaia archive.</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card m1-4 mr-4">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-question-10" aria-expanded="false" aria-controls="collapse-question-10">
+                                                        What is Herschel?
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapse-question-10" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body sfm-text-justify">
+                                                    <a target="_blank" href="https://sci.esa.int/web/herschel">Herschel</a> is the largest infrared space observatory launched to date to observe the universe at wavelengths that have never previously been explored.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card m1-4 mr-4">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-question-11" aria-expanded="false" aria-controls="collapse-question-11">
+                                                        How do I download data from Herschel in DEAVI?
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapse-question-11" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body sfm-text-justify">
+                                                    DEAVI allows access to the Herschel archive. This interface includes only basic funcionality and access to the Herschel archive and its is meant to be used in conjunction with the algorithms embeded in DEAVI. To access the Herschel Queries panel in DEAVI, just go to the left hand side menu and click on Queries and Herschel.  The following link contains the location of the oficial <a target="_blank" href="http://archives.esac.esa.int/hsa/whsa/">ESA Herschel archive.</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card m1-4 mr-4">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-question-12" aria-expanded="false" aria-controls="collapse-question-12">
+                                                        What are the Simulations included in DEAVI?
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapse-question-12" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body sfm-text-justify">
+                                                    <p>One of the goals of the SFM project is to develop new tools which can be used to look at Gaia and Herschel data. One such tools is a code to Make Your Own Synthetic ObservaTIonS (MYOSOTIS).  The code is designed to take the output from Nbody (or any other) simulations and show how the cluster would look when observed with various different platforms. The code can do both imaging, and spectroscopy, making it ideally suited for exploring observational constraints on mass segregation, binary fractions, etc. A set of this simulations performed by Cardiff University for the SFM project is included in DEAVI.</p>
+                                                    <p>Papers:</p>
+                                                    <ul>
+                                                        <li class="sfm_bullet">
+                                                            <a target="_blank" href="https://academic.oup.com/mnras/article-abstract/485/3/3124/5322183">Khorrami, Z. et al., 2019, A code to Make Your Own Synthetic ObservaTIonS (MYOSOTIS). Monthly Notices of the Royal Astronomical Society, 485(3), 3124-3133.</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card m1-4 mr-4">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-question-13" aria-expanded="false" aria-controls="collapse-question-13">
+                                                        How do I download the Simulations in DEAVI?
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapse-question-13" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body sfm-text-justify">
+                                                    DEAVI allows access to the Simulations archive. To access the Simulations siles just go to the left hand side menu and click on Queries and Simulations. More information about the simulations can be found in this <a target="_blank" href="https://starformmapper.org/home/simulation-data/">link.</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card m1-4 mr-4">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-question-14" aria-expanded="false" aria-controls="collapse-question-14">
+                                                        How do I acknowledge the results I obtained using DEAVI ?
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapse-question-14" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body sfm-text-justify">
+                                                    <p>The StarFormMapper project, or SFM project, should be acknowledged using the following quote:</p>
+                                                    <ul><li style="font-style: italic;">The StarFormMapper has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 687528.</li></ul>
+                                                    <p>DEAVI should be acknowledge using the following quote (or similar):</p>
+                                                    <ul><li style="font-style: italic;">DEAVI is a software developed by Quasar Science Resources S.L. for the StarFormMapper European Union’s Horizon 2020 project.</li></ul>
+                                                    <p>DEAVI is hosted at: <a target="_blank" href="https://sfmdeavi.quasarsr.com/">https://sfmdeavi.quasarsr.com/</a></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card m1-4 mr-4">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-question-15" aria-expanded="false" aria-controls="collapse-question-15">
+                                                        Can I contact Quasar Science Resources for matters related to DEAVI?
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                        
+                                            <div id="collapse-question-15" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body sfm-text-justify">
+                                                    <a target="_blank" href="https://quasarsr.com/">Quasar Science Resources S.L.</a> remains the custodian of DEAVI, so for any maters related to its functionality, problems, giving feedback or even asking for a possible contribution to your own projects ... Quasar can be contacted at <a target="_top" href="mailto:contact@quasarsr.com">contact@quasarsr.com.</a> Any matters related to the algorithms or simulations should be directed to the authors of the relevant papers.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>   
                                 </div>
                             </div>
                         </div>

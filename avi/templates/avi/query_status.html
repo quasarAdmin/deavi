@@ -1,20 +1,24 @@
 <!--
-Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+Copyright (C) 2016-2020 Quasar Science Resources, S.L.
 
-This file is part of DEAVI.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-DEAVI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-DEAVI is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -63,6 +67,35 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                         </script>
                         {% endfor %}
                         <div class="end_scripts"></div>
+                        <div class="row">
+                            <script>
+                                function more(){
+                                    $(".sfm_more").each(function(){
+                                        if (!$(this).is(':visible')) {
+                                            $('#more').text('less');
+                                            $(this).show();
+                                        } else {
+                                            $('#more').text('more');
+                                            $(this).hide();
+                                        }
+                                    });
+                                }
+                            </script>
+                            <div class="col-sm-10 offset-sm-1 sfm-text-justify">
+                                <p>Once any of the queries are launched by clicking on the "Submit" button, the application will automatically load the "Queries Status" page <a id="more" href="#" onclick="more()">more</a>.</p>
+                                <p class="sfm_more" style="display: none;">At the very top, the first element of this section consists of a search engine where a certain query can be located. The second element displayed is a table where each individual row represents a single query.</p>
+                                <p class="sfm_more" style="display: none;">When the execution of a query has finished, a column Status shows whether it has falied or wheter it has succeded. If successfull, the results of the query can be explored by clicking in the name of the query as listed in column Name. A Launch button is also available to launch the results of a given query against an algorithm. By pressing Launch, a new panel appears giving access to the list of available algorithms. Selecting an algorithm opens up the parameter configuration panel of the chosen algorithm making possible to configure the algorithm parameters from here and launch the algorithm. Last, a given query can be deleted from the table by pressing the Delete button.</p>
+                                <p class="sfm_more" style="display: none;">Note that the user can sort the executions by Name, Date and Status by clicking on each label in the table. This feature is maintained in any of the tables of the same style present in the DEAVI application.</p>
+                                <p class="sfm_more" style="display: none;">A tutorial is provided in the Guide section to guide you through the different sections of this table with an example.</p>
+                                <p class="sfm_more" style="display: none;">The states of the query are:</p>
+                                <ul class="sfm_more" style="display: none;">
+                                    <li><span class="font-weight-bold">Pending: </span>Query pending of execution</li>
+                                    <li><span class="font-weight-bold">Started: </span>Query executing</li>
+                                    <li><span class="font-weight-bold">Success: </span>Query successfully executed</li>
+                                    <li><span class="font-weight-bold">Failure: </span>Query with failed execution or aborted</li>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="row">
                             <div id="alert" class="col-sm-12">
                             </div>
@@ -167,12 +200,12 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                         <div class="row">
                             <div class="col-sm-11 table-pipe">
                                 <div class="row table-head-pipe">
-                                    <div class="col-md-3 table-head-pipe-element sort-by-name">Name <i class="fas fa-sort name-sort"></i></div>
-                                    <div class="col-md-2 table-head-pipe-element sort-by-date">Date <i class="fas fa-sort date-sort"></i></div>
-                                    <div class="col-md-2 table-head-pipe-element sort-by-status">Status <i class="fas fa-sort status-sort"></i></div>
-                                    <div class="col-md-1 table-head-pipe-element">Info</div>
-                                    <div class="col-md-2 table-head-pipe-element">Launch</div>
-                                    <div class="col-md-2 table-head-pipe-element-last">Abort</div>
+                                    <div class="col-md-3 table-head-pipe-element sort-by-name" title="Name of the query.">Name <i class="fas fa-sort name-sort"></i></div>
+                                    <div class="col-md-2 table-head-pipe-element sort-by-date" title="Date of the query.">Date <i class="fas fa-sort date-sort"></i></div>
+                                    <div class="col-md-2 table-head-pipe-element sort-by-status" title="Status of the query.">Status <i class="fas fa-sort status-sort"></i></div>
+                                    <div class="col-md-1 table-head-pipe-element" title="This parameter gives information on whether the query has been successfully done.">Info</div>
+                                    <div class="col-md-2 table-head-pipe-element" title="Launch a query against an algorithm.">Launch</div>
+                                    <div class="col-md-2 table-head-pipe-element-last" title="Delete a particular query and accompanying files.">Abort</div>
                                 </div>
                                 {% for q in queries.items %}
                                 <div class="row table-body-pipe data">
@@ -196,7 +229,7 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                     <div class="col-md-2 table-head-pipe-element-last pipe-button">
                                         <form id="form_{{ q.1.4 }}" method="post">
                                             {% csrf_token %}
-                                            <button type="submit" class="btn btn-danger btn-block" formmethod="POST" id="form_button_{{ q.1.4 }}" {% if q.1.1 in "SUCCESS" or q.1.1 in "FAILURE" %} name="delete_{{ q.1.5 }}" title="Delete" value="{{ q.1.4 }}">
+                                            <!--<button type="submit" class="btn btn-danger btn-block" formmethod="POST" id="form_button_{{ q.1.4 }}" {% if q.1.1 in "SUCCESS" or q.1.1 in "FAILURE" %} name="delete_{{ q.1.5 }}" title="Delete" value="{{ q.1.4 }}">
                                                 <a class="thrash-icon"><i class="fas fa-trash-alt"></i></a><a class="delete">Delete</a>
                     {% else %}
                     name="abort_{{ q.1.5 }}"
@@ -204,11 +237,54 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                     value="{{ q.1.4 }}">
                     Abort
                     {% endif %}
-                  </button>
+                  </button>-->
+                  {% if q.1.1 in "SUCCESS" or q.1.1 in "FAILURE" %}
+                  <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#call_delete_query_{{ q.1.5 }}_{{ q.1.4 }}" 
+                  id="form_button_{{ q.1.4 }}"
+                  data-whatever="@fat"
+                  name="delete_{{ q.1.5 }}"
+                  title="Delete"
+                  value="pre_{{ q.1.4 }}">Delete</button>
+                  {% else %}
+                  <button type="submit" class="btn btn-danger btn-block" 
+                  id="form_button_{{ q.1.4 }}"
+                  name="abort_{{ q.1.5 }}"
+                  title="Abort"
+                  value="{{ q.1.4 }}">Abort</button>
+                  {% endif %}
+
+                  <!-- Start Delete file button pop up -->
+                  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmation_file_modal" aria-hidden="true" id="call_delete_query_{{ q.1.5 }}_{{ q.1.4 }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-warning alert-white rounded">
+                                    <p class="modal-title" id="modal_confirmation_file_pop_up_{{ q.1.5 }}_{{ q.1.4 }}" style="display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                        <img src="https://vignette.wikia.nocookie.net/lego/images/c/cd/Warning_sign.png/revision/latest/scale-to-width-down/1000?cb=20110705195119" width="42" height="42">                                                                                                    Do you want to delete also the files associated to this query?</p>
+                                    <p style="text-align: center; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"><strong>"{{ q.1.5 }}" </strong></p>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" formmethod="POST" type="button" name="delete_all_{{ q.1.5 }}" class="btn btn-default" value="{{ q.1.4 }}" title="Click to delete the query and the files" id="modal_btn__delete_yes_file">Yes
+                    </button>
+                                <button type="submit" formmethod="POST" type="button" class="btn btn-primary" name="delete_{{ q.1.5 }}" value="{{ q.1.4 }}" title="Click to delete the query" id="modal_btn_no_file">No
+                    </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert" role="alert" id="result"></div>
+                </div>
+                <!-- End Delete file button -->
                                         </form>
                                     </div>
                                     <script>
-                                        titles("{{ q.1.4 }}", "{{ q.1.5 }}");
+                                        //titles("{{ q.1.4 }}", "{{ q.1.5 }}");
                                     </script>
                                 </div>
 

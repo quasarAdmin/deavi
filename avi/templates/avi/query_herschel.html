@@ -1,20 +1,24 @@
 <!--
-Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+Copyright (C) 2016-2020 Quasar Science Resources, S.L.
 
-This file is part of DEAVI.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-DEAVI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-DEAVI is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -48,16 +52,41 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                     </div>
                     <div class="card-body body-page">
                         <form id="herschel_query_form" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-sm-10 offset-sm-1 sfm-text-justify">
+                                    <p>The method to make queries to this archive is similar to that described in the Gaia section. The main difference lies in the choice of device (<a target="_blank" href="https://www.cosmos.esa.int/web/herschel/pacs-overview">PACS</a>, <a target="_blank" href="https://www.cosmos.esa.int/web/herschel/spire-overview">SPIRE</a> or <a target="_blank" href="https://www.cosmos.esa.int/web/herschel/hifi-overview">HIFI</a>) in the case of queries by Name and Equatorial coordinates.</p>
+                                    <p>A tutorial for this can be found <a href="{{ avi_url }}avi/tutorials">here</a>.</p>
+                                </div>
+                            </div>
                             {% csrf_token %} {{ form.non_field_errors }}
                             <div class="row">
                                 <div class="col-sm-10 offset-sm-1">
                                     <div class="card border-primary mb-3 card-form">
-                                        <div class="card-body text-primary">
+                                        <div class="card-body text-primary" style="padding-bottom: 0px !important;">
                                             <div class="from-group row">
                                                 <div class="col-sm-5">
                                                     <div class="row">
                                                         <div style="margin:0 auto">
                                                             <div class="col text-left">
+                                                                <h5 title="Query by" data-toggle="hsa_queryby_popover" data-html="true" 
+                                                                data-content='<a style="font-weight: bold;">Name</a><br/>
+                                                                            <p>The name of the target, which will be resolved to coordinates and used for a positional match with the HSA database. The target name will be resolved to coordinates using Simbad and/or NED. These coordinates will be used as the center of a circle (of customisable radius) in the sky. All HSA observation with footprints intersecting with this circle are matched.</p>
+                                                                            <p>The target names are passed without parsing to the resolving services. Please consult:</p>
+                                                                            <ul>
+                                                                                <li><a target="_blank"href="http://cdsweb.u-strasbg.fr/Simbad.html">http://cdsweb.u-strasbg.fr/Simbad.html</a></li>
+                                                                                <li><a target="_blank"href="http://nedwww.ipac.caltech.edu/">http://nedwww.ipac.caltech.edu/</a></li>
+                                                                                </ul>
+                                                                            <br/><p>for more help on the syntax to be used.</p>
+                                                                            <a style="font-weight: bold;">Examples</a><br/>
+                                                                            M31<br/>MCG+02-60-010<br/><br/>
+                                                                            <a>Equatorial:</a><br/>
+                                                                            <p>The default option is equatorial coordinates. In this case the user must fill in the parameters of the coordinates Right Ascension (RA) and Declination (DEC).</p>
+                                                                            <a style="font-weight: bold;">File</a><br/>
+                                                                            <p>Queries can be made by choosing the "File" option. A file can be uploaded by using the "Browse..." button (depending on the browser, this button can have a different caption).</p>
+                                                                            <a style="font-weight: bold;">ADQL</a><br/>
+                                                                            <p>Another available option is through the use of the ADQL language. By default, choosing this option, displays an example query. More information on the ADQL query syntax can be found at <a href="https://gea.esac.esa.int/archive-help/adql/index.html">[1]</a>.</p>
+                                                                            '>
+                                                                <a class="sfm_popover_cursor sfm_link" title="Seach by: target name, equatorial coordinates, using an uploaded file, or use the ADQL syntax">Query by:</a></h5>
                                                                 <div id="div_id_name_coord">
                                                                     {{ form.name_coord.errors }} {{ form.name_coord }}
                                                                 </div>
@@ -72,7 +101,21 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                     <div id="div_id_ra">
                                                         <div class="form-group row">
                                                             {{ form.ra.errors }}
-                                                            <label for="{{ form.ra.id_for_label }}" title="{{ form.ra.help_text }}" class="col-form-label">RA: </label>
+                                                            <label for="{{ form.ra.id_for_label }}" title="Right Ascension" data-html="true" data-toggle="hsa_ra_popover"
+                                                            data-content='<p>Right Ascension is the angular distance measured eastward along the celestial equator from the vernal equinox to the hour circle of the point in question.</p>
+                                                            <p>Together with declination these astronomical coordinates specify the direction of a point on the celestial sphere in the equatorial coordinate system.</p>
+                                                            <p>Range between 0 and 360 degrees, or 0 and 24 hours.</p>
+                                                            <a style="font-weight: bold;">Units</a><br/>
+                                                            degrees by default. Hours if "h" is provided.<br/><br/>
+                                                            <a style="font-weight: bold;">Examples</a><br/>
+                                                            13h30m52.5s (hms)<br/>
+                                                            13h30m (hm)<br/>
+                                                            13.51444h (decimal hours)<br/>
+                                                            202.71875 (decimal degrees)<br/>
+                                                            202.71875d (decimal degrees)<br/>'
+                                                            class="col-form-label">
+                                                            <a class="sfm_popover_cursor sfm_link" title="{{ form.ra.help_text }}" >RA: </a>
+                                                        </label>
                                                             <div class="col-sm-6" title="{{ form.ra.help_text }}">{{ form.ra }}</div>
                                                             <div class="col-sm-2 mt-1 text-center" style="min-width: 80px !important" title="International Celestial Reference System"><span>(ICRS)</span></div>
                                                         </div>
@@ -80,7 +123,24 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                     <div id="div_id_dec">
                                                         <div class="form-group row">
                                                             {{ form.dec.errors }}
-                                                            <label for="{{ form.dec.id_for_label }}" title="{{ form.dec.help_text }}" class="col-form-label">DEC: </label>
+                                                            <label for="{{ form.dec.id_for_label }}" title="Declination" data-html="true" data-toggle="hsa_dec_popover" 
+                                                            data-content='<p>Together with RA, these two values locate a point on the celestial sphere in the equatorial coordinates system.</p>
+                                                            <p>Declination&#39;s angle is measured north or south of the celestial equator along the hour circle passing through the point in question.</p>
+                                                            <p>Range between -90 and 90 degrees.</p>
+                                                            <a style="font-weight: bold;">Units</a><br/>
+                                                            degrees<br/>
+                                                            <br/>
+                                                            <a style="font-weight: bold;">Examples</a><br/>
+                                                            01:50:27.0 (deg, min, sec, colon separated)<br/>
+                                                            01 50 27.0 (deg, min, sec, space separated)<br/>
+                                                            01d50&#39;27.0" (d&#39;" format)<br/>
+                                                            01d50&#39;(d&#39; format)<br/>
+                                                            -01.84083d (decimal degrees)<br/>
+                                                            +1.84083 (decimal degrees)<br/>
+                                                            +1.84083d (decimal degrees)'
+                                                            class="col-form-label">
+                                                            <a class="sfm_popover_cursor sfm_link" title="{{ form.dec.help_text }}" >DEC: </a>
+                                                            </label>
                                                             <div class="col-sm-6" title="{{ form.dec.help_text }}">{{ form.dec }}</div>
                                                             <div class="col-sm-2 mt-1 text-center" style="min-width: 80px !important" title="International Celestial Reference System"><span>(ICRS)</span></div>
                                                         </div>
@@ -110,6 +170,15 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                         <div class="row">
                                                             <div style="margin:0 auto">
                                                                 <div class="col text-left">
+                                                                    <h5 title="Shape" data-toggle="hsa_shape_popover" data-html="true" 
+                                                                data-content='<a style="font-weight: bold;">Cone</a><br/>
+                                                                <p>Cone search. The Cone Radius has to be filled in.</p>
+                                                                <a style="font-weight: bold;">Box</a><br/>
+                                                                <p>Box search. The Height and Width of the Box have to be filled in.	</p>
+                                                                <a style="font-weight: bold;">Polygon</a><br/>
+                                                                <p>Polygon search. The polygon vertices have to be filled in.</p>
+                                                                '>
+                                                                <a class="sfm_popover_cursor sfm_link" title="Target in: cone, box, or polygon">Shape:</a></h5>
                                                                     <div id="div_id_shape">
                                                                         {{ form.shape.errors }} {{ form.shape }}
                                                                     </div>
@@ -121,23 +190,33 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                         <div id="div_id_radius">
                                                             <div class="form-group row">
                                                                 {{ form.radius.errors }}
-                                                                <label for="{{ form.radius.id_for_label }}" title="{{ form.radius.help_text }}" class="col-form-label">Radius: </label>
+                                                                <label for="{{ form.radius.id_for_label }}" title="Radius" data-html="true" data-toggle="hsa_radius_popover" 
+                                                                data-content='The radius of the search cone. A positional match is achieved if the position of the source lays within the given radius around the query position. The units are DEG.'
+                                                                class="col-form-label">
+                                                                <a class="sfm_popover_cursor sfm_link" title="{{ form.radius.help_text }}">Radius: </a></label>
                                                                 <div class="col-sm-6" title="{{ form.radius.help_text }}">{{ form.radius }}</div>
                                                                 <div class="col-sm-2 mt-2 text-center" style="min-width: 80px !important" title="Degrees">DEG</div>
                                                             </div>
                                                         </div>
                                                         <div id="div_id_height">
-                                                            <div class="form-group row" title="{{ form.height.help_text }}">
+                                                            <div class="form-group row">
                                                                 {{ form.height.errors }}
-                                                                <label for="{{ from.height.id_for_label }}" class="col-form-label">Height: </label>
+                                                                <label for="{{ from.height.id_for_label }}" title="Height" data-html="true" data-toggle="hsa_height_popover" 
+                                                                data-content='Height of search Box. The units are DEG.' 
+                                                                class="col-form-label">
+                                                                    <a class="sfm_popover_cursor sfm_link" title="{{ form.height.help_text }}">Height: </a>
+                                                                </label>
                                                                 <div class="col-sm-6">{{ form.height }}</div>
                                                                 <div class="col-sm-2 mt-2 text-center" style="min-width: 80px !important" title="Degrees">DEG</div>
                                                             </div>
                                                         </div>
                                                         <div id="div_id_width">
-                                                            <div class="form-group row" title="{{ form.width.help_text }}">
+                                                            <div class="form-group row">
                                                                 {{ form.width.errors }}
-                                                                <label for="{{ form.width.id_for_label }}" class="col-form-label">Width: </label>
+                                                                <label for="{{ form.width.id_for_label }}" title="Width" data-html="true" data-toggle="hsa_width_popover" 
+                                                                data-content='Width of search Box. The units are DEG.'
+                                                                class="col-form-label">
+                                                                    <a class="sfm_popover_cursor sfm_link" title="{{ form.width.help_text }}">Width: </a></label>
                                                                 <div class="col-sm-6">{{ form.width }}</div>
                                                                 <div class="col-sm-2 mt-2 text-center" style="min-width: 80px !important" title="Degrees">DEG</div>
                                                             </div>
@@ -145,7 +224,11 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                         <div id="div_id_polygon">
                                                             <div class="form-group row" title="{{ form.polygon.help_text }}">
                                                                 {{ form.polygon.errors }}
-                                                                <label for="{{ form.polygon.id_for_label }}" class="col-form-label">Polygon: </label>
+                                                                <label for="{{ form.polygon.id_for_label }}" title="Polygon" data-html="true" data-toggle="hsa_poly_popover" 
+                                                                data-content='Polygon search. The polygon vertices have to be filled in.'
+                                                                class="col-form-label">
+                                                                    <a class="sfm_popover_cursor sfm_link" title="{{ form.polygon.help_text }}">Polygon: </a>
+                                                                </label>
                                                                 <div class="col-sm-8">{{ form.polygon }}
                                                                 </div>
                                                             </div>
@@ -158,6 +241,11 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                         <div class="row">
                                                             <div style="margin:0 auto">
                                                                 <div class="col text-left">
+                                                                    <h5 title="Herschel Catalogs"data-toggle="hsa_cat_popover" data-html="true" 
+                                                                    data-content='Positional Sources<br/>
+                                                                    Images
+                                                                    '>
+                                                                    <a class="sfm_popover_cursor sfm_link" title="HSA Catalogs">Catalogs:</a></h5>
                                                                     <div id="div_id_positional_images">
                                                                         {{ form.positional_images.errors }} {{ form.positional_images }}
                                                                     </div>
@@ -196,7 +284,10 @@ along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
                                                             <div class="row">
                                                                 <div class="col-sm-6 offset-sm-3" title="{{ form.file_name.help_text }}">
                                                                     {{ form.file_name.errors }}
-                                                                    <label for="{{ form.file_name.id_for_label }}">Output File: </label> {{ form.file_name }}
+                                                                    <label for="{{ form.file_name.id_for_label }}"  title="Output File" data-html="true" data-toggle="hsa_outfile_popover" 
+                                                                    data-content='Name of the output file to store de results of the query.'>
+                                                                    <a class="sfm_popover_cursor sfm_link" title="{{ form.file_name.help_text }}">Output File: </a>
+                                                                </label>{{ form.file_name }}
                                                                 </div>
                                                             </div>
                                                         </div>

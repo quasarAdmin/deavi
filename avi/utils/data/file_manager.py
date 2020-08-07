@@ -1,20 +1,24 @@
 """
-Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+Copyright (C) 2016-2020 Quasar Science Resources, S.L.
 
-This file is part of DEAVI.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-DEAVI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-DEAVI is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
 
 @package avi.utils.data.file_manager
 
@@ -24,6 +28,7 @@ This module provides the file management
 """
 import os
 import traceback
+import tarfile
 
 from avi.log import logger
 
@@ -282,3 +287,55 @@ class file_manager:
         path = os.path.abspath(outputFileName)
         self.log.info("Data saved in: %s", outputFileName)
         return path
+    
+    def save_tar_file(self, source, name, path = None, 
+                            id = "", task_name = "", date = ""):
+        """Saves a plain data file
+
+        Saves the given data into a file with the given name and creates a 
+        resource_model with the file information.
+
+        Args:
+        self: The object pointer
+        source: The source directory to be saved
+        name: The name of the file
+        path: The path of the file
+        id: The job id associated with the task that created the file
+        task_name: The name of the task that created this file
+        date: The date of creation
+
+        Returns:
+        The path to the created file
+
+        See:
+        resource_model: avi.models.resource_model
+        """
+        if not path:
+            self.log.info("Using default RESULTS_PATH")
+            path = wh_global_config().get().RESULTS_PATH
+
+        output_file_name = os.path.join(path, name)
+        with tarfile.open(output_file_name, "w:gz") as tar:
+            tar.add(source, arcname=os.path.basename(source))
+        res = os.path.abspath(output_file_name)
+        self.log.info("Data saved in: %s", output_file_name)
+
+        try:
+            from avi.models import resource_model
+            model = resource_model(sort_name = name,
+                                   name = name,
+                                   path = path,
+                                   file_type = task_name,
+                                   job_id = id,
+                                   date = date)
+            model.save()
+        except Exception:
+            self.log.warning("Something went wrong while updating the db"
+                             " saving tmp file to update the db later")
+            tmp_path = wh_global_config().get().TMP_PATH
+            full_tmp_path = os.path.join(tmp_path, str(id))
+            with open(full_tmp_path, "a") as tmp:
+                tmp.write("%s;%s;%s;%s;%s"%(name, path, task_name, 
+                                               str(id), str(date)))
+
+        return res

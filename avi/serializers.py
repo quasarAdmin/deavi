@@ -1,20 +1,24 @@
 """
-Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+Copyright (C) 2016-2020 Quasar Science Resources, S.L.
 
-This file is part of DEAVI.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-DEAVI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-DEAVI is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
 
 @package avi.serializers
 
@@ -28,7 +32,7 @@ serializers.
 """
 from avi.models import (resource_model, algorithm_model, gaia_query_model,
                         herschel_query_model, plot_model, results_model,
-                        algorithm_info_model)
+                        algorithm_info_model, algorithm_group_model)
 
 from rest_framework import serializers
 
@@ -46,7 +50,23 @@ class algorithm_info_serializer(serializers.HyperlinkedModelSerializer):
         model = algorithm_info_model
         ## The fields to serialize
         fields =('name','name_view',
-                 'source_file','definition_file','algorithm_type')
+                 'source_file','definition_file','algorithm_type', 'algorithm_group')
+
+class algorithm_group_serializer(serializers.HyperlinkedModelSerializer):
+    """@class algorithm_group_serializer
+    Serializes the algorithm_group_model
+
+    @see avi.models.algorithm_group_model
+    """
+    class Meta:
+        """@class Meta
+        Meta class
+        """
+        ## The model name
+        model = algorithm_group_model
+        ## The fields to serialize
+        fields =('name','name_view',
+                 'position','position')
 
 class algorithm_serializer(serializers.HyperlinkedModelSerializer):
     """@class algorithm_serializer

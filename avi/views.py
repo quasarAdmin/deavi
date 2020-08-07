@@ -1,20 +1,24 @@
 """
-Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+Copyright (C) 2016-2020 Quasar Science Resources, S.L.
 
-This file is part of DEAVI.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-DEAVI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-DEAVI is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
 
 @package avi.views
 
@@ -355,8 +359,17 @@ def status(request):
             data = {}
             data['type'] = "algorithm"
             data['pk'] = request.POST['delete']
-            if request.POST.get('delete_data'):
-                data['delete-data'] = request.POST['delete_data']
+            #if request.POST.get('delete_data'):
+            #    data['delete-data'] = request.POST['delete_data']
+            risea().get().start_job(wh_names().get().JOB_DELETE,data)
+        if request.POST.get('delete_all'):
+            log.info("Delete %s",str(request.POST['delete_all']))
+            data = {}
+            data['type'] = "algorithm"
+            data['pk'] = request.POST['delete_all']
+            #if request.POST.get('delete_data'):
+            #    data['delete-data'] = request.POST['delete_data']
+            data['delete-data'] = "yes"
             risea().get().start_job(wh_names().get().JOB_DELETE,data)
         if request.POST.get('relaunch'):
             log.info("Relaunch %s",str(request.POST['relaunch']))
@@ -801,6 +814,13 @@ def query_status(request):
             if request.POST.get('delete_data'):
                 data['delete-data'] = request.POST['delete_data']
             risea().get().start_job(wh_names().get().JOB_DELETE,data)
+        if request.POST.get('delete_all_gaia'):
+            log.info("Post %s",str(request.POST['delete_all_gaia']))
+            data = {}
+            data['type'] = "gaia"
+            data['pk'] = request.POST['delete_all_gaia']
+            data['delete-data'] = "yes"
+            risea().get().start_job(wh_names().get().JOB_DELETE,data)
         if request.POST.get('delete_hsa'):
             log.info("Post %s",str(request.POST['delete_hsa']))
             data = {}
@@ -808,6 +828,34 @@ def query_status(request):
             data['pk'] = request.POST['delete_hsa']
             if request.POST.get('delete_data'):
                 data['delete-data'] = request.POST['delete_data']
+            risea().get().start_job(wh_names().get().JOB_DELETE,data)
+        if request.POST.get('delete_all_hsa'):
+            log.info("Post %s",str(request.POST['delete_all_hsa']))
+            data = {}
+            data['type'] = "hsa"
+            data['pk'] = request.POST['delete_all_hsa']
+            data['delete-data'] = "yes"
+            risea().get().start_job(wh_names().get().JOB_DELETE,data)
+        if request.POST.get('abort_sim'):
+            log.info("Post %s",str(request.POST['abort_sim']))
+            data = {}
+            data['type'] = "sim"
+            data['pk'] = request.POST['abort_sim']
+            risea().get().start_job(wh_names().get().JOB_ABORT,data)
+        if request.POST.get('delete_sim'):
+            log.info("Post %s",str(request.POST['delete_sim']))
+            data = {}
+            data['type'] = "sim"
+            data['pk'] = request.POST['delete_sim']
+            if request.POST.get('delete_data'):
+                data['delete-data'] = request.POST['delete_data']
+            risea().get().start_job(wh_names().get().JOB_DELETE,data)
+        if request.POST.get('delete_all_sim'):
+            log.info("Post %s",str(request.POST['delete_all_sim']))
+            data = {}
+            data['type'] = "sim"
+            data['pk'] = request.POST['delete_all_sim']
+            data['delete-data'] = "yes"
             risea().get().start_job(wh_names().get().JOB_DELETE,data)
         if request.POST.get('launch'):
             log.info("Post %s",str(request.POST['launch']))
@@ -835,10 +883,16 @@ def query_status(request):
             data['sort_by'] = request.POST['sort_by']
             risea().get().start_job(wh_names().get().JOB_SORT_BY, data)
         #return HttpResponseRedirect('avi/query_status.html')
-    queries = risea().get().start_job(wh_names().get().JOB_GET_QUERIES_STATUS,
-                                      None)
+    log.info("queries status start")
+    try:
+        queries = risea().get().start_job(wh_names().get().JOB_GET_QUERIES_STATUS,
+                                          None)
+    except Exception as e:
+        log.info(e)
+        queries = None
+    log.info("queries status end")
     template = loader.get_template('avi/query_status.html')
-    if queries.ok:
+    if queries is not None and queries.ok:
         #if request.POST:
             #log.debug("queries post: %s", str(request.POST))
         #log.info("queries %s", str(queries.data))
@@ -941,8 +995,9 @@ def resources_filemanager(request):
     paths = job.data[2]
     gaia_files = job.data[3]
     hsa_files = job.data[4]
-    results_files = job.data[5]
-    user_files = job.data[6]
+    sim_files = job.data[5]
+    results_files = job.data[6]
+    user_files = job.data[7]
 #     current_path_files = risea().get().get_current_path()
     
     if request.method=='POST':

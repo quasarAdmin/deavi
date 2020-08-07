@@ -1,20 +1,24 @@
 """
-Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+Copyright (C) 2016-2020 Quasar Science Resources, S.L.
 
-This file is part of DEAVI.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-DEAVI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-DEAVI is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
 
 @package avi.core.algorithm.algorithm_manager
 
@@ -28,7 +32,7 @@ from avi.log import logger
 from avi.warehouse import wh_frontend_config, wh_global_config
 from avi.utils.data.json_manager import json_manager
 from avi.warehouse import wh_global_config as wh
-from avi.models import algorithm_info_model
+from avi.models import algorithm_info_model, algorithm_group_model
 
 class algorithm_manager:
     """@class algorithm_manager
@@ -73,6 +77,22 @@ class algorithm_manager:
             if not f.endswith(".json"):
                 continue
             name, fext = os.path.splitext(f)
+            if name == "groups":
+                try:
+                    jm = json_manager()
+                    jm.load(os.path.join(path,f))
+                    for _, g in jm.json_root["groups"].items():
+                        m = algorithm_group_model.objects.all().filter(name=g["name"])
+                        if not m:
+                            if not "view_name" in g:
+                                g["view_name"] = g["name"]
+                            m = algorithm_group_model(name=g["name"],
+                                                      position=g["position"],
+                                                      name_view=g["view_name"])
+                            m.save()
+                except Exception as err:
+                    self.log.info(err)
+                    continue
             name_src = name+".py"
             if not os.path.isfile(os.path.join(path,name_src)):
                 continue
@@ -81,7 +101,9 @@ class algorithm_manager:
                                                      "view_name"),
                           "src": os.path.join(path,name_src),
                           "json": os.path.join(path,f),
-                          "type": alg_type }
+                          "type": alg_type,
+                          "group": self.get_info(os.path.join(path, f), "group"),
+                          "position": self.get_info(os.path.join(path, f), "position")}
         # check and add new ones
         #self.log.info(alg)
         for name in alg:
@@ -98,7 +120,9 @@ class algorithm_manager:
                                          source_file=a["src"],
                                          name_view=a["name_view"],
                                          definition_file=a["json"],
-                                         algorithm_type=a["type"])
+                                         algorithm_type=a["type"],
+                                         algorithm_group=a["group"],
+                                         position=a["position"])
                 m.save()
 
     def init(self):
@@ -210,7 +234,6 @@ class algorithm_manager:
         See also:
         __check_json: __check_json()
         """
-        # OLD
         try:
             jm = json_manager()
             jm.load(json)
@@ -225,6 +248,7 @@ class algorithm_manager:
             return False
         except:
             return None
+        # OLD
         try:
             jm = json_manager()
             jm.load(json)

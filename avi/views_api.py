@@ -1,20 +1,24 @@
 """
-Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+Copyright (C) 2016-2020 Quasar Science Resources, S.L.
 
-This file is part of DEAVI.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-DEAVI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-DEAVI is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
 
 @package avi.views_api
 
@@ -37,11 +41,11 @@ from wsgiref.util import FileWrapper
 from avi.warehouse import wh_global_config as wh
 from avi.models import (resource_model, algorithm_model, gaia_query_model,
                         herschel_query_model, plot_model, results_model,
-                        algorithm_info_model)
+                        algorithm_info_model,algorithm_group_model)
 from avi.serializers import (resource_serializer, algorithm_serializer,
                              gaia_query_serializer, hsa_query_serializer, 
                              plot_serializer, results_serializer,
-                             algorithm_info_serializer)
+                             algorithm_info_serializer, algorithm_group_serializer)
 
 class algorithms_info(viewsets.ModelViewSet):
     """@class algorithms_info
@@ -54,6 +58,18 @@ class algorithms_info(viewsets.ModelViewSet):
     queryset = algorithm_info_model.objects.all()
     ## serializer class
     serializer_class = algorithm_info_serializer
+
+class algorithms_group(viewsets.ModelViewSet):
+    """@class algorithms_group
+    This class provides a view for the algorithm_group_model
+
+    @see avi.models.algorithm_group_model
+    @see avi.serializers.algorithm_group_serializer
+    """
+    ## query to the model
+    queryset = algorithm_group_model.objects.all()
+    ## serializer class
+    serializer_class = algorithm_group_serializer
 
 class algorithms_list(viewsets.ModelViewSet):
     """@class algorithms_list

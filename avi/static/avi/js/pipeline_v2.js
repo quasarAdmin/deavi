@@ -1,20 +1,24 @@
 /*
-Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+Copyright (C) 2016-2020 Quasar Science Resources, S.L.
 
-This file is part of DEAVI.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-DEAVI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-DEAVI is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
 */
 var text_array = ["hola", "Hola 2", "asdf", "qwerty"];
 var gaia_array = [];
@@ -70,13 +74,20 @@ var get_files_list = function(type){
 $(document).ready(
     function do_poll() {
         //return;
-        var state = document.getElementById('div_alg_info').getAttribute('state');
+        setTimeout(function() {
+        console.log();
+        var query = document.getElementById('query_loading').getAttribute('state');
+        query = query.replace(/ /g, '');
+        query = query.replace(/'/g, '"');
+        var obj = JSON.parse(query);
+        // console.log(obj.algorithm_flag[0]);
+        var state = document.getElementById(document.querySelector('[id^="div_alg_info'+obj.algorithm_flag[0]+'"]').id).getAttribute('state');
         state = state.replace(/ /g, '');
         state = state.replace(/'/g, '"');
-        console.log(state);
-        var obj = JSON.parse(state);
-        console.log(obj);
-        console.log("polling");
+        // console.log(state);
+        obj = JSON.parse(state);
+        // console.log(obj);
+        // console.log("polling");
         $.ajax({
             type: "POST",
             url: avi_url + "avi/ajax/get_query_status",
@@ -87,7 +98,7 @@ $(document).ready(
                 csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value
             },
             success: function(data) {
-                console.log(data)
+                // console.log(data)
 
 
                 if (data == 'PENDING' || data == 'STARTED') {
@@ -101,9 +112,9 @@ $(document).ready(
                         document.getElementsByClassName('load_icon')[0].remove();
                         document.getElementsByClassName('icon')[i].innerHTML = tick_icon;
                     }
-                    state = document.getElementById('div_alg_info').getAttribute('state');
+                    state = document.getElementById(document.querySelector('[id^="div_alg_info'+obj.algorithm_flag[0]+'"]').id).getAttribute('state');
                     state = state.replace('True', 'False');
-                    document.getElementById('div_alg_info').setAttribute('state', state);
+                    document.getElementById(document.querySelector('[id^="div_alg_info'+obj.algorithm_flag[0]+'"]').id).setAttribute('state', state);
                     let alert = '<div id="alert-info" class="alert alert-info" role="alert">Query ready</div>';
                     document.getElementById('alert').innerHTML = alert;
 
@@ -117,7 +128,7 @@ $(document).ready(
                             csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value
                         },
                         success: function(data) {
-                            console.log(data);
+                            console.log("algorithm info not function");
                             if ('hsa' in data) {
                                 hsa_array = data['hsa'];
                                 $(".hsa_table").autocomplete({ source: hsa_array });
@@ -134,6 +145,9 @@ $(document).ready(
                                 user_array = data['user'];
                                 $(".user_data").autocomplete({ source: user_array });
                             }
+                        },
+                        error: function(xhr, textStatus, throwError){
+                            console.log("error 2");
                         }
                     });
                     setTimeout(function() {
@@ -147,24 +161,28 @@ $(document).ready(
                 //window.location.reload();
             }
         });
+
+    }, 2000);
     });
 
-var create_form = function(el, id, data, state) {
-    console.log(state);
-
-    var desc_id = "#div_description";
+var create_form = function(el, id, data, state, description) {
+    var desc_id = "#div_description"+id;
     desc = $(desc_id);
     desc.html('');
-    if (!data["description"]) {
-        data["description"] = "No description";
+    if (!description["description"]) {
+        description["description"] = "No description";
     }
-    desc.append($("<p>" + data["description"] + "</p>"));
+    desc.append("<p>" + description["description"] + "</p>");
     $(desc_id).show();
 
-    var desc_div = "#alg_description";
+    var desc_div = "#alg_description"+id;
     $(desc_div).css("display", "block");
 
-    console.log(id_selected);
+    var x = document.getElementById("div_description"+id).querySelectorAll("p");
+    for(let i = 0; i < x.length; i++){
+        x[i].className = "text";
+    }
+    // console.log(id_selected);
 
     var view_name = data['view_name'];
     var form = $('<form></form>', {
@@ -172,21 +190,23 @@ var create_form = function(el, id, data, state) {
         id: 'alg_info_form'
     }); //,autocomplete: 'off'});
     var token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
-    document.getElementById("div_alg_info").className = "text-center col-sm-12";
-    document.getElementById("div_alg_info").setAttribute("style", "width:100%");
+    document.getElementById("div_alg_info"+id).className = "text-center col-sm-12";
+    document.getElementById("div_alg_info"+id).setAttribute("style", "width:100%");
     form.append('<input name="csrfmiddlewaretoken" value="' +
         token + '" type="hidden">');
-    form.append('<h3>' + view_name + '</h3>');
-    $.each(data['input'], function(k, v) {
+    // form.append('<h3>' + view_name + '</h3>');
+    // console.log(description);
+    // console.log(el[0].id);
+    $.each(data, function(k, v) {
         var div_row = $('<div class="row"></div>');
         var div = $('<div class="col-sm-12"></div>');
         var inp_id = id + "_" + v['name'];
         //console.log(inp_id);
         if (v['type'] == "bool") {
             if ("info" in v) {
-                adiv.append('<label for="' + id + "_" + v['name'] + ' title="' + v["info"] + '">' + v['view_name'] + "</label>");
+                adiv.append('<label class="text-left" for="' + id + "_" + v['name'] + ' title="' + v["info"] + '">' + v['view_name'] + "</label>");
             } else {
-                div.append('<label for="' + id + "_" + v['name'] + '>' + v['view_name'] + '</label>');
+                div.append('<label class="text-left" for="' + id + "_" + v['name'] + '>' + v['view_name'] + '</label>');
             }
             div.append('<input id="' + id + "_" + v['name'] + '" name="' + id + "_" + v['name'] +
                 '" type="checkbox" value="true">');
@@ -198,9 +218,9 @@ var create_form = function(el, id, data, state) {
             v['type'] == "complex") {
             var adiv = $('<div class="row" style="width:100%; margin-top:5px"></div>');
             if ("info" in v) {
-                adiv.append('<label for="' + id + "_" + v['name'] + '" class = "col-sm-5 col-form-label" style="padding: 5px 0px 0px 0px" title="' + v["info"] + '">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + id + "_" + v['name'] + '" class = "col-sm-5 col-form-label text-left" title="' + v["info"] + '">' + v['view_name'] + "</label>");
             } else {
-                adiv.append('<label for="' + id + "_" + v['name'] + '" class = "col-sm-5 col-form-label" style="padding: 5px 0px 0px 0px">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + id + "_" + v['name'] + '" class = "col-sm-5 col-form-label text-left">' + v['view_name'] + "</label>");
             }
             var ainput = $('<input id="' + id + "_" + v['name'] + '" name="' + id + "_" + v['name'] +
                 '" type="text" value="" class="col-sm-7 form-control">');
@@ -212,11 +232,12 @@ var create_form = function(el, id, data, state) {
                 '" type="text" value="" class="col-sm-7 form-control">');*/
             form.append(div_row);
         } else if (v['type'] == "gaia_table") {
+            // console.log("gaia");
             var adiv = $('<div class="autocomplete row" style="width:100%; margin-top:5px"></div>');
             if ("info" in v) {
-                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label" title="' + v["info"] + '">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label text-left" title="' + v["info"] + '">' + v['view_name'] + "</label>");
             } else {
-                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label text-left">' + v['view_name'] + "</label>");
             }
             var ainput = $('<input name="' + id + "_" + v['name'] +
                 '" id="' + inp_id +
@@ -229,7 +250,7 @@ var create_form = function(el, id, data, state) {
                     var icon = '<div class="icon"><div class="load_icon mt-2 ml-1"><i class="fa fa-spinner fa-w-16 fa-spin fa-lg"></i></div></div>';
                 }
             }
-            var gbutton = '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Launch Gaia query</button>';
+            var gbutton = '<button type="button" class="btn btn-info text-left" data-toggle="modal" data-target="#myModal">Launch Gaia query</button>';
             //var gbutton = '<form id="asdfff" method="post"><input type="hidden" name="csrfmiddlewaretoken" value="DVzic7x1JNw5RZN6aEP1SKP5Z9ym8X6Z"><button type="submit" formmethod="POST" title="gaia_query" value="1" name="gaia_query" class="btn btn-info" data-toggle="modal" data-target="#myModal">Launch gaia query</button></form>';
             /*
             <button type="button" class="btn btn-info">Info</button>
@@ -245,9 +266,9 @@ var create_form = function(el, id, data, state) {
         } else if (v['type'] == "hsa_table") {
             var adiv = $('<div class="autocomplete row" style="width:100%; margin-top:5px"></div>');
             if ("info" in v) {
-                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label" title="' + v["info"] + '">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label text-left" title="' + v["info"] + '">' + v['view_name'] + "</label>");
             } else {
-                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label text-left">' + v['view_name'] + "</label>");
             }
             adiv.append('<input name="' + id + "_" + v['name'] +
                 '" id="' + inp_id +
@@ -258,7 +279,7 @@ var create_form = function(el, id, data, state) {
                     var icon = '<div class="icon"><div class="load_icon mt-2 ml-1"><i class="fa fa-spinner fa-w-16 fa-spin fa-lg"></i></div></div>';
                 }
             }
-            var gbutton = '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal2">Launch HSA query</button>';
+            var gbutton = '<button type="button" class="btn btn-info text-left" data-toggle="modal" data-target="#myModal2">Launch HSA query</button>';
 
             adiv.append(gbutton);
             adiv.append(icon);
@@ -271,9 +292,9 @@ var create_form = function(el, id, data, state) {
         } else if (v['type'] == "results_data") {
             var adiv = $('<div class="autocomplete row" style="width:100%; margin-top:5px"></div>');
             if ("info" in v) {
-                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label" title="' + v["info"] + '">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label text-left" title="' + v["info"] + '">' + v['view_name'] + "</label>");
             } else {
-                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label text-left">' + v['view_name'] + "</label>");
             }
             adiv.append('<input name="' + id + "_" + v['name'] +
                 '" id="' + inp_id +
@@ -288,9 +309,9 @@ var create_form = function(el, id, data, state) {
         } else if (v['type'] == "user_data") {
             var adiv = $('<div class="autocomplete row" style="width:100%; margin-top:5px"></div>');
             if ("info" in v) {
-                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label" title="' + v["info"] + '">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label text-left" title="' + v["info"] + '">' + v['view_name'] + "</label>");
             } else {
-                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label">' + v['view_name'] + "</label>");
+                adiv.append('<label for="' + inp_id +'" class = "col-sm-5 col-form-label text-left">' + v['view_name'] + "</label>");
             }
             adiv.append('<input name="' + id + "_" + v['name'] +
                 '" id="' + inp_id +
@@ -308,13 +329,30 @@ var create_form = function(el, id, data, state) {
     form.append('<button name="algorithm_id" class="btn btn-outline-primary" style="margin-top:5px; margin-bottom: 5px" type="submit" value="' +
         id + '">Run</button>');
     el.append(form);
+    autocomplete_input(id);
     $("#alg_parameters").show();
+    if (state.includes('True') && document.getElementById('query_loading').getAttribute('flag') == 'true'){
+        var alg_group = document.getElementById(id).getAttribute('alg_group');
+        for(let x = 0; x < document.getElementsByClassName("text-capitalize nav-item nav-link active").length; x++){
+            document.getElementsByClassName("text-capitalize nav-item nav-link active")[x].setAttribute("aria-selected","false");
+            document.getElementsByClassName("text-capitalize nav-item nav-link active")[x].className = "text-capitalize nav-item nav-link";
+        }
+        document.getElementById('nav-'+alg_group+'-tab').className = "text-capitalize nav-item nav-link active";
+        document.getElementById('nav-'+alg_group+'-tab').setAttribute("aria-selected","true");
+        document.getElementsByClassName("tab-pane fade show active")[0].className = "tab-pane fade";
+        document.getElementById('nav-'+alg_group).className = "tab-pane fade show active";
+        document.getElementById(id).setAttribute("aria-expanded","true");
+        document.getElementById(id).className = "btn btn-link alg-button";
+        document.getElementById("collapse-"+id).className = "collapse show";
+        document.getElementById('query_loading').setAttribute("flag","false");
+    }
+    
 
 }
 
 var get_algorithm_info = function(el, id, state) { //, name){
-    console.log(id)
-    console.log(state)
+
+    // console.log(state)
     $.ajax({
         type: "POST",
         url: avi_url + "avi/ajax/get_alg_info",
@@ -338,7 +376,8 @@ var get_algorithm_info = function(el, id, state) { //, name){
             if ('user' in data) {
                 user_array = data['user'];
             }
-            create_form(el, id, data['algorithm'], state);
+            // create_form($("#" +el[0].id+id), id, data['algorithm_input'], state, data['algorithm']);
+            create_form(el, id, data['algorithm_input'], state, data['algorithm']);
         },
         error: function(xhr, textStatus, throwError) {
             console.log(xhr);
@@ -351,43 +390,49 @@ var get_algorithm_info = function(el, id, state) { //, name){
 
 $(document).ready(function() {
     $(".alg-button").click(function() {
-        var id = $(this).attr("id");
-        id_selected = id;
-        document.getElementById("algorithm_pk_gaia_form").setAttribute('value', id_selected);
-        document.getElementById("algorithm_pk_hsa_form").setAttribute('value', id_selected);
-        //var name = $(this).attr("name");
-        var info_id = "div_alg_info"; //_" + id;
-        var state = document.getElementById('div_alg_info').getAttribute('state');
-        var node = document.getElementById(info_id);
-        while (node.firstChild) {
-            node.removeChild(node.firstChild);
+        if($(this).hasClass('collapsed')){
+            var id = $(this).attr("id");
+            id_selected = id;
+            document.getElementById("algorithm_pk_gaia_form").setAttribute('value', id_selected);
+            document.getElementById("algorithm_pk_hsa_form").setAttribute('value', id_selected);
+            //var name = $(this).attr("name");
+            var info_id = "div_alg_info"+id; //_" + id;
+            var state = document.getElementById('div_alg_info'+id).getAttribute('state');
+            var node = document.getElementById(info_id);
+            while (node.firstChild) {
+                node.removeChild(node.firstChild);
+            }
+            get_algorithm_info($("#" + info_id), id, state); //, name);
         }
-        get_algorithm_info($("#" + info_id), id, state); //, name);
     });
 });
 
 
 $(document).ready(function() {
-    var state = document.getElementById('div_alg_info').getAttribute('state');
+    var query = document.getElementById('query_loading').getAttribute('state');
+    query = query.replace(/ /g, '');
+    query = query.replace(/'/g, '"');
+    var obj = JSON.parse(query);
+    var state = document.getElementById(document.querySelector('[id^="div_alg_info'+obj.algorithm_flag[0]+'"]').id).getAttribute('state');
     state = state.replace(/ /g, '');
     state = state.replace(/'/g, '"');
-    console.log(state);
+    // console.log(state);
     var obj = JSON.parse(state);
-    console.log(obj);
+    // console.log(obj);
     if (state.includes('algorithm_flag')) {
         var id = obj.algorithm_flag;
-        console.log(id[0]);
+        // console.log(id[0]);
         id_selected = id[0];
         document.getElementById("algorithm_pk_gaia_form").setAttribute('value', id_selected);
         document.getElementById("algorithm_pk_hsa_form").setAttribute('value', id_selected);
         //var name = $(this).attr("name");
-        var info_id = "div_alg_info"; //_" + id;
+        var info_id = "div_alg_info"+obj.algorithm_flag[0]; //_" + id;
         var node = document.getElementById(info_id);
         while (node.firstChild) {
             node.removeChild(node.firstChild);
         }
-        state = document.getElementById('div_alg_info').getAttribute('state');
-        get_algorithm_info($("#" + info_id), id[0], state); //, name);
+        state = document.getElementById('div_alg_info'+obj.algorithm_flag[0]+'').getAttribute('state');
+        get_algorithm_info($("#" + info_id), obj.algorithm_flag[0], state); //, name);
     }
 });
 
@@ -408,11 +453,32 @@ $(document).ready(function() {
     );
 });
 
+function autocomplete_input(id){
+    // var desc_id = "#div_description"+id;
+    // $(desc_id).hide();
+    var info_id = "#div_alg_info"+id;
+    var node = $(info_id);
+    $(".gaia_table").autocomplete({ source: gaia_array });
+    $(".hsa_table").autocomplete({ source: hsa_array });
+    $(".results_data").autocomplete({ source: res_array });
+    $(".user_data").autocomplete({ source: user_array });
+    node.on("DOMSubtreeModified",
+    function() {
+        //console.log("onChange");
+        //$("#alg_info_form").attr("autocomplete","off");
+        // $(".gaia_table").autocomplete({ source: gaia_array });
+        // $(".hsa_table").autocomplete({ source: hsa_array });
+        // $(".results_data").autocomplete({ source: res_array });
+        // $(".user_data").autocomplete({ source: user_array });
+    }
+);
+}
+
 function autocomplete(inp, arr) {
     /*the autocomplete function takes two arguments,
       the text field element and an array of possible autocompleted values:*/
-    console.log(inp);
-    console.log(arr);
+    // console.log(inp);
+    // console.log(arr);
     var currentFocus;
     /*execute a function when someone writes in the text field:*/
     inp.addEventListener("input", function(e) {
@@ -527,7 +593,7 @@ function query_form() {
 }
 
 function click(value) {
-    console.log(value);
+    // console.log(value);
     //alert(value);
     /*if(value.textContent === "Launch Gaia query"){
         if(document.getElementById('myModal2')){

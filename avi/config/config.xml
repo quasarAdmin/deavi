@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <sfm>
   <gaia>
-    <http-header>http://</http-header><host>gea.esac.esa.int</host>
+    <http-header>https://</http-header><host>gea.esac.esa.int</host>
     <port>80</port>
     <tap-server>/tap-server</tap-server>
     <async-pathinfo>/tap-server/tap/async</async-pathinfo>
@@ -37,14 +37,14 @@
   </herschel>
   <!-- tables. It is possible to download this information from the archives -->
   <hsa_tables header="hsa.">
-    <ancillary>hsa.ancillary</ancillary>
+    <!--<ancillary>hsa.ancillary</ancillary>-->
     <pacs_point_source_070>hsa.pacs_point_source_070</pacs_point_source_070>
     <pacs_point_source_100>hsa.pacs_point_source_100</pacs_point_source_100>
-    <pacs_point_source_160>hsa.pacs_point_source_160</pacs_point_source_160>>
+    <pacs_point_source_160>hsa.pacs_point_source_160</pacs_point_source_160>
     <spire_point_source_250>hsa.spire_point_source_250</spire_point_source_250>
     <spire_point_source_350>hsa.spire_point_source_350</spire_point_source_350>
     <spire_point_source_500>hsa.spire_point_source_500</spire_point_source_500>
-    <spire_spectral_feature_finder_catalogue>hsa.spire_spectral_feature_finder_catalogue</spire_spectral_feature_finder_catalogue>
+    <!--<spire_spectral_feature_finder_catalogue>hsa.spire_spectral_feature_finder_catalogue</spire_spectral_feature_finder_catalogue>
     <hifi_spectral_native>hsa.hifi_spectral_native</hifi_spectral_native>
     <hifi_spectral_line_smoothed>hsa.hifi_spectral_line_smoothed</hifi_spectral_line_smoothed>
     <instrument>hsa.instrument</instrument>
@@ -59,7 +59,7 @@
     <proposal_pi_user>hsa.proposal_pi_user</proposal_pi_user>
     <v_publication>hsa.v_publication</v_publication>
     <qualify_flag>hsa.qualify_flag</qualify_flag>
-    <v_active_observation>hsa.v_active_observation</v_active_observation>
+    <v_active_observation>hsa.v_active_observation</v_active_observation>-->
   </hsa_tables>
   <hsa_updp_tables header="updp.">
     <updp_files>updp_files</updp_files>
@@ -143,6 +143,10 @@
     <vari_short_timescale>gaiadr2.vari_short_timescale</vari_short_timescale>
     <vari_time_series_statistics>gaiadr2.vari_time_series_statistics</vari_time_series_statistics>
   </gaiadr2_tables>
+  <simulations>
+    <url>http://sims.starformmapper.es/files/</url>
+    <path>pure_nbody_sims/</path>
+  </simulations>
   <file_manager>
     <resources_path>/data/resources/</resources_path>
   </file_manager>

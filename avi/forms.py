@@ -1,20 +1,24 @@
 """
-Copyright (C) 2016-2018 Quasar Science Resources, S.L.
+Copyright (C) 2016-2020 Quasar Science Resources, S.L.
 
-This file is part of DEAVI.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-DEAVI is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-DEAVI is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with DEAVI.  If not, see <http://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
 
 @package avi.forms
 
@@ -99,7 +103,7 @@ def get_pos_img():
     Returns:
     A set of tuplas with the options to query the herschel archive
     """
-    return (('positional','Positional'),('images','Images'))
+    return (('positional','Point Sources'),('images','Images'))
 
 def get_hs_instruments():
     """This function returns the instruments to query the herschel archive
@@ -116,10 +120,15 @@ def get_hs_levels():
     A set of tuplas with the processing levels to query the herschel archive
     """
     return (('All','All'),('level0','level0'),('level0_5','level0_5'),
-            ('level1','level1'),('level2','level2'),('level2_5','level2_5'),
-            ('level3','level3'),('browseImageProduct','browseImageProduct'),
-            ('browseProduct','browseProduct'),('logObsContext','logObsContext'),
-            ('quality','quality'),('qualitySummary','qualitySummary'))
+           ('level1','level1'),('level2','level2'),('level2_5','level2_5'),
+           ('level3','level3'))
+           # ('browseProduct','browseProduct'),('logObsContext','logObsContext'),
+           # ('quality','quality'),('qualitySummary','qualitySummary'))
+           # #(('All','All'),('level0','level0'),('level0_5','level0_5'),
+           # ('level1','level1'),('level2','level2'),('level2_5','level2_5'),
+           # ('level3','level3'),('browseImageProduct','browseImageProduct'),
+           # ('browseProduct','browseProduct'),('logObsContext','logObsContext'),
+           # ('quality','quality'),('qualitySummary','qualitySummary'))
         
 def get_hs_tables():
     """This function returns the tables to query the herschel archive
@@ -196,9 +205,9 @@ class query_herschel_form(forms.Form):
                                    required=True,
                                    choices=get_name_coord())
     ## name of the object to be queried
-    name = forms.CharField(label='Name', max_length=255,help_text='Targe Name',required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    name = forms.CharField(label='Name', max_length=255,help_text='Search by target name.',required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
     ## input file containing multiple queries information
-    input_file = forms.CharField(label='Input File',help_text='Input File', max_length=255, 
+    input_file = forms.CharField(label='Search by File. Query by using an uploaded file. Select a file to be uploaded.',help_text='Input File', max_length=255, 
                                  required=False)
     ## ra
     ra = forms.FloatField(label='ra',help_text='Right Ascension',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
@@ -218,7 +227,7 @@ class query_herschel_form(forms.Form):
     ## array containing the vertexes of a polygon
     polygon = forms.CharField(label='polygon',help_text='Polygon: RA DEC,RA DEC, ...', max_length=255,required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
     ## is it a positional source catalog query or images?
-    positional_images = forms.ChoiceField(label='Positional Images',help_text="Positional Source,Instrument Image",
+    positional_images = forms.ChoiceField(label='Point Sources Images',help_text="Point Sources,Instrument Image",
                                           widget=forms.RadioSelect,
                                           required=True,
                                           choices=get_pos_img())
@@ -240,7 +249,7 @@ class query_herschel_form(forms.Form):
     ## output file name
     file_name = forms.CharField(label='File Name',help_text='File Name', max_length=255,required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
     ## an ADQL query
-    adql = forms.CharField(label='ADQL query', help_text='ADQL Query',
+    adql = forms.CharField(label='ADQL query', help_text='Search by ADQL. Use ADQL query syntax.',
                            #max_length=255,
                            required=False,
                            widget=forms.Textarea(attrs={'class': 'form-control'}))
@@ -255,10 +264,10 @@ class query_gaia_form(forms.Form):
                                    required=True,
                                    choices=get_name_coord())
     ## name of the object to be queried
-    name = forms.CharField(label='Name',help_text='Targe Name', max_length=255,required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    name = forms.CharField(label='Name',help_text='Search by targe name', max_length=255,required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
     ##name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'text'}))
     ## input file containing multiple queries information
-    input_file = forms.CharField(label='Input File',help_text='Input File', max_length=255, 
+    input_file = forms.CharField(label='Input File',help_text='Search by File. Query by using an uploaded file. Select a file to be uploaded.', max_length=255, 
                                  required=False)
     ## ra
     ra = forms.FloatField(label='ra',required=False,help_text='Right Ascension',widget=forms.NumberInput(attrs={'class': 'form-control'}))
@@ -272,16 +281,16 @@ class query_gaia_form(forms.Form):
                               required=True,
                               choices=get_shapes())
     ## radius of the query
-    radius = forms.FloatField(label='radius',help_text='Radius',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    radius = forms.FloatField(label='radius',help_text='The radius of the search cone.',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
     ##radius = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number'}))
     ## width of the query
-    width = forms.FloatField(label='width',help_text='Width',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    width = forms.FloatField(label='width',help_text='The width of the search Box.',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
     ##width = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number'}))
     ## height of the query
-    height = forms.FloatField(label='height',help_text='Height',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    height = forms.FloatField(label='height',help_text='The height of the search Box.',required=False,widget=forms.NumberInput(attrs={'class': 'form-control'}))
     ##height = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number'}))
     ## array containing the vertexes of a polygon
-    polygon = forms.CharField(label='polygon',help_text='Polygon: RA DEC,RA DEC, ...', max_length=255,required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    polygon = forms.CharField(label='polygon',help_text='Polygon: RA DEC, RA DEC, ...', max_length=255,required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
     ##polygon = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'type': 'number'}))
     data_release = forms.ChoiceField(label='Data Release',help_text="Data Release 1,Data Release 2",
                                      widget=forms.RadioSelect,
@@ -311,22 +320,22 @@ class query_sim_form(forms.Form):
     """
     ## Total mass (solar-mass)
     total_mass = forms.FloatField(validators=[MinValueValidator(1000), MaxValueValidator(10000)],
-                                    help_text="Total Mass")
+                                    help_text="Total Mass", widget=forms.NumberInput(attrs={'class': 'form-control'}))
     ## virial ratio
     virial_ratio = forms.FloatField(validators=[MinValueValidator(0.3), MaxValueValidator(0.5)],
-                                    help_text="Virial Ratio")
+                                    help_text="Virial Ratio", widget=forms.NumberInput(attrs={'class': 'form-control'}))
     ## Half-mass radius (pc) 0.1, 0.5, 1.0
     half_mass_radius = forms.FloatField(validators=[MinValueValidator(0.1), MaxValueValidator(1.0)],
-                                    help_text="Half-Mass Radius")
+                                    help_text="Half-Mass Radius", widget=forms.NumberInput(attrs={'class': 'form-control'}))
     ## Fractal dimension
     fractal_dimension = forms.FloatField(validators=[MinValueValidator(2.0), MaxValueValidator(3.0)],
-                                    help_text="Fractal Dimension")
+                                    help_text="Fractal Dimension", widget=forms.NumberInput(attrs={'class': 'form-control'}))
     ## Degree of mass-segregation
     mass_segregation_degree = forms.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(1.0)],
-                                    help_text="Degree of mass-segregation")
+                                    help_text="Degree of mass-segregation", widget=forms.NumberInput(attrs={'class': 'form-control'}))
     ## Binary fraction (%)
     binary_fraction = forms.FloatField(validators=[MinValueValidator(0), MaxValueValidator(50)],
-                                    help_text="Binary Fraction")
+                                    help_text="Binary Fraction", widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
 # deprecated
 class _query_gaia_form():

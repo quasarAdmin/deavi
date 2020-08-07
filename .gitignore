@@ -33,6 +33,7 @@ pipeline/migrations/
 !*.gif
 
 !.gitignore
+!*.gitkeep
 
 !AUTHORS
 !LICENSE
