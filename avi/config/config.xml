@@ -144,7 +144,9 @@
     <vari_time_series_statistics>gaiadr2.vari_time_series_statistics</vari_time_series_statistics>
   </gaiadr2_tables>
   <simulations>
-    <url>http://sims.starformmapper.es/files/</url>
+    <!--<url>http://sims.starformmapper.es/files/</url>
+    <path>pure_nbody_sims/</path>-->
+    <url>https://brunhilda.astro.cf.ac.uk/files/</url>
     <path>pure_nbody_sims/</path>
   </simulations>
   <file_manager>

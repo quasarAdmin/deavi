@@ -32,7 +32,7 @@ import time
 import sys, traceback, os
 from django.utils import timezone
 
-import shutil, urllib
+import shutil, urllib, ssl
 
 try:
     from urllib.parse import urlencode
@@ -183,7 +183,10 @@ class sim_query_task(parent):
         return ret
 
     def download_file(self, url, path):
-        response = urlopen(url)
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        response = urlopen(url, context=ctx)
         file_name = url[url.rindex("/", 0, len(url)) + 1:]
         print(os.path.join(path, file_name))
         fp = open(os.path.join(path, file_name), 'wb')
@@ -192,7 +195,10 @@ class sim_query_task(parent):
 
     def parse_url(self, url, path):
         try:
-            response = urlopen(url)
+            ctx = ssl.create_default_context()
+            ctx.check_hostname = False
+            ctx.verify_mode = ssl.CERT_NONE
+            response = urlopen(url, context=ctx)
             data = bs4.BeautifulSoup(response.read(), "html.parser")
             for l in data.find_all("a"):
                 ldat = l['href']

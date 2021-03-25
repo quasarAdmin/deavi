@@ -54,7 +54,7 @@ class get_query_info(parent):
 
         Args:
         self: The object pointer.
-        data: A dictorianry containing the input data for the job.
+        data: A dictionary containing the input data for the job.
 
         Returns:
         The job_data attribute. The ok attribute will be True if the 
